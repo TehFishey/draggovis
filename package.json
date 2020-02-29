@@ -1,0 +1,28 @@
+{
+  "name": "draggovis",
+  "version": "0.0.1",
+  "description": "A js-based utility for visualizing dragon linages for the adoption game, dragcave.net.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TehFishey/draggovis.git"
+  },
+  "author": "Michael D'Attilo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TehFishey/draggovis/issues"
+  },
+  "homepage": "https://github.com/TehFishey/draggovis#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "debug": "^2.6.9",
+    "express": "^4.16.4",
+    "http-errors": "^1.6.3",
+    "morgan": "^1.9.1",
+    "pug": "^2.0.4"
+  }
+}

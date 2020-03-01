@@ -1,11 +1,6 @@
 import React from 'react';
-import './DragonElement.css';
 
 export default class DragonElement extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  
   onFieldChange(fieldName, event) {
     const fieldValue = event.target.value;
     
@@ -29,17 +24,17 @@ export default class DragonElement extends React.Component {
   }
 
   render () {
-    let children =[];
+    let parents =[];
 
     if (this.props.data.mother !== undefined) {
-      children.push
+      parents.push
         (<DragonElement 
           data={this.props.data.mother} 
           onChange={(parentData) => this.onChildFieldChange(this.props.data.mother, parentData)}
         />)
     }
     if (this.props.data.father !== undefined) {
-      children.push
+      parents.push
       (<DragonElement 
         data={this.props.data.father} 
         onChange={(parentData) => this.onChildFieldChange(this.props.data.father, parentData)}
@@ -60,7 +55,7 @@ export default class DragonElement extends React.Component {
           />
         </div>
         <ul>
-          {children}
+          {parents}
         </ul>
       </li>
     )

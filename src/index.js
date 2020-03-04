@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Root from './components/DragonRoot/DragonRoot';
+import Root from './components/TreeView/RootElement';
 import * as serviceWorker from './serviceWorker';
 
-let dragon = {
+let testData = {
     imagePath: process.env.PUBLIC_URL + 'testDrag.png',
     name: "Leafy Sea Dragon",
     mother: {
@@ -25,7 +25,7 @@ let dragon = {
     }
 }
 
-ReactDOM.render(<Root data={dragon} />, document.getElementById('root'));
+ReactDOM.render(<Root data={testData} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

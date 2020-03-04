@@ -1,16 +1,16 @@
 import React from 'react';
-import './DragonRoot.css';
-import DragonElement from '../DragonElement/DragonElement';
+import './RootElement.css';
+import DragonElement from './DragonElement';
 
-export default class DragonRoot extends React.Component {
+export default class RootElement extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: props.data
+      data: props.data,
     }
   }
-  
+
   render () {
     return ( 
     <div className="lineage-element">

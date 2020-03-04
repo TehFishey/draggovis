@@ -1,4 +1,6 @@
 import React from 'react';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import EditWindow from '../Popover/EditWindow';
 
 export default class DragonElement extends React.Component {
   onFieldChange(fieldName, event) {
@@ -24,6 +26,7 @@ export default class DragonElement extends React.Component {
   }
 
   render () {
+    
     let parents =[];
 
     if (this.props.data.mother !== undefined) {
@@ -44,10 +47,14 @@ export default class DragonElement extends React.Component {
     return ( 
       <li>
         <div>
+          <OverlayTrigger 
+          trigger="click" 
+          overlay={<EditWindow/>}>
           <img 
             src={this.props.data.imagePath} 
             alt={this.props.data.name + "'s portrait"} 
           />
+          </OverlayTrigger>
           <input
             type="text"
             value={this.props.data.name}

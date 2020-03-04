@@ -3,24 +3,17 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import EditWindow from '../Popover/EditWindow';
 
 export default class DragonElement extends React.Component {
-  onFieldChange(fieldName, event) {
-    const fieldValue = event.target.value;
-    
-    let newData = this.props.data;
-    newData[fieldName] = fieldValue;
   
-    console.log(`onFieldChange triggered in node ${this.props.data.name}`)
-    console.log(`sending newData to parent: `, newData)
-
-    this.props.onChange(newData);
+  onPopoverFieldChange(popoverData) {
+    this.props.onChange(popoverData);
   }
 
-  onChildFieldChange(parent, parentData) {
+  onIncomingFieldChange(parent, parentData) {
     let newData = this.props.data;
     newData[parent] = parentData;
 
-    console.log(`onChildFieldChange triggered in node ${this.props.data.name}`)
-    console.log(`sending newData to 'child': `, newData)
+    console.log(`onIncomingFieldChange triggered in node ${this.props.data.name}`)
+    console.log(`sending newData to higher node: `, newData)
 
     this.props.onChange(newData);
   }
@@ -33,14 +26,14 @@ export default class DragonElement extends React.Component {
       parents.push
         (<DragonElement 
           data={this.props.data.mother} 
-          onChange={(parentData) => this.onChildFieldChange(this.props.data.mother, parentData)}
+          onChange={(parentData) => this.onIncomingFieldChange(this.props.data.mother, parentData)}
         />)
     }
     if (this.props.data.father !== undefined) {
       parents.push
       (<DragonElement 
         data={this.props.data.father} 
-        onChange={(parentData) => this.onChildFieldChange(this.props.data.father, parentData)}
+        onChange={(parentData) => this.onIncomingFieldChange(this.props.data.father, parentData)}
       />)
     }
 
@@ -49,17 +42,16 @@ export default class DragonElement extends React.Component {
         <div>
           <OverlayTrigger 
           trigger="click" 
-          overlay={<EditWindow/>}>
+          overlay={<EditWindow
+            data={this.props.data}
+            onChange={(popoverData) => this.onPopoverFieldChange(popoverData)}
+          />}>
           <img 
             src={this.props.data.imagePath} 
             alt={this.props.data.name + "'s portrait"} 
           />
           </OverlayTrigger>
-          <input
-            type="text"
-            value={this.props.data.name}
-            onChange={e => this.onFieldChange('name', e)}
-          />
+          <label>{this.props.data.name}</label>
         </div>
         <ul>
           {parents}

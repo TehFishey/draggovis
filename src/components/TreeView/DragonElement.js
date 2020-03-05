@@ -5,6 +5,7 @@ import EditWindow from '../Popover/EditWindow';
 export default class DragonElement extends React.Component {
   
   onPopoverFieldChange(popoverData) {
+    console.log("popover change detected in tree...")
     this.props.onChange(popoverData);
   }
 
@@ -39,20 +40,21 @@ export default class DragonElement extends React.Component {
 
     return ( 
       <li>
-        <div>
-          <OverlayTrigger 
-          trigger="click" 
+        <OverlayTrigger 
+          trigger="click"
+          rootClose
           overlay={<EditWindow
             data={this.props.data}
-            onChange={(popoverData) => this.onPopoverFieldChange(popoverData)}
+            update={(popoverData) => this.onPopoverFieldChange(popoverData)}
           />}>
+        <div>
           <img 
             src={this.props.data.imagePath} 
             alt={this.props.data.name + "'s portrait"} 
           />
-          </OverlayTrigger>
           <label>{this.props.data.name}</label>
         </div>
+        </OverlayTrigger>
         <ul>
           {parents}
         </ul>

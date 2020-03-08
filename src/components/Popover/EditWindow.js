@@ -78,11 +78,6 @@ export default class EditWindow extends React.Component{
                   })}>
                     Remove Parents
                 </button>
-                <button 
-                  type="button" 
-                  className="removeParents">
-                    Hide Parents
-                </button>
               </div>
             </div>   
           </Popover.Content>

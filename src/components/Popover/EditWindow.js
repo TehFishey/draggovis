@@ -1,5 +1,6 @@
 import React from 'react';
 import Popover from 'react-bootstrap/Popover';
+import DragonSelect from './DragonSelect';
 import './EditWindow.css';
 
 export default class EditWindow extends React.Component{
@@ -8,6 +9,7 @@ export default class EditWindow extends React.Component{
 
       this.state = {
         name: props.data.name,
+        breed: props.data.breed,
       }
 
       console.log({props});
@@ -34,7 +36,7 @@ export default class EditWindow extends React.Component{
           className={this.props.className}
           outOfBoundaries={this.props.outOfBoundaries}
         >
-          <Popover.Title>{(this.props.data.name !== "") ? this.props.data.name : 'Unnamed Dragon'}</Popover.Title>
+          <Popover.Title>{(this.props.data.name !== "") ? this.props.data.name : "Unnamed Dragon"}</Popover.Title>
           <Popover.Content>
               <div className="grid-wrapper">
               <div className="box a">
@@ -52,7 +54,12 @@ export default class EditWindow extends React.Component{
                   />
                 </div>
                 <div>Gender: {this.props.data.gender}</div>
-                <div>Species: SPECIES SELECTOR HERE</div>
+                <div>Breed: <DragonSelect 
+                  breed={this.state.breed}
+                  onChange={(breedObject)=>{ this.onFieldChange('breed',breedObject)}
+                  }
+                  />
+                </div>
                 <div>Portrait: ART SELECTOR HERE</div>
               </div>
               <div className="box c"></div>
@@ -84,4 +91,4 @@ export default class EditWindow extends React.Component{
         </Popover>
       );
     }
-  }
+}

@@ -2,7 +2,7 @@ import DragonModel from './DragonModel';
 
 class TwoHeadModel extends DragonModel {
     constructor(breed, name, genders, reqs) {
-        super.constructor(breed, name, "twohead", genders, reqs)
+        super(breed, name, "twohead", genders, reqs)
     }
 }
 

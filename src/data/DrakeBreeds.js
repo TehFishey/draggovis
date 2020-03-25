@@ -2,7 +2,7 @@ import DragonModel from './DragonModel';
 
 class DrakeModel extends DragonModel {
     constructor(breed, name, genders, reqs) {
-        super.constructor(breed, name, "drake", genders, reqs)
+        super(breed, name, "drake", genders, reqs)
     }
 }
 

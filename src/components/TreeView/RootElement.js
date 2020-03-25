@@ -18,7 +18,7 @@ export default class RootElement extends React.Component {
         <DragonElement 
           data={this.state.data} 
           onChange={(data) => this.setState({data})}
-          />
+        />
       </ul>
     </div>)
   }

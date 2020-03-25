@@ -42,4 +42,4 @@ let SpecialBreeds = [
     new DragonModel("kohraki-dragon", "Kohraki Dragon")
 ]
 
-export default DragonBreeds;
+export default SpecialBreeds;

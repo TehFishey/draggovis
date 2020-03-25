@@ -5,8 +5,8 @@ export default class DragonModel {
         this.type = type || "dragon";
         this.genders = genders || "mf-mf";
         this.reqs = reqs || function(parentA,parentB) {
-            breedCheck = (parentA.breed === this.breed) || (parentB.breed === this.breed)
-            typeCheck = parentA.type === parentB.type;
+            let breedCheck = (parentA.breed === this.breed) || (parentB.breed === this.breed)
+            let typeCheck = parentA.type === parentB.type;
             return (breedCheck && typeCheck);
         }
     }

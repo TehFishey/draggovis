@@ -1,4 +1,4 @@
-import DragonModel from './DragonModel';
+import DragonModel from './BreedModel';
 
 class DrakeModel extends DragonModel {
     constructor(breed, name, genders, reqs) {

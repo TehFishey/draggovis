@@ -1,4 +1,4 @@
-import DragonModel from './DragonModel';
+import DragonModel from './BreedModel';
 
 let DragonBreeds = [
     new DragonModel("aeon-wyvern", "Aeon Wyvern"),

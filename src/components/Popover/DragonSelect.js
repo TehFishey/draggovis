@@ -1,9 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
-import DragonData from '../../data/DragonData';
+import BreedData from '../../data/BreedData';
 
-const dragonData = DragonData();
-const options = Object.entries(dragonData).map((item)=>{ 
+const breedData = BreedData();
+const options = Object.entries(breedData).map((item)=>{ 
     return { value: item[0], label: item[1].name }
 });
 
@@ -12,15 +12,15 @@ export default class DragonSelect extends React.Component {
       super(props);
       this.state = {
         value: {
-          value: (props.breed !== undefined) ? props.breed.breed.breed : "",
-          label: (props.breed !== undefined) ? props.breed.breed.name : "Select Breed"
+          value: (props.breedObject !== undefined) ? props.breedObject.breed.breedId : "",
+          label: (props.breedObject !== undefined) ? props.breedObject.breed.name : "Select Breed"
         }
       }   
     }
   
   handleChange(selectedOption) {
     this.setState({value: selectedOption});
-    this.props.onChange({breed: dragonData[selectedOption.value]});
+    this.props.onChange({breed: breedData[selectedOption.value]});
   }
 
   render() {

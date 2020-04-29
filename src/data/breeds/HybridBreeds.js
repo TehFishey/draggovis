@@ -1,4 +1,4 @@
-import DragonModel from './DragonModel';
+import DragonModel from './BreedModel';
 
 let HybridBreeds = [
     new DragonModel("avatar-of-change", "Avatar of Change"),

@@ -1,6 +1,7 @@
 import React from 'react';
 import Popover from 'react-bootstrap/Popover';
 import DragonSelect from './DragonSelect';
+import DragonObject from '../../data/DragonObject';
 import './EditWindow.css';
 
 export default class EditWindow extends React.Component{
@@ -41,7 +42,7 @@ export default class EditWindow extends React.Component{
               <div className="grid-wrapper">
               <div className="box a">
                 <img 
-                  src={this.props.data.imagePath} 
+                  src={process.env.PUBLIC_URL + 'portraits/' + this.props.data.portraitObject.imagePath} 
                   alt={this.props.data.name + "'s portrait"} 
                 />
               </div>
@@ -55,7 +56,7 @@ export default class EditWindow extends React.Component{
                 </div>
                 <div>Gender: {this.props.data.gender}</div>
                 <div>Breed: <DragonSelect 
-                  breed={this.state.breed}
+                  breedObject={this.state.breed}
                   onChange={(breedObject)=>{ this.onFieldChange('breed',breedObject)}
                   }
                   />
@@ -69,9 +70,11 @@ export default class EditWindow extends React.Component{
                   text=""
                   className="newParents"
                   onClick={e => this.onButtonClick( (data) => {
-                    data.mother = { name: "", gender: "Female", imagePath: process.env.PUBLIC_URL + 'testDrag.png'};
-                    data.father = { name: "", gender: "Male", imagePath: process.env.PUBLIC_URL + 'testDrag.png'};
-                    return data;
+                    if (data.father === undefined && data.mother === undefined) {
+                      data.father = new DragonObject("Male");
+                      data.mother = new DragonObject("Female")
+                      return data;
+                    }
                   })}>
                     Add Parents
                 </button>

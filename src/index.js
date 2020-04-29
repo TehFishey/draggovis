@@ -5,26 +5,7 @@ import './index.css';
 import Root from './components/TreeView/RootElement';
 import * as serviceWorker from './serviceWorker';
 
-let testData = {
-    imagePath: process.env.PUBLIC_URL + 'testDrag.png',
-    name: "Leafy Sea Dragon",
-    mother: {
-        imagePath: process.env.PUBLIC_URL + 'testDrag.png',
-        name: "Leafy Mom",
-        mother: {
-            imagePath: process.env.PUBLIC_URL + 'testDrag.png',
-            name: "Leafy Grandma"
-        },
-        father: {
-            imagePath: process.env.PUBLIC_URL + 'testDrag.png',
-            name: "Leafy Grandad"
-        }
-    },
-    father: {
-        imagePath: process.env.PUBLIC_URL + 'testDrag.png',
-        name: "Leafy Dad"
-    }
-}
+import testData from './TestData';
 
 ReactDOM.render(<Root data={testData} />, document.getElementById('root'));
 

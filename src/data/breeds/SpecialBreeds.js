@@ -1,4 +1,4 @@
-import DragonModel from './DragonModel';
+import DragonModel from './BreedModel';
 
 let SpecialBreeds = [
     new DragonModel("shimmer-scale-dragon", "Shimmer-scale Dragon"),

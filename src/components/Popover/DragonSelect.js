@@ -12,15 +12,15 @@ export default class DragonSelect extends React.Component {
       super(props);
       this.state = {
         value: {
-          value: (props.breedObject !== undefined) ? props.breedObject.breed.breedId : "",
-          label: (props.breedObject !== undefined) ? props.breedObject.breed.name : "Select Breed"
+          value: (props.breedObject !== undefined) ? props.breedObject.breedId : "",
+          label: (props.breedObject !== undefined) ? props.breedObject.name : "Select Breed"
         }
       }   
     }
   
   handleChange(selectedOption) {
     this.setState({value: selectedOption});
-    this.props.onChange({breed: breedData[selectedOption.value]});
+    this.props.onChange(breedData[selectedOption.value]);
   }
 
   render() {

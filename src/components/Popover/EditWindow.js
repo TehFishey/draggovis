@@ -10,7 +10,7 @@ export default class EditWindow extends React.Component{
 
       this.state = {
         name: props.data.name,
-        breed: props.data.breed,
+        breedObject: props.data.breedObject,
       }
 
       console.log({props});
@@ -56,8 +56,8 @@ export default class EditWindow extends React.Component{
                 </div>
                 <div>Gender: {this.props.data.gender}</div>
                 <div>Breed: <DragonSelect 
-                  breedObject={this.state.breed}
-                  onChange={(breedObject)=>{ this.onFieldChange('breed',breedObject)}
+                  breedObject={this.state.breedObject}
+                  onChange={(breedObject)=>{this.onFieldChange('breedObject',breedObject)}
                   }
                   />
                 </div>

@@ -42,7 +42,7 @@ export default class EditWindow extends React.Component{
               <div className="grid-wrapper">
               <div className="box a">
                 <img 
-                  src={process.env.PUBLIC_URL + 'portraits/' + this.props.data.portraitObject.imagePath} 
+                  src={process.env.PUBLIC_URL + 'portraits/' + ((this.props.data.portraitObject !== undefined) ? this.props.data.portraitObject.imagePath : "testDrag.png")} 
                   alt={this.props.data.name + "'s portrait"} 
                 />
               </div>

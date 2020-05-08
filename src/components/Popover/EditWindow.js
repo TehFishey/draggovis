@@ -16,16 +16,26 @@ export default class EditWindow extends React.Component{
       console.log({props});
     }
 
-    onFieldChange(fieldName, fieldValue) {
+    updateField(fieldName, fieldValue) {
       let newData = this.props.data;
       newData[fieldName] = fieldValue;
     
       this.props.update(newData);
     }
 
-    onButtonClick(callback) {
+    updateAll(callback) {
       let newData = callback(this.props.data);
       this.props.update(newData);
+    }
+
+    onBreedChange(breedObject) {
+      let portraits = Object.entries(breedObject.portraits);
+      let validPortraits = portraits.filter((item) => {
+        return item[1].condition(this.props.data) && item[1].isDefault
+      });
+
+      this.updateField('breedObject',breedObject);
+      this.updateField('portraitObject', validPortraits[0][1]);
     }
 
     render() {
@@ -51,14 +61,13 @@ export default class EditWindow extends React.Component{
                     type="text"
                     value={this.state.name}
                     onChange={e => {this.setState({name: e.target.value})}}
-                    onBlur={() => this.onFieldChange('name', this.state.name)}
+                    onBlur={() => this.updateField('name', this.state.name)}
                   />
                 </div>
                 <div>Gender: {this.props.data.gender}</div>
                 <div>Breed: <DragonSelect 
                   breedObject={this.state.breedObject}
-                  onChange={(breedObject)=>{this.onFieldChange('breedObject',breedObject)}
-                  }
+                  onChange={(breedObject)=>{ this.onBreedChange(breedObject)}}
                   />
                 </div>
                 <div>Portrait: ART SELECTOR HERE</div>
@@ -69,7 +78,7 @@ export default class EditWindow extends React.Component{
                   type="button" 
                   text=""
                   className="newParents"
-                  onClick={e => this.onButtonClick( (data) => {
+                  onClick={e => this.updateAll( (data) => {
                     if (data.father === undefined && data.mother === undefined) {
                       data.father = new DragonObject("Male");
                       data.mother = new DragonObject("Female")
@@ -81,7 +90,7 @@ export default class EditWindow extends React.Component{
                 <button 
                   type="button" 
                   className="removeParents"
-                  onClick={e => this.onButtonClick( (data) => {
+                  onClick={e => this.updateAll( (data) => {
                     data.mother = undefined;
                     data.father = undefined;
                     return data;

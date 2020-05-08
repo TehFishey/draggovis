@@ -9,7 +9,7 @@ export default function DragonData() {
     let imports = [dragonBreeds, drakeBreeds, pygmyBreeds, twoHeadBreeds, specialBreeds, hybridBreeds].flat();
     let data = {};
 
-    // Return a map-like object of "breed-id" : {Dragon Model Object}
-    imports.forEach((item)=>{data[item.breedId] = item});
+    // Return a map-like object of "breed-id" : {Breed Model Object}
+    imports.forEach((item)=>{data[item.id] = item});
     return data;
 };

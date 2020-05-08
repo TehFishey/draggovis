@@ -48,7 +48,7 @@ export default class DragonElement extends React.Component {
           />}>
         <div>
           <img 
-            src={process.env.PUBLIC_URL + 'portraits/' + ((this.props.data.portraitObject !== undefined) ? this.props.data.portraitObject.imagePath : "testDrag.png")} 
+            src={process.env.PUBLIC_URL + 'portraits/' + ((this.props.data.portraitObject !== undefined) ? this.props.data.portraitObject.thumbPath : "testDrag.png")} 
             alt={this.props.data.name + "'s portrait"} 
           />
           <label>{this.props.data.name}</label>

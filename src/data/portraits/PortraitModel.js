@@ -1,8 +1,9 @@
 export default class PortraitModel {
-    constructor(portraitId, breedId, imagePath, isDefault, condition) {
-        this.portraitId = portraitId || "undefined-portrait";
-        this.breedId = breedId || "undefined-breed";
-        this.imagePath = imagePath || "undefined-path";
+    constructor(id, name, isDefault, condition) {
+        this.id = id || "undefined-portrait";
+        this.name = name || "Undefined Portrait";
+        this.imagePath = "art/" + this.id + ".png";
+        this.thumbPath = "thumbs/" + this.id + ".png";
         this.isDefault = isDefault || true;
         this.condition = condition || function(dragonObject) {
             return true;

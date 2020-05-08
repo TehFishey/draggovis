@@ -4,7 +4,7 @@ import BreedData from '../../data/BreedData';
 
 const breedData = BreedData();
 const options = Object.entries(breedData).map((item)=>{ 
-    return { value: item[0], label: item[1].name }
+    return { value: item[0], label: item[1].label }
 });
 
 export default class DragonSelect extends React.Component {
@@ -12,8 +12,8 @@ export default class DragonSelect extends React.Component {
       super(props);
       this.state = {
         value: {
-          value: (props.breedObject !== undefined) ? props.breedObject.breedId : "",
-          label: (props.breedObject !== undefined) ? props.breedObject.name : "Select Breed"
+          value: (props.breedObject !== undefined) ? props.breedObject.id : "",
+          label: (props.breedObject !== undefined) ? props.breedObject.label : "Select Breed"
         }
       }   
     }

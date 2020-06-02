@@ -1,0 +1,25 @@
+.app-stage {
+    display: grid;
+    grid-template-areas: 'side menu'
+                         'side canvas';
+    grid-template-rows: 50px 1fr;
+    grid-template-columns: 100px 1fr;
+}
+
+.stage-top-menu {
+    grid-area: menu;
+    background: blue;
+}
+
+.stage-side-menu {
+    grid-area: side;
+    background: green;
+}
+
+.stage-canvas {
+    grid-area: canvas;
+    display: flex;
+    align-items: center;
+    overflow: auto;
+    background: tan;
+}

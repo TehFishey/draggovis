@@ -22,19 +22,19 @@ export default class DragonElement extends React.Component {
   render () {
     let parents =[];
 
-    if (this.props.data.mother !== undefined) {
-      parents.push(
-        <DragonElement 
-          data={this.props.data.mother} 
-          onChange={(parentData) => this.onIncomingFieldChange(this.props.data.mother, parentData)}
-        />);
-    }
     if (this.props.data.father !== undefined) {
       parents.push(
       <DragonElement 
         data={this.props.data.father} 
         onChange={(parentData) => this.onIncomingFieldChange(this.props.data.father, parentData)}
       />);
+    }
+    if (this.props.data.mother !== undefined) {
+      parents.push(
+        <DragonElement 
+          data={this.props.data.mother} 
+          onChange={(parentData) => this.onIncomingFieldChange(this.props.data.mother, parentData)}
+        />);
     }
 
     return ( 

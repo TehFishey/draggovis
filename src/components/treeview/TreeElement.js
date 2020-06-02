@@ -1,6 +1,6 @@
 import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import EditWindow from '../Popover/EditWindow';
+import EditWindow from './TreeElementPopover';
 
 export default class DragonElement extends React.Component {
   

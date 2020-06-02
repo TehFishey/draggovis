@@ -1,10 +1,10 @@
 import React from 'react';
 import Popover from 'react-bootstrap/Popover';
-import DragonSelect from './DragonSelect';
-import DragonObject from '../../data/DragonObject';
-import './EditWindow.css';
+import DragonSelect from './popover/SelectDragonPulldown';
+import Dragon from '../../engine/library/Dragon';
+import './tree-element-popover.css';
 
-export default class EditWindow extends React.Component{
+export default class TreeElementPopover extends React.Component{
     constructor(props){
       super(props);
 
@@ -80,8 +80,8 @@ export default class EditWindow extends React.Component{
                   className="newParents"
                   onClick={e => this.updateAll( (data) => {
                     if (data.father === undefined && data.mother === undefined) {
-                      data.father = new DragonObject("Male");
-                      data.mother = new DragonObject("Female")
+                      data.father = new Dragon("Male");
+                      data.mother = new Dragon("Female")
                       return data;
                     }
                   })}>

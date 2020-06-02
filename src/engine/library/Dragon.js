@@ -1,4 +1,4 @@
-export default class DragonObject {
+export default class Dragon {
     constructor(gender) {
         this.name = "";
         this.gender = gender || "Undefined";

@@ -1,8 +1,8 @@
 import React from 'react';
-import './RootElement.css';
-import DragonElement from './DragonElement';
+import DragonElement from './TreeElement';
+import './tree-root.css';
 
-export default class RootElement extends React.Component {
+export default class TreeRoot extends React.Component {
   constructor(props) {
     super(props);
 

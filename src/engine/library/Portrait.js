@@ -1,4 +1,4 @@
-export default class PortraitModel {
+export default class Portrait {
     constructor(id, name, isDefault, condition) {
         this.id = id || "undefined-portrait";
         this.name = name || "Undefined Portrait";

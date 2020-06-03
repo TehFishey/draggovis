@@ -1,0 +1,17 @@
+.popover-window {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(
+        rgba(255, 255, 255, .90),
+        rgba(255, 255, 255, 0.80)
+    );
+    border-radius: 10px;
+    border-style: groove;
+    border-width: 3px;
+    border-color:rgb(211, 209, 209);
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px;
+    will-change: transform;
+}

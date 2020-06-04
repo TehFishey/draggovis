@@ -14,7 +14,8 @@ export default class EditWindow extends React.Component {
         this.state = {
             name: this.props.data.name,
         }
-      }
+
+    }
   
     updateField(fieldName, fieldValue) {
         let newData = this.props.data;
@@ -22,20 +23,38 @@ export default class EditWindow extends React.Component {
       
         this.props.update(newData);
     }
-  
-    updateAll(callback) {
-        let newData = callback(this.props.data);
+
+    createParents() {
+        if (this.props.data.father === undefined && 
+            this.props.data.mother === undefined) {
+                let newData = this.props.data;
+                newData.father = new Dragon("Male", this.props.data.breed);
+                newData.father.portrait = this.getDefaultPortrait(newData.father);
+                newData.mother = new Dragon("Female", this.props.data.breed);
+                newData.mother.portrait = this.getDefaultPortrait(newData.mother);
+                this.props.update(newData);
+        }
+    }
+
+    removeParents() {
+        let newData = this.props.data;
+        newData.father = undefined;
+        newData.mother = undefined;
         this.props.update(newData);
     }
   
-    onBreedChange(breedObject) {
-        let portraits = Object.entries(breedObject.portraits);
+    onBreedChange(breed) {
+        this.updateField('breed',breed);
+        this.updateField('portrait', this.getDefaultPortrait(this.props.data));
+    }
+
+    getDefaultPortrait(dragonData) {
+        let portraits = Object.entries(dragonData.breed.portraits);
         let validPortraits = portraits.filter((item) => {
-            return item[1].condition(this.props.data) && item[1].isDefault
+            return item[1].condition(dragonData) && item[1].isDefault
         });
-  
-        this.updateField('breedObject',breedObject);
-        this.updateField('portraitObject', validPortraits[0][1]);
+
+        return validPortraits[0][1];
     }
 
     render() {
@@ -48,7 +67,7 @@ export default class EditWindow extends React.Component {
                     <div className="grid-wrapper">
                         <div className="box a">
                             <img 
-                                src={process.env.PUBLIC_URL + 'portraits/' + ((this.props.data.portraitObject !== undefined) ? this.props.data.portraitObject.imagePath : "testDrag.png")} 
+                                src={process.env.PUBLIC_URL + 'portraits/' + ((this.props.data.portrait !== undefined) ? this.props.data.portrait.imagePath : "testDrag.png")} 
                                 alt={this.props.data.name + "'s portrait"} 
                             />
                         </div>
@@ -65,42 +84,29 @@ export default class EditWindow extends React.Component {
                                     <SelectMenu 
                                         selectData={breedData}
                                         defaultLabel = {'Select Breed'}
-                                        selectObject={this.props.data.breedObject}
-                                        onChange={(breedObject)=>{ this.onBreedChange(breedObject)}}
+                                        selectObject={this.props.data.breed}
+                                        onChange={(breed)=>{ this.onBreedChange(breed)}}
                                     />
                                 </div>
                                 <div>
                                     <SelectMenu 
-                                        selectData={this.props.data.breedObject.portraits}
+                                        selectData={this.props.data.breed.portraits}
                                         defaultLabel = {'Select Portrait'}
-                                        selectObject={this.props.data.portraitObject}
-                                        onChange={(portraitObject)=>{ this.updateField('portraitObject', portraitObject)}}
+                                        selectObject={this.props.data.portrait}
+                                        onChange={(portrait)=>{ this.updateField('portrait', portrait)}}
                                     />
                                 </div>
                             </div>
                             <div className="box c"></div>
                             <div className="box d">
                                 <button 
-                                    type="button" 
-                                    text=""
                                     className="newParents"
-                                    onClick={e => this.updateAll( (data) => {
-                                        if (data.father === undefined && data.mother === undefined) {
-                                            data.father = new Dragon("Male");
-                                            data.mother = new Dragon("Female")
-                                            return data;
-                                        }
-                                })}>
+                                    onClick={() => {this.createParents()}}>
                                     Add Parents
                                 </button>
                                 <button 
-                                    type="button" 
                                     className="removeParents"
-                                    onClick={e => this.updateAll( (data) => {
-                                        data.mother = undefined;
-                                        data.father = undefined;
-                                        return data;
-                                })}>
+                                    onClick={() => {this.removeParents()}}>
                                     Remove Parents
                                 </button>
                             </div>

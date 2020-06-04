@@ -5,7 +5,7 @@ export default class Portrait {
         this.imagePath = "art/" + this.id + ".png";
         this.thumbPath = "thumbs/" + this.id + ".png";
         this.isDefault = isDefault || true;
-        this.condition = condition || function(dragonObject) {
+        this.condition = condition || function(dragon) {
             return true;
         }
     }

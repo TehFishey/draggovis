@@ -88,12 +88,12 @@ export default class TreeNode extends React.Component {
                         className='tree-unit-display-portrait'
                         onClick={()=>{this.displayPopover(true)}} 
                         ref={this.imgRef}
-                        src={process.env.PUBLIC_URL + 'portraits/' + ((this.props.data.portraitObject !== undefined) ? 
-                                                                     this.props.data.portraitObject.thumbPath : 
+                        src={process.env.PUBLIC_URL + 'portraits/' + ((this.props.data.portrait !== undefined) ? 
+                                                                     this.props.data.portrait.thumbPath : 
                                                                      "testDrag.png")} 
                         alt={this.props.data.name + "'s portrait"} 
                     />
-                    <label className='tree-unit-display-label'>{this.props.data.name}</label>
+                    <label className='tree-unit-display-label'>{(this.props.data.name) ? this.props.data.name : "(code)"}</label>
                 </div>
                 {this.buildParentComponents()}
             </li>

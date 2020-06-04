@@ -1,9 +1,9 @@
 export default class Dragon {
-    constructor(gender) {
+    constructor(gender, breed, portrait) {
         this.name = "";
         this.gender = gender || "Undefined";
-        this.breedObject = undefined;
-        this.portraitObject = undefined;
+        this.breed = breed || undefined;
+        this.portrait = portrait || undefined;
         this.father = undefined;
         this.mother = undefined;
     }

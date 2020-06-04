@@ -5,35 +5,35 @@ let breed = breedData['aeon-wyvern'];
 let mPortrait = breed.portraits['aeon-m']
 let fPortrait = breed.portraits['aeon-f']
 
-//portraitObject: process.env.PUBLIC_URL + 'portraits/' + 'testDrag.png',
+//portrait: process.env.PUBLIC_URL + 'portraits/' + 'testDrag.png',
 
 export default {
     name: "Leafy Sea Dragon",
     gender: "Male",
-    breedObject: breed,
-    portraitObject: mPortrait,
+    breed: breed,
+    portrait: mPortrait,
     father: {
         name: "Leafy Dad",
         gender: "Male",
-        breedObject: breed,
-        portraitObject: mPortrait
+        breed: breed,
+        portrait: mPortrait
     },
     mother: {
         name: "Leafy Mom",
         gender: "Female",
-        breedObject: breed,
-        portraitObject: fPortrait,
+        breed: breed,
+        portrait: fPortrait,
         father: {
             name: "Leafy Grandad",
             gender: "Male",
-            breedObject: breed,
-            portraitObject: mPortrait
+            breed: breed,
+            portrait: mPortrait
         },
         mother: {
             name: "Leafy Grandma",
             gender: "Female",
-            breedObject: breed,
-            portraitObject: fPortrait
+            breed: breed,
+            portrait: fPortrait
         }
     }
 }

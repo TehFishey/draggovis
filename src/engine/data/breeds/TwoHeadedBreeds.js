@@ -11,10 +11,10 @@ class TwoHeadedBreed extends Breed {
 
 let TwoHeadedBreeds = [
     new TwoHeadedBreed("baikala-dragon", "Baikala Dragon", {
-        'baikala-b-f' : new Portrait('baikala-b-f', "Blue", true, ConditionFactory.genderCheck("Female")),
-        'baikala-b-m' : new Portrait('baikala-b-m', "Blue", true, ConditionFactory.genderCheck("Male")),
-        'baikala-g-f' : new Portrait('baikala-g-f', "Green", true, ConditionFactory.genderCheck("Female")),
-        'baikala-g-m' : new Portrait('baikala-g-m', "Green", true, ConditionFactory.genderCheck("Male")),
+        'baikala-b-f' : new Portrait('baikala-b-f', "Blue", true, ConditionFactory.checkGender("Female")),
+        'baikala-b-m' : new Portrait('baikala-b-m', "Blue", true, ConditionFactory.checkGender("Male")),
+        'baikala-g-f' : new Portrait('baikala-g-f', "Green", true, ConditionFactory.checkGender("Female")),
+        'baikala-g-m' : new Portrait('baikala-g-m', "Green", true, ConditionFactory.checkGender("Male")),
     }),
     new TwoHeadedBreed("bauta-dragon", "Bauta Dragon", PortraitFactory.uPortraits("bauta")),
     new TwoHeadedBreed("blancblack-dragon", "Blancblack Dragon", PortraitFactory.mfPortraits("blancblack")),
@@ -25,10 +25,10 @@ let TwoHeadedBreeds = [
     new TwoHeadedBreed("nexus-dragon", "Nexus Dragon", PortraitFactory.mfPortraits("nexus")),
     new TwoHeadedBreed("split-dragon", "Split Dragon", PortraitFactory.mfPortraits("split")),
     new TwoHeadedBreed("two-headed-lindwyrm", "Two-headed Lindwyrm", {
-        'two-headed-g-f' : new Portrait('two-headed-g-f', "Green", true, ConditionFactory.genderCheck("Female")),
-        'two-headed-g-m' : new Portrait('two-headed-g-m', "Green", true, ConditionFactory.genderCheck("Male")),
-        'two-headed-p-f' : new Portrait('two-headed-p-f', "Purple", true, ConditionFactory.genderCheck("Female")),
-        'two-headed-p-m' : new Portrait('two-headed-p-m', "Purple", true, ConditionFactory.genderCheck("Male")),
+        'two-headed-g-f' : new Portrait('two-headed-g-f', "Green", true, ConditionFactory.checkGender("Female")),
+        'two-headed-g-m' : new Portrait('two-headed-g-m', "Green", true, ConditionFactory.checkGender("Male")),
+        'two-headed-p-f' : new Portrait('two-headed-p-f', "Purple", true, ConditionFactory.checkGender("Female")),
+        'two-headed-p-m' : new Portrait('two-headed-p-m', "Purple", true, ConditionFactory.checkGender("Male")),
     }),
 ]
 

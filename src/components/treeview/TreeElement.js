@@ -1,6 +1,6 @@
 import React from 'react';
 import Popover from './popover/Popover';
-import PopoverContent from './popover/PopoverContent';
+import EditWindow from './popover/PopoverEditWindow';
 import {debounce} from '../../utilities/Limiters';
 
 export default class TreeNode extends React.Component {
@@ -75,19 +75,12 @@ export default class TreeNode extends React.Component {
     }
 
     render () {
-        
-
         return ( 
             <li className='tree-unit'>
                 <Popover 
                     show={this.state.showPopover} 
-                    children={
-                        <PopoverContent 
-                            data={this.props.data} 
-                            update={(popoverData) => this.internalDataUpdate(popoverData)}
-                        /> 
-                    } 
                     loc={this.state.loc}
+                    content={ <EditWindow data={this.props.data} update={(popoverData) => this.internalDataUpdate(popoverData)}/> } 
                     handleClose={()=>{this.displayPopover(false)}} 
                 />
                 <div className='tree-unit-display'>

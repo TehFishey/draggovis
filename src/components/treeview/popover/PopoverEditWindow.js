@@ -1,15 +1,18 @@
 import React from 'react';
-import DragonSelect from "./SelectDragonPulldown";
+import SelectMenu from "./PopoverSelectMenu";
 import Dragon from '../../../engine/library/Dragon';
-import './tree-element-popover.css';
+import './popover-edit-window.css';
 
-export default class PopoverContent extends React.Component {
+import BreedData from '../../../engine/data/BreedData';
+
+const breedData = BreedData();
+
+export default class EditWindow extends React.Component {
     constructor(props){
         super(props);
   
         this.state = {
-            name: props.data.name,
-            breedObject: props.data.breedObject,
+            name: this.props.data.name,
         }
       }
   
@@ -59,12 +62,21 @@ export default class PopoverContent extends React.Component {
                                 />
                                 <div>Gender: {this.props.data.gender}</div>
                                 <div>
-                                    Breed: <DragonSelect 
-                                        breedObject={this.state.breedObject}
+                                    <SelectMenu 
+                                        selectData={breedData}
+                                        defaultLabel = {'Select Breed'}
+                                        selectObject={this.props.data.breedObject}
                                         onChange={(breedObject)=>{ this.onBreedChange(breedObject)}}
                                     />
                                 </div>
-                                <div>Portrait: ART SELECTOR HERE</div>
+                                <div>
+                                    <SelectMenu 
+                                        selectData={this.props.data.breedObject.portraits}
+                                        defaultLabel = {'Select Portrait'}
+                                        selectObject={this.props.data.portraitObject}
+                                        onChange={(portraitObject)=>{ this.updateField('portraitObject', portraitObject)}}
+                                    />
+                                </div>
                             </div>
                             <div className="box c"></div>
                             <div className="box d">

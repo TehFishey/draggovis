@@ -7,14 +7,12 @@ const overlay = document.getElementById("overlay");
 export default class Popover extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             pos : {
                 x : 0,
                 y : 0
             }
         }
-
     }
     
     handleClose(e) {
@@ -55,7 +53,7 @@ export default class Popover extends React.Component {
                     ref={(elementRef) => {this.elementRef = elementRef}}
                     style={{ transform : `translate(${this.state.pos.x}px, ${this.state.pos.y}px)` }}
                 >
-                    <div className='popover-content'>{this.props.children}</div>
+                    <div className='popover-content'>{this.props.content}</div>
                     <button 
                         className='popover-close'
                         onClick={(e)=>{this.handleClose(e)}}>

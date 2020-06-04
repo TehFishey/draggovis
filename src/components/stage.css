@@ -19,7 +19,6 @@
 .stage-canvas {
     grid-area: canvas;
     display: flex;
-    align-items: center;
     overflow: auto;
     background: tan;
 }

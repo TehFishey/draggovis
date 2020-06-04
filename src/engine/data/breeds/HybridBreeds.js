@@ -2,8 +2,8 @@ import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
 
 class HybridBreed extends Breed {
-    constructor(breed, name, type, portraits, reqs) {
-        super(breed, name, type, "mf-mf", portraits, reqs)
+    constructor(id, label, type, portraits, condition) {
+        super(id, label, type, "mf-mf", portraits, condition)
     }
 }
 
@@ -12,7 +12,7 @@ let HybridBreeds = [
     new HybridBreed("avatar-of-creation", "Avatar of Creation", "dragon", PortraitFactory.uPortraits("avatar-of-creation")),
     new HybridBreed("avatar-of-destruction", "Avatar of Destruction", "dragon", PortraitFactory.uPortraits("avatar-of-destruction")),
     new HybridBreed("carina-dragon", "Carina Dragon", "dragon", PortraitFactory.mfPortraits("carina")),
-    new HybridBreed("dusk-pygmy", "Dusk Pygmy", "pygmy", "dragon", PortraitFactory.mfPortraits("dusk")),
+    new HybridBreed("dusk-pygmy", "Dusk Pygmy", "pygmy", PortraitFactory.mfPortraits("dusk")),
     new HybridBreed("geode-dragon", "Geode Dragon", "dragon", PortraitFactory.mfPortraits("geode")),
     new HybridBreed("hellhorse-dragon", "Hellorse Dragon", "dragon", PortraitFactory.mfPortraits("hellhorse")),
     new HybridBreed("risensong-dragon", "Risensong Dragon", "dragon", PortraitFactory.uPortraits("risensong")),

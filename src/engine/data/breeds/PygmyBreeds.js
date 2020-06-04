@@ -2,8 +2,8 @@ import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
 
 class PygmyBreed extends Breed {
-    constructor(breed, name, portraits, reqs) {
-        super(breed, name, "pygmy", "mf-mf", portraits, reqs)
+    constructor(id, label, portraits, condition) {
+        super(id, label, "pygmy", "mf-mf", portraits, condition)
     }
 }
 

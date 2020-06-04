@@ -4,8 +4,8 @@ import PortraitFactory from '../../utilities/PortraitFactory';
 import ConditionFactory from '../../utilities/PortraitConditionFactory';
 
 class TwoHeadedBreed extends Breed {
-    constructor(breed, name, genders, portraits, reqs) {
-        super(breed, name, "twohead", "mf-mf", portraits, reqs)
+    constructor(id, label, portraits, condition) {
+        super(id, label, "twohead", "mf-mf", portraits, condition)
     }
 }
 

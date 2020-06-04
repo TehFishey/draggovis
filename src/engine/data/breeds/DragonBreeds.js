@@ -4,8 +4,8 @@ import PortraitFactory from '../../utilities/PortraitFactory';
 import ConditionFactory from '../../utilities/PortraitConditionFactory';
 
 class DragonBreed extends Breed {
-    constructor(breed, name, portraits, reqs) {
-        super(breed, name, "dragon", "mf-mf", portraits, reqs)
+    constructor(id, label, portraits, condition) {
+        super(id, label, "dragon", "mf-mf", portraits, condition)
     }
 }
 

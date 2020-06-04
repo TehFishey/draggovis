@@ -1,7 +1,7 @@
 import Portrait from './Portrait';
 
 export default class BreedModel {
-    constructor(id, label, type, genders, portraits, reqs) {
+    constructor(id, label, type, genders, portraits, condition) {
         this.id = id || "undefined-breed";                      // Id/name for backend reference
         this.label = label || "Undefined Dragon";               // Label for frontend display
         this.type = type || "dragon";                           // Type of dragon. Used for breeding logic.
@@ -9,10 +9,38 @@ export default class BreedModel {
         this.portraits = portraits || {                         // Object containing all portraits associated with this breed, formatted as {portrait-id : portrait}
             "blank-portrait" : new Portrait("blank-portrait", "Blank Portrait", "testDrag.png", true, () => {return true})
         };             
-        this.reqs = reqs || function(parentA,parentB) {         // Validation function for child dragon. Checks parents to see if child is a valid offspring.
-            let breedCheck = (parentA.breed === this.breed) || (parentB.breed === this.breed)
-            let typeCheck = parentA.type === parentB.type;
-            return (breedCheck && typeCheck);
-        }
+        this.validate = condition || BreedModel.defaultCondition(this.id, this.genders)      // Validation function
+    }
+
+    static defaultCondition(id, genders) {
+        return (dragon) => {
+            let breedCheck = true;
+            let genderCheck = true;
+            let isFirstGen = (dragon.mother === undefined || dragon.father === undefined);
+
+            if(!isFirstGen) {
+                breedCheck = (dragon.mother.breed.id === id || dragon.father.breed.id === id)
+            }
+
+            if(genders !== "mf-mf") {
+                if(isFirstGen) {
+                    let genderString = dragon.breed.genders.split("-")[0];
+                    genderCheck = (
+                        (genderString.includes('m') && dragon.gender === "Male") || 
+                        (genderString.includes('f') && dragon.gender === "Female")
+                    );
+                } else {
+                    let genderString = dragon.breed.genders.split("-")[1];
+                    genderCheck = (
+                        (genderString.includes('m') && dragon.gender === "Male") || 
+                        (genderString.includes('f') && dragon.gender === "Female")
+                    );
+                }
+            }
+            
+            console.log(id + ' returns breedcheck: '+breedCheck+' and gendercheck: '+genderCheck)
+            return breedCheck && genderCheck;
+        };
+        
     }
 };

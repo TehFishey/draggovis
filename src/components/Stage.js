@@ -5,6 +5,8 @@ import './stage.css';
 
 import testData from '../TestData';
 
+console.log(testData);
+
 export default class Stage extends React.Component {
     constructor(props) {
         super(props);

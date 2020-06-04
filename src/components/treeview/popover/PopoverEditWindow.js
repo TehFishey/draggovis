@@ -12,7 +12,9 @@ export default class EditWindow extends React.Component {
         super(props);
   
         this.state = {
-            name: this.props.data.name,
+            name : this.props.data.name,
+            validateBreeds : true,
+            validatePortraits : true
         }
 
     }
@@ -49,11 +51,12 @@ export default class EditWindow extends React.Component {
     }
 
     getDefaultPortrait(dragonData) {
+        // Convert portraits dict to array of form [[key,value], [key,value] ... ] for iteration
         let portraits = Object.entries(dragonData.breed.portraits);
-        let validPortraits = portraits.filter((item) => {
-            return item[1].condition(dragonData) && item[1].isDefault
-        });
 
+        let validPortraits = portraits.filter((keyValue) => {
+            return keyValue[1].validate(dragonData) && keyValue[1].isDefault
+        });
         return validPortraits[0][1];
     }
 
@@ -82,17 +85,19 @@ export default class EditWindow extends React.Component {
                                 <div>Gender: {this.props.data.gender}</div>
                                 <div>
                                     <SelectMenu 
-                                        selectData={breedData}
+                                        selectionPool={breedData}
+                                        currentSelection={this.props.data.breed}
                                         defaultLabel = {'Select Breed'}
-                                        selectObject={this.props.data.breed}
+                                        validationObject = {(this.state.validateBreeds) ? this.props.data : null}
                                         onChange={(breed)=>{ this.onBreedChange(breed)}}
                                     />
                                 </div>
                                 <div>
                                     <SelectMenu 
-                                        selectData={this.props.data.breed.portraits}
+                                        selectionPool={this.props.data.breed.portraits}
+                                        currentSelection={this.props.data.portrait}
                                         defaultLabel = {'Select Portrait'}
-                                        selectObject={this.props.data.portrait}
+                                        validationObject = {(this.state.validatePortraits) ? this.props.data : null}
                                         onChange={(portrait)=>{ this.updateField('portrait', portrait)}}
                                     />
                                 </div>

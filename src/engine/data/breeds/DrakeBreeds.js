@@ -2,8 +2,8 @@ import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
 
 class DrakeBreed extends Breed {
-    constructor(breed, name, genders, portraits, reqs) {
-        super(breed, name, "drake", genders, portraits, reqs)
+    constructor(id, label, genders, portraits, condition) {
+        super(id, label, "drake", genders, portraits, condition)
     }
 }
 

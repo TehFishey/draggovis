@@ -5,7 +5,6 @@ export default class DragonSelect extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            currentValue : null,
             optionsList : null
         }
         this.handleChange = this.handleChange.bind(this)
@@ -45,7 +44,6 @@ export default class DragonSelect extends React.Component {
 
     componentDidMount() {
         this.setState({
-            currentValue : this.getCurrentValue(),
             optionsList : this.getOptionsList()
         })
     }
@@ -53,11 +51,11 @@ export default class DragonSelect extends React.Component {
     componentDidUpdate(prevProps) {
         // Re-validating the options list can be computationally expensive.
         // We want to avoid doing so on each re-render; only do it if key variables have changed.
-        if (this.props.selectionPool !== prevProps.selectionPool || 
+        if (this.props.shouldRevalidate && (
+            this.props.selectionPool !== prevProps.selectionPool || 
             this.props.validationObject !== prevProps.validationObject || 
-            this.props.currentSelection !== prevProps.currentSelection) {
+            this.props.currentSelection !== prevProps.currentSelection)) {
             this.setState({
-                currentValue : this.getCurrentValue(),
                 optionsList : this.getOptionsList()
             })
         }
@@ -71,7 +69,7 @@ export default class DragonSelect extends React.Component {
         return (
             <Select
                 name = "dragonTypeSelect"
-                value = { this.state.currentValue }
+                value = { this.getCurrentValue() }
                 options = { this.state.optionsList }
                 isSearchable = { true }
                 onChange = { this.handleChange }

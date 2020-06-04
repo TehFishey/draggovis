@@ -89,6 +89,7 @@ export default class EditWindow extends React.Component {
                                         currentSelection={this.props.data.breed}
                                         defaultLabel = {'Select Breed'}
                                         validationObject = {(this.state.validateBreeds) ? this.props.data : null}
+                                        shouldRevalidate = {false}
                                         onChange={(breed)=>{ this.onBreedChange(breed)}}
                                     />
                                 </div>
@@ -98,6 +99,7 @@ export default class EditWindow extends React.Component {
                                         currentSelection={this.props.data.portrait}
                                         defaultLabel = {'Select Portrait'}
                                         validationObject = {(this.state.validatePortraits) ? this.props.data : null}
+                                        shouldRevalidate = {true}
                                         onChange={(portrait)=>{ this.updateField('portrait', portrait)}}
                                     />
                                 </div>

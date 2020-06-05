@@ -1,25 +1,49 @@
 export default {
-    or(conditions) {
-        return (dragon) => {
-            return conditions.some((condition) => {return condition(dragon)});
+    and(conditions, label) {
+        let tooltips = [];
+        let rules = [];
+
+        conditions.forEach((condition, index) => {
+            tooltips[index] = condition.tooltip;
+            rules[index] = condition.validate;
+        })
+        
+        let tooltip = `${label} requires dragon `;
+        tooltips.forEach((string) => {
+            let sub = string.split('requires dragon ')[1];
+            sub = sub.substr(0, sub.lastIndexOf('.'));
+            tooltip += sub+' AND ';
+        })
+        tooltip = tooltip.substr(0, tooltip.lastIndexOf(' AND '))+'.';
+
+        let validate = (dragon) => {
+            return rules.every((func)=>{
+                return func(dragon);
+            })
         }
+
+        return {validate : validate, tooltip : tooltip};
+    },
+    
+    checkGender(gender, label) {
+        let tooltip = `${label} requires dragon to be ${gender}.`;
+        let validate = (dragon) => {return (dragon.gender === gender)};
+        return {validate : validate, tooltip : tooltip}
     },
 
-    and(conditions) {
-        return (dragon) => {
-            return conditions.every((condition) => {return condition(dragon)});
-        }
-    },
+    checkFirstGeneration(label) {
+        let tooltip = `${label} requires dragon to be first generation.`;
+        let validate = (dragon) => {return ((dragon.mother === undefined) &&
+                                            (dragon.father === undefined))};
+        return {validate : validate, tooltip : tooltip}
+    }
 
-    checkGender(gender) {
-        return (dragon) => {return (dragon.gender === gender)};
-    },
-
-    checkFatherBreed(breedId) {
+    /*
+    checkFatherBreed(breedId, label) {
         return (dragon) => {return (dragon.father.breed.breedId === breedId)};
     },
 
-    checkMotherBreed(breedId) {
+    checkMotherBreed(breedId, label) {
         return (dragon) => {return (dragon.mother.breed.breedId === breedId)};
     },
 
@@ -39,9 +63,7 @@ export default {
             return check1
         }  
     },
+    */
 
-    checkFirstGeneration() {
-        return (dragon) => {return ((dragon.mother === undefined) &&
-                                    (dragon.father === undefined))};
-    }
+    
 }

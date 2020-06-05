@@ -9,11 +9,12 @@ export default class BreedModel {
         this.portraits = portraits || {                         // Object containing all portraits associated with this breed, formatted as {portrait-id : portrait}
             "blank-portrait" : new Portrait("blank-portrait", "Blank Portrait", "testDrag.png", true, () => {return true})
         };             
-        this.validate = condition || BreedModel.defaultCondition(this.id, this.genders)      // Validation function
+        this.condition = condition || BreedModel.defaultCondition(this.id, this.genders, this.label)      // Validation function
     }
 
-    static defaultCondition(id, genders) {
-        return (dragon) => {
+    static defaultCondition(id, genders, label) {
+        let tooltip = `Invalid gender or parent breeds for ${label}.`;
+        let validate = (dragon) => {
             let breedCheck = true;
             let genderCheck = true;
             let isFirstGen = (dragon.mother === undefined || dragon.father === undefined);
@@ -37,8 +38,9 @@ export default class BreedModel {
                     );
                 }
             }
-            return breedCheck && genderCheck;
+            return (breedCheck && genderCheck);
         };
-        
+
+        return {validate : validate, tooltip : tooltip};
     }
 };

@@ -1,15 +1,17 @@
 class Rule {
-    constructor(rule, warning) {
+    constructor(rule, tooltip) {
         this.check = rule;
-        this.warning = warning;
+        this.tooltip = tooltip;
     }
 }
 
 export default [
-    new Rule((node) => {
-        return node.breed.validate(node);
-    }, "Illegal breed."),
-    new Rule((node) => {
-        return node.portrait.validate(node);
-    }, "Illegal portrait.")
+    new Rule(
+        (node) => { return node.breed.condition.validate(node);}, 
+        (node) => { return "Invalid Breed:\n"+node.breed.condition.tooltip;}
+    ),
+    new Rule(
+        (node) => { return node.portrait.condition.validate(node);}, 
+        (node) => { return "Invalid Portrait:\n"+node.portrait.condition.tooltip;}
+    )
 ];

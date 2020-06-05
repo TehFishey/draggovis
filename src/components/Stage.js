@@ -62,12 +62,12 @@ export default class Stage extends React.Component {
         let node = data;
 
         node.meta.failedValidation = false;
-        node.meta.validationWarning = '';
+        node.meta.validationWarning = [];
 
         ValidationRules.forEach((rule)=>{
             if(!rule.check(node)) {
                 node.meta.failedValidation = true;
-                node.meta.validationWarning += ('\n'+rule.warning)
+                node.meta.validationWarning.push(rule.tooltip(node));
             }}
         );
 

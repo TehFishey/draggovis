@@ -23,7 +23,7 @@ export default class DragonSelect extends React.Component {
         // If a validation object was input, filter selection pool by validating each object against it
         if(this.props.validationObject) {
             selectionPool = selectionPool.filter((keyValue)=>{
-                return keyValue[1].validate(this.props.validationObject);
+                return keyValue[1].condition.validate(this.props.validationObject);
             });
 
             // If currently selected object is NOT in filtered pool, add it

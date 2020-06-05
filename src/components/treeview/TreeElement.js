@@ -1,5 +1,6 @@
 import React from 'react';
 import Popover from './popover/Popover';
+import Tooltip from './tooltip/Tooltip';
 import EditWindow from './popover/PopoverEditWindow';
 import {debounce} from '../../utilities/Limiters';
 
@@ -8,8 +9,9 @@ export default class TreeNode extends React.Component {
         super(props);
 
         this.state = {
-            showPopover: false,
-            loc: {x : 0, y : 0}
+            imgRect : {x : 0, y : 0, width : 0, height : 0},
+            showPopover : false,
+            showTooltip : false,
         }
         
         this.imgRef = React.createRef();
@@ -22,17 +24,47 @@ export default class TreeNode extends React.Component {
         this.setState({showPopover : show});
     }
 
+    displayTooltip(show) {
+        if(this.props.data.meta.failedValidation)
+            this.setState({showTooltip : show});
+    }
+
+    writeTooltip() {
+        if(this.props.data.meta.validationWarning !== undefined) {
+            let warnings = []
+            this.props.data.meta.validationWarning.forEach((tooltip)=>{
+                warnings.push(<div>{tooltip}</div>)
+            })
+            return (<div>{warnings}</div>);
+        }
+        return null;
+    }
+
     updatePosition = debounce(() => { 
         if(this.imgRef.current) {
             let rect = this.imgRef.current.getBoundingClientRect();
             this.setState(
-                {loc : {
-                    x : (rect.x + (rect.width * 0.5)),
-                    y : (rect.y + (rect.height * 0.5))
+                {imgRect : {
+                    x : rect.x,
+                    y : rect.y,
+                    width : rect.width,
+                    height : rect.height
                 }}
             )
         }
     }, 500);
+
+    calcPopoverLoc() {
+        let px = this.state.imgRect.x + (this.state.imgRect.width * 0.5);
+        let py = this.state.imgRect.y + (this.state.imgRect.height * 0.5);
+        return {x : px, y : py}
+    }
+
+    calcTooltipLoc() {
+        let px = this.state.imgRect.x + this.state.imgRect.width;
+        let py = this.state.imgRect.y;
+        return {x : px, y : py}
+    }
 
     internalDataUpdate(updatedData) {
         let newData = updatedData;
@@ -81,14 +113,21 @@ export default class TreeNode extends React.Component {
             <li className='tree-unit'>
                 <Popover 
                     show={this.state.showPopover} 
-                    loc={this.state.loc}
+                    loc={this.calcPopoverLoc()}
                     content={ <EditWindow data={this.props.data} update={(popoverData) => this.internalDataUpdate(popoverData)}/> } 
                     handleClose={()=>{this.displayPopover(false)}} 
                 />
+                <Tooltip
+                    show={this.state.showTooltip} 
+                    loc={this.calcTooltipLoc()}
+                    content={this.writeTooltip()} 
+                />
                 <div className='tree-unit-display'>
                     <img 
-                        className='tree-unit-display-portrait'
+                        className={(this.props.data.meta.failedValidation) ? 'tree-unit-display-portrait invalid-portrait' : 'tree-unit-display-portrait'}
                         onClick={()=>{this.displayPopover(true)}} 
+                        onMouseOver={()=>{this.displayTooltip(true)}}
+                        onMouseOut={()=>{this.displayTooltip(false)}}
                         ref={this.imgRef}
                         src={process.env.PUBLIC_URL + 'portraits/' + ((this.props.data.portrait !== undefined) ? 
                                                                      this.props.data.portrait.thumbPath : 

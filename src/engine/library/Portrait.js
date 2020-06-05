@@ -5,8 +5,9 @@ export default class Portrait {
         this.imagePath = "art/" + this.id + ".png";
         this.thumbPath = "thumbs/" + this.id + ".png";
         this.isDefault = isDefault || true;
-        this.validate = condition || function(dragon) {
-            return true;
+        this.condition = condition || {
+            validate: (dragon) => {return true;},
+            tooltip: `${this.label} is always valid.`
         }
     }
 };

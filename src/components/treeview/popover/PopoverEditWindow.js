@@ -57,7 +57,7 @@ export default class EditWindow extends React.Component {
         let portraits = Object.entries(dragonData.breed.portraits);
 
         let validPortraits = portraits.filter((keyValue) => {
-            return keyValue[1].validate(dragonData) && keyValue[1].isDefault
+            return keyValue[1].condition.validate(dragonData) && keyValue[1].isDefault
         });
         return validPortraits[0][1];
     }

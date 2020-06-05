@@ -35,7 +35,9 @@ export default class TreeNode extends React.Component {
     }, 500);
 
     internalDataUpdate(updatedData) {
-        this.props.onChange(updatedData);
+        let newData = updatedData;
+        newData.meta.updated = true;
+        this.props.onChange(newData);
     }
 
     recursiveDataUpdate(sourceParent, parentData) {

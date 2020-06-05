@@ -16,7 +16,12 @@ export default {
         name: "Leafy Dad",
         gender: "Male",
         breed: breed,
-        portrait: mPortrait
+        portrait: mPortrait,
+        meta: {
+            updated: false,
+            failedValidation: false,
+            validationMessage: ''
+        }
     },
     mother: {
         name: "Leafy Mom",
@@ -27,13 +32,33 @@ export default {
             name: "Leafy Grandad",
             gender: "Male",
             breed: breed,
-            portrait: mPortrait
+            portrait: mPortrait,
+            meta: {
+                updated: false,
+                failedValidation: false,
+                validationMessage: ''
+            }
         },
         mother: {
             name: "Leafy Grandma",
             gender: "Female",
             breed: breed,
-            portrait: fPortrait
+            portrait: fPortrait,
+            meta: {
+                updated: false,
+                failedValidation: false,
+                validationMessage: ''
+            }
+        },
+        meta: {
+            updated: false,
+            failedValidation: false,
+            validationMessage: ''
         }
+    },
+    meta: {
+        updated: false,
+        failedValidation: false,
+        validationMessage: ''
     }
 }

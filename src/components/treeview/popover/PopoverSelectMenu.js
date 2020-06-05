@@ -5,7 +5,7 @@ export default class DragonSelect extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            optionsList : null
+            validOptions : null
         }
         this.handleChange = this.handleChange.bind(this)
     }
@@ -16,11 +16,10 @@ export default class DragonSelect extends React.Component {
         return {value : "", label : this.props.defaultLabel};
     }
 
-    getOptionsList() {
+    setValidOptions() {
         // Convert selection pool dict to array of form [[key,value], [key,value] ... ] for iteration
         let selectionPool = Object.entries(this.props.selectionPool);
         
-
         // If a validation object was input, filter selection pool by validating each object against it
         if(this.props.validationObject) {
             selectionPool = selectionPool.filter((keyValue)=>{
@@ -39,26 +38,28 @@ export default class DragonSelect extends React.Component {
         // Map selection pool to form used by react-select
         let options = selectionPool.map((item)=>{ 
             return { value: item[0], label: item[1].label }});
-        return options;
+        this.setState({validOptions : options});
     }
 
     componentDidMount() {
-        this.setState({
-            optionsList : this.getOptionsList()
-        })
+        this.setValidOptions();
     }
     
     componentDidUpdate(prevProps) {
         // Re-validating the options list can be computationally expensive.
         // We want to avoid doing so on each re-render; only do it if key variables have changed.
-        if (this.props.shouldRevalidate && (
+        if(this.props.validationFactors.some((object, index) => {
+            return object !== prevProps.validationFactors[index];
+        })) {
+            this.setValidOptions();
+        }
+        
+        /*
+        (
             this.props.selectionPool !== prevProps.selectionPool || 
             this.props.validationObject !== prevProps.validationObject || 
-            this.props.currentSelection !== prevProps.currentSelection)) {
-            this.setState({
-                optionsList : this.getOptionsList()
-            })
-        }
+            this.props.currentSelection !== prevProps.currentSelection))
+            */ 
     }
     
     handleChange(selectedOption) {
@@ -70,7 +71,7 @@ export default class DragonSelect extends React.Component {
             <Select
                 name = "dragonTypeSelect"
                 value = { this.getCurrentValue() }
-                options = { this.state.optionsList }
+                options = { this.state.validOptions }
                 isSearchable = { true }
                 onChange = { this.handleChange }
             />

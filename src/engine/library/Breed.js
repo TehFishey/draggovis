@@ -37,8 +37,6 @@ export default class BreedModel {
                     );
                 }
             }
-            
-            console.log(id + ' returns breedcheck: '+breedCheck+' and gendercheck: '+genderCheck)
             return breedCheck && genderCheck;
         };
         

@@ -1,11 +1,10 @@
 import React from 'react';
 import DragonElement from './treeview/TreeElement';
+import ValidationRules from '../engine/data/ValidationRules';
 import './treeview/tree-root.css';
 import './stage.css';
 
 import testData from '../TestData';
-
-console.log(testData);
 
 export default class Stage extends React.Component {
     constructor(props) {
@@ -20,8 +19,59 @@ export default class Stage extends React.Component {
         this.getCanvasRef = this.getCanvasRef.bind(this);
     }
 
-    getCanvasRef() {
-        return this.canvasRef;
+    getCanvasRef() { return this.canvasRef; }
+
+    validateDataTree(data) {
+        let node = data;
+        function hasParents(n) { return (n.father !== undefined && n.mother !== undefined) };
+
+        /*  Check if the CURRENT node has updated MetaData
+            Note: This should ONLY ever happen at the root node, and ONLY if it has been updated
+            In all other cases, node.meta.updated will have already been checked by the time this
+            function runs for node. */
+        if(node.meta.updated) {
+            node = this.validateNode(node);
+            if(hasParents(node)) {
+                node.mother = this.validateNode(node.mother);
+                node.father = this.validateNode(node.father);
+            }
+            node.meta.updated = false;
+        }
+
+        /*  Check if PARENT nodes have updated MetaData
+            If so, validate self, that parent, and that parent's parents. Afterwards, continue valiating
+            data tree.  */
+        if(hasParents(node)) {
+            [node.mother,node.father].forEach((parent)=> {
+                if(parent.meta.updated) {
+                    node = this.validateNode(node);
+                    parent = this.validateNode(parent);
+                        if(hasParents(parent)) {
+                            parent.mother = this.validateNode(parent.mother);
+                            parent.father = this.validateNode(parent.father);
+                        }
+                    parent.meta.updated = false;
+                }
+                parent = this.validateDataTree(parent)
+            });
+        }
+        return node;
+    }
+
+    validateNode(data) {
+        let node = data;
+
+        node.meta.failedValidation = false;
+        node.meta.validationWarning = '';
+
+        ValidationRules.forEach((rule)=>{
+            if(!rule.check(node)) {
+                node.meta.failedValidation = true;
+                node.meta.validationWarning += ('\n'+rule.warning)
+            }}
+        );
+
+        return node;
     }
 
     componentDidMount() {
@@ -40,7 +90,11 @@ export default class Stage extends React.Component {
                                 <DragonElement 
                                 data={this.state.data}
                                 getCanvasRef={this.getCanvasRef}
-                                onChange={(data) => this.setState({data})}
+                                onChange={(treeData) => {
+                                    console.log('Detecting data update and validating data tree...')
+                                    this.setState({data : this.validateDataTree(treeData)})
+                                    console.log(this.state.data);
+                                }}
                                 />
                             </ul>
                         </div> ) : null}

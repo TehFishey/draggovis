@@ -1,7 +1,7 @@
 import Breed from '../../library/Breed';
 import Portrait from '../../library/Portrait';
 import PortraitFactory from '../../utilities/PortraitFactory';
-import ConditionFactory from '../../utilities/PortraitConditionFactory';
+import ConditionFactory from '../../utilities/ConditionFactory';
 
 class TwoHeadedBreed extends Breed {
     constructor(id, label, portraits, condition) {

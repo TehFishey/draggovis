@@ -108,8 +108,8 @@ export default class EditWindow extends React.Component {
                                         validationFactors = {[
                                             this.props.data.breed,
                                             this.props.data.gender,
-                                            (this.props.data.mother !== undefined),
-                                            (this.props.data.father !== undefined)
+                                            ((this.props.data.father !== undefined) ? this.props.data.father.portrait : null),
+                                            ((this.props.data.mother !== undefined) ? this.props.data.father.portrait : null)
                                         ]}
                                         onChange={(portrait)=>{ this.updateField('portrait', portrait)}}
                                     />

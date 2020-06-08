@@ -1,8 +1,8 @@
 import Portrait from '../library/Portrait';
-import ConditionFactory from './PortraitConditionFactory';
+import ConditionFactory from './ConditionFactory';
 
 export default {
-    genericPortrait(id, label, isDefault, condition) {
+    customPortrait(id, label, isDefault, condition) {
         let portrait = new Portrait(id, label, isDefault, condition);
 
         return {[id] : portrait};

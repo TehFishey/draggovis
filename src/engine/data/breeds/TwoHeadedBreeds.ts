@@ -2,14 +2,15 @@ import Breed from '../../library/Breed';
 import Portrait from '../../library/Portrait';
 import PortraitFactory from '../../utilities/PortraitFactory';
 import ConditionFactory from '../../utilities/ConditionFactory';
+import Condition from '../../library/Condition';
 
 class TwoHeadedBreed extends Breed {
-    constructor(id, label, portraits, condition) {
+    constructor(id: string, label: string, portraits: Object, condition?: Condition) {
         super(id, label, "twohead", "mf-mf", portraits, condition)
     }
 }
 
-let TwoHeadedBreeds = [
+let TwoHeadedBreeds: Array<Breed> = [
     new TwoHeadedBreed("baikala-dragon", "Baikala Dragon", {
         'baikala-b-f' : new Portrait('baikala-b-f', "Blue", true, ConditionFactory.checkGender("Female")),
         'baikala-b-m' : new Portrait('baikala-b-m', "Blue", true, ConditionFactory.checkGender("Male")),

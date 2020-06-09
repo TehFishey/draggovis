@@ -1,14 +1,15 @@
 import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
 import ConditionFactory from '../../utilities/ConditionFactory';
+import Condition from '../../library/Condition';
 
 class DragonBreed extends Breed {
-    constructor(id, label, portraits, condition) {
+    constructor(id: string, label: string, portraits: Object, condition?: Condition) {
         super(id, label, "dragon", "mf-mf", portraits, condition)
     }
 }
 
-let DragonBreeds = [
+let DragonBreeds: Array<Breed> = [
     new DragonBreed("aeon-wyvern", "Aeon Wyvern", PortraitFactory.mfPortraits("aeon")),
     new DragonBreed("aeria-gloris-dragon", "Aeria Gloris Dragon", PortraitFactory.uPortraits("aeria-gloris")),
     new DragonBreed("aether-wyvern", "Aether Wyvern", PortraitFactory.uPortraits("aether")),

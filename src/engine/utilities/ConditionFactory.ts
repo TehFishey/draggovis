@@ -1,7 +1,13 @@
+import Condition from "../library/Condition";
+import DragonNode from "../library/DragonNode";
+
+type nodeReference = (node: DragonNode) => any;
+type pseudoObject = {id: String, label: String}
+
 export default {   
-    and(label, conditions) {
-        let tooltips = [];
-        let rules = [];
+    and(label: string, conditions: Array<Condition>) {
+        let tooltips: Array<String> = [];
+        let rules: Array<nodeReference> = [];
 
         conditions.forEach((condition, index) => {
             tooltips[index] = condition.tooltip;
@@ -16,18 +22,18 @@ export default {
         })
         tooltip = tooltip.substr(0, tooltip.lastIndexOf(' AND '))+'.';
 
-        let validate = (dragon) => {
+        let validate = (dragon: DragonNode) => {
             return rules.every((func)=>{
                 return func(dragon);
             })
         }
 
-        return {validate : validate, tooltip : tooltip};
+        return new Condition(validate, tooltip);
     },
 
-    or(label, conditions) {
-        let tooltips = [];
-        let rules = [];
+    or(label: string, conditions: Array<Condition>) {
+        let tooltips: Array<String> = [];
+        let rules: Array<nodeReference> = [];
 
         conditions.forEach((condition, index) => {
             tooltips[index] = condition.tooltip;
@@ -42,29 +48,29 @@ export default {
         })
         tooltip = tooltip.substr(0, tooltip.lastIndexOf(' OR '))+'.';
 
-        let validate = (dragon) => {
+        let validate = (dragon: DragonNode) => {
             return rules.some((func)=>{
                 return func(dragon);
             })
         }
 
-        return {validate : validate, tooltip : tooltip};
+        return new Condition(validate, tooltip);
     },
     
-    checkGender(gender, label) {
+    checkGender(gender: string, label?: string) {
         let tooltip = `'${label}' requires ${gender} gender.`;
-        let validate = (dragon) => {return (dragon.gender === gender)};
-        return {validate : validate, tooltip : tooltip}
+        let validate = (dragon: DragonNode) => {return (dragon.gender === gender)};
+        return new Condition(validate, tooltip);
     },
 
-    checkFirstGeneration(label) {
+    checkFirstGeneration(label?: string) {
         let tooltip = `'${label}' requires dragon to be first generation.`;
-        let validate = (dragon) => {return ((dragon.mother === undefined) &&
-                                            (dragon.father === undefined))};
-        return {validate : validate, tooltip : tooltip}
+        let validate = (dragon: DragonNode) => {return ((dragon.mother === undefined) &&
+                                                        (dragon.father === undefined))};
+        return new Condition(validate, tooltip);
     },
 
-    checkParentPortraitIds(portraits, label) {
+    checkParentPortraitIds(portraits: Array<pseudoObject>, label?: String) {
         let ids = portraits.map((portrait)=>{return portrait.id});
         let labels = portraits.map((portrait)=>{return portrait.label});
         
@@ -77,16 +83,16 @@ export default {
             tooltip = tooltip.substr(0, tooltip.lastIndexOf(','))+'.';
         }
 
-        let validate = (dragon) => {
+        let validate = (dragon: DragonNode) => {
             if((dragon.mother !== undefined) && (dragon.father !== undefined)) {
                 return ids.includes(dragon.mother.portrait.id) || ids.includes(dragon.father.portrait.id);
             } else {
                 return false;
             }};
-        return {validate : validate, tooltip : tooltip}
+        return new Condition(validate, tooltip);
     },
 
-    checkParentBreedIds(breeds, label) {
+    checkParentBreedIds(breeds: Array<pseudoObject>, label?: string) {
         let ids = breeds.map((breed)=>{return breed.id});
         let labels = breeds.map((breed)=>{return breed.label});
         
@@ -99,13 +105,13 @@ export default {
             tooltip = tooltip.substr(0, tooltip.lastIndexOf(','))+'.';
         }
 
-        let validate = (dragon) => {
+        let validate = (dragon: DragonNode) => {
             if((dragon.mother !== undefined) && (dragon.father !== undefined)) {
                 return ids.includes(dragon.mother.breed.id) || ids.includes(dragon.father.breed.id);
             } else {
                 return false;
             }};
-        return {validate : validate, tooltip : tooltip}
+        return new Condition(validate, tooltip);
     },
 
     /*

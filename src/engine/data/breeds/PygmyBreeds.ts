@@ -1,13 +1,14 @@
 import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
+import Condition from '../../library/Condition';
 
 class PygmyBreed extends Breed {
-    constructor(id, label, portraits, condition) {
+    constructor(id: string, label: string, portraits: string, condition?: Condition) {
         super(id, label, "pygmy", "mf-mf", portraits, condition)
     }
 }
 
-let PygmyBreeds = [
+let PygmyBreeds: Array<Breed> = [
     new PygmyBreed("avea-pygmy", "Avea Pygmy", PortraitFactory.mfPortraits("avea")),
     new PygmyBreed("common-pygmy", "Common Pygmy", PortraitFactory.mfPortraits("common")),
     new PygmyBreed("coral-pygmy-wyvern", "Coral Pygmy Wyvern", PortraitFactory.mfPortraits("avcoralea")),

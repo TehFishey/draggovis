@@ -1,12 +1,22 @@
+import DragonNode from "./DragonNode";
+import Condition from "./Condition";
+
 export default class Portrait {
-    constructor(id, label, isDefault, condition) {
+    id: string;
+    label: string;
+    imagePath: string;
+    thumbPath: string;
+    isDefault: boolean;
+    condition: Condition;
+
+    constructor(id: string, label: string, isDefault: boolean, condition?: Condition) {
         this.id = id || "undefined-portrait";
         this.label = label || "Undefined Portrait";
         this.imagePath = "art/" + this.id + ".png";
         this.thumbPath = "thumbs/" + this.id + ".png";
         this.isDefault = isDefault || true;
         this.condition = condition || {
-            validate: (dragon) => {return true;},
+            validate: (dragon: DragonNode) => {return true;},
             tooltip: `${this.label} is always valid.`
         }
     }

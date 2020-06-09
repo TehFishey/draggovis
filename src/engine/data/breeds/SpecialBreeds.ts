@@ -2,7 +2,7 @@ import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
 import ConditionFactory from '../../utilities/ConditionFactory';
 
-let SpecialBreeds = [
+let SpecialBreeds: Array<Breed> = [
     new Breed("tinsel-dragon", "Tinsel Dragon", "dragon", "mf-mf", {
         ...PortraitFactory.customPortrait('tinsel-b-u', "Bronze", true, 
             ConditionFactory.or("Bronze", [

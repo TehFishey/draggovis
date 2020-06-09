@@ -1,13 +1,16 @@
-import MetaData from './MetaData';
+import Breed from "./Breed";
+import Portrait from "./Portrait";
 
 export default class Dragon {
-    constructor(gender, breed, portrait) {
+    name: string;
+    gender: string;
+    breed: Breed;
+    portrait: Portrait;
+
+    constructor(gender: string, breed: Breed, portrait: Portrait) {
         this.name = "";
         this.gender = gender || "undefined";
         this.breed = breed || undefined;
         this.portrait = portrait || undefined;
-        this.father = undefined;
-        this.mother = undefined;
-        this.meta = new MetaData()
     }
 };

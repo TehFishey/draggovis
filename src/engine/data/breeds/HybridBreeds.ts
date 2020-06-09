@@ -1,14 +1,15 @@
 import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
 import ConditionFactory from '../../utilities/ConditionFactory';
+import Condition from '../../library/Condition';
 
 class HybridBreed extends Breed {
-    constructor(id, label, type, portraits, condition) {
+    constructor(id: string, label: string, type: string, portraits: Object, condition?: Condition) {
         super(id, label, type, "mf-mf", portraits, condition)
     }
 }
 
-let HybridBreeds = [
+let HybridBreeds: Array<Breed> = [
     new HybridBreed("avatar-of-change", "Avatar of Change", "dragon", PortraitFactory.uPortraits("avatar-of-change")),
     new HybridBreed("avatar-of-creation", "Avatar of Creation", "dragon", PortraitFactory.uPortraits("avatar-of-creation")),
     new HybridBreed("avatar-of-destruction", "Avatar of Destruction", "dragon", PortraitFactory.uPortraits("avatar-of-destruction")),

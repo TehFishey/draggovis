@@ -6,15 +6,14 @@ export default {
     customPortrait(id: string, label: string, isDefault: boolean, condition?: Condition) {
         let portrait = new Portrait(id, label, isDefault, condition);
 
-        return {[id] : portrait};
+        return portrait;
     },
 
     uPortraits(id: string) {
         let uId = id + "-u";
         let portrait = new Portrait(uId, "Standard", true);
 
-        let dict: any = { [uId] : portrait };
-        return dict;
+        return [portrait];
     },
     
     mfPortraits(id: string) {
@@ -23,8 +22,7 @@ export default {
         let mPortrait = new Portrait(mId, "Standard ♂", true, ConditionFactory.checkGender("Male", "Standard ♂"));
         let fPortrait = new Portrait(fId, "Standard ♀", true, ConditionFactory.checkGender("Female", "Standard ♀")); 
         
-        let dict: any = { [mId] : mPortrait , [fId] : fPortrait };
-        return dict;
+        return [mPortrait,fPortrait];
     },
     
     uAltPortraits(id: string) {
@@ -33,8 +31,7 @@ export default {
         let portrait = new Portrait(uId, "Standard", true);
         let altPortrait = new Portrait(uAltId, "Alt", false);
     
-        let dict: any = { [uId] : portrait , [uAltId] : altPortrait };
-        return dict;
+        return [portrait,altPortrait];
     },
     
     mfAltPortraits(id: string) {
@@ -47,9 +44,7 @@ export default {
         let fPortrait = new Portrait(fId, "Standard ♀", true, ConditionFactory.checkGender("Female", "Standard ♀")); 
         let mAltPortrait = new Portrait(mAltId, "Alt ♂", false, ConditionFactory.checkGender("Male", "Alt ♂"));
         let fAltPortrait = new Portrait(fAltId, "Alt ♀", false, ConditionFactory.checkGender("Female", "Alt ♀")); 
-    
-        let dict: any = { [mId] : mPortrait , [fId] : fPortrait , [mAltId] : mAltPortrait, [fAltId] : fAltPortrait };
 
-        return dict;
+        return [mPortrait,fPortrait,mAltPortrait,fAltPortrait];
     }
 }

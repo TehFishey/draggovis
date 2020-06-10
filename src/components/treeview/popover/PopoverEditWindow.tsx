@@ -2,12 +2,12 @@ import React from 'react';
 import DVSelect from "./PopoverSelectMenu";
 import './popover-edit-window.css';
 
-import BreedData from '../../../engine/data/BreedData';
+import {Breeds} from '../../../engine/data/Model';
 import DragonNode from '../../../engine/library/DragonNode';
 import Breed from '../../../engine/library/Breed';
 import Portrait from '../../../engine/library/Portrait';
 
-const breedData = BreedData();
+const breedData = Breeds;
 
 enum fieldName {
     name = 'name',
@@ -110,10 +110,10 @@ export default class EditWindow extends React.Component<Props, State> {
                                 <div>Gender: {this.props.data.gender}</div>
                                 <div>
                                     <DVSelect 
-                                        selectionPool={breedData}
+                                        selectionPool={breedData.dict}
                                         currentSelection={this.props.data.breed}
                                         defaultLabel = {'Select Breed'}
-                                        validationObject = {(this.state.validateBreeds) ? this.props.data : null}
+                                        validationObject = {(this.state.validateBreeds) ? this.props.data : undefined}
                                         validationFactors = {[
                                             this.props.data.gender,
                                             ((this.props.data.father !== undefined) ? this.props.data.father.breed : null),
@@ -127,7 +127,7 @@ export default class EditWindow extends React.Component<Props, State> {
                                         selectionPool={this.props.data.breed.portraits}
                                         currentSelection={this.props.data.portrait}
                                         defaultLabel = {'Select Portrait'}
-                                        validationObject = {(this.state.validatePortraits) ? this.props.data : null}
+                                        validationObject = {(this.state.validatePortraits) ? this.props.data : undefined}
                                         validationFactors = {[
                                             this.props.data.breed,
                                             this.props.data.gender,

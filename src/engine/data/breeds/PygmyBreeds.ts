@@ -1,9 +1,10 @@
 import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
 import Condition from '../../library/Condition';
+import Portrait from '../../library/Portrait';
 
 class PygmyBreed extends Breed {
-    constructor(id: string, label: string, portraits: string, condition?: Condition) {
+    constructor(id: string, label: string, portraits: Array<Portrait>, condition?: Condition) {
         super(id, label, "pygmy", "mf-mf", portraits, condition)
     }
 }

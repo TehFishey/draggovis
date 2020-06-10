@@ -25,7 +25,6 @@ export default class Stage extends React.Component<Props, State> {
             data: testData,
             renderCanvas : false
         }
-
         this.canvasRef = React.createRef();
         this.getCanvasRef = this.getCanvasRef.bind(this);
     }

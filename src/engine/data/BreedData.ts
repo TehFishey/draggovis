@@ -6,12 +6,14 @@ import specialBreeds from './breeds/SpecialBreeds';
 import hybridBreeds from './breeds/HybridBreeds';
 import Breed from '../library/Breed';
 
-export default function DragonData() {
-    let importData: Array<Array<Breed>> = [dragonBreeds, drakeBreeds, pygmyBreeds, twoHeadedBreeds, specialBreeds, hybridBreeds];
-    let imports: Array<Breed> = importData.flat();
-    let data: any = {};
+export default class BreedData {
+    readonly dict: Map<string, Breed>;
+    readonly arr: Array<Breed>;
 
-    // Return a map-like object of "breed-id" : {Breed Model Object}
-    imports.forEach((item: Breed)=>{data[item.id] = item});
-    return data;
+    constructor() {
+        let imports: Array<Array<Breed>> = [dragonBreeds, drakeBreeds, pygmyBreeds, twoHeadedBreeds, specialBreeds, hybridBreeds];
+        this.arr = imports.flat();
+        this.dict = new Map<string, Breed>();
+        this.arr.forEach((breed: Breed) => {this.dict.set(breed.id, breed)});
+    }
 };

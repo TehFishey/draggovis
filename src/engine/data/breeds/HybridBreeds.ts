@@ -2,9 +2,10 @@ import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
 import ConditionFactory from '../../utilities/ConditionFactory';
 import Condition from '../../library/Condition';
+import Portrait from '../../library/Portrait';
 
 class HybridBreed extends Breed {
-    constructor(id: string, label: string, type: string, portraits: Object, condition?: Condition) {
+    constructor(id: string, label: string, type: string, portraits: Array<Portrait>, condition?: Condition) {
         super(id, label, type, "mf-mf", portraits, condition)
     }
 }

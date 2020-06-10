@@ -1,9 +1,10 @@
 import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
 import Condition from '../../library/Condition';
+import Portrait from '../../library/Portrait';
 
 class DrakeBreed extends Breed {
-    constructor(id: string, label: string, portraits: Object, condition?: Condition) {
+    constructor(id: string, label: string, portraits: Array<Portrait>, condition?: Condition) {
         super(id, label, "drake", "mf-mf", portraits, condition)
     }
 }

@@ -3,25 +3,23 @@ import DragonNode from './DragonNode';
 import Condition from './Condition';
 
 export default class Breed {
-    id: string;
-    label: string;
-    type: string;
-    genders: string;
-    portraits: Object;
-    condition: Condition;
+    id: string;                         // String Id for backend reference & dictionary lookups
+    label: string;                      // String Label for frontend display
+    type: string;                       // Type of dragon. Used for breeding logic.
+    genders: string;                    // String representing possble dragon genders. Format: "{Genders possible for gen1}-{Genders possible for later gens}"
+    portraits: Map<string, Portrait>;   // Dictionary of Portraits associated with this breed, keyed by Portrait.id
+    condition: Condition;               // Condition to be used for validation checks
 
-    constructor(id: string, label: string, type?: string, genders?: string, portraits?: Object, condition?: Condition) {
-        this.id = id;                                           // Id/name for backend reference
-        this.label = label;                                     // Label for frontend display
-        this.type = type || "dragon";                           // Type of dragon. Used for breeding logic.
-        this.genders = genders || "mf-mf";                      // Possible genders of dragon. Format: "{Genders possible for gen1}-{Genders possible for later gens}"
-        this.portraits = portraits || {                         // Object containing all portraits associated with this breed, formatted as {portrait-id : portrait}
-            "blank-portrait" : new Portrait("blank-portrait", "Blank Portrait", true, {
-                validate: (dragon: DragonNode) => {return true;},
-                tooltip: `${this.label} is always valid.`
-            })
-        };             
-        this.condition = condition || Breed.defaultCondition(this.id, this.genders, this.label)      // Validation function
+    constructor(id: string, label: string, type?: string, genders?: string, portraits?: Array<Portrait>, condition?: Condition) {
+        this.id = id;                                           
+        this.label = label;                                     
+        this.type = type || "dragon";                           
+        this.genders = genders || "mf-mf";                      
+        this.portraits = new Map<string, Portrait>();
+        if(portraits != undefined)
+            portraits.forEach((portrait: Portrait)=>this.portraits.set(portrait.id, portrait));
+            
+        this.condition = condition || Breed.defaultCondition(this.id, this.genders, this.label)
     }
 
     static defaultCondition(id: string, genders: string, label: string) {

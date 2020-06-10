@@ -23,7 +23,7 @@ export default class Breed {
     }
 
     static defaultCondition(id: string, genders: string, label: string) {
-        let tooltip = `Invalid gender or parent breeds for ${label}.`;
+        let warning = `Invalid gender or parent breeds for ${label}.`;
         let validate = (dragon: DragonNode) => {
             let breedCheck = true;
             let genderCheck = true;
@@ -51,6 +51,6 @@ export default class Breed {
             return (breedCheck && genderCheck);
         };
 
-        return {validate : validate, tooltip : tooltip};
+        return new Condition(validate, warning);
     }
 }

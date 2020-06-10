@@ -6,6 +6,7 @@ import {Breeds} from '../../../engine/data/Model';
 import DragonNode from '../../../engine/library/DragonNode';
 import Breed from '../../../engine/library/Breed';
 import Portrait from '../../../engine/library/Portrait';
+import MetaData from '../../../engine/library/MetaData';
 
 const breedData = Breeds;
 
@@ -43,10 +44,11 @@ export default class EditWindow extends React.Component<Props, State> {
     }
   
     updateField(fieldName: fieldName, fieldValue: any) {
-        let newData = this.props.data;
-        newData[fieldName] = fieldValue;
-      
-        this.props.update(newData);
+        if(typeof this.props.data[fieldName] === typeof fieldValue) {
+            let newData = this.props.data;
+            newData[fieldName] = fieldValue;
+            this.props.update(newData);
+        }
     }
 
     createParents() {

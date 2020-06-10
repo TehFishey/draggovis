@@ -10,7 +10,7 @@ export default {
         let rules: Array<nodeReference> = [];
 
         conditions.forEach((condition, index) => {
-            tooltips[index] = condition.tooltip;
+            tooltips[index] = condition.warning;
             rules[index] = condition.validate;
         })
         
@@ -36,7 +36,7 @@ export default {
         let rules: Array<nodeReference> = [];
 
         conditions.forEach((condition, index) => {
-            tooltips[index] = condition.tooltip;
+            tooltips[index] = condition.warning;
             rules[index] = condition.validate;
         })
         

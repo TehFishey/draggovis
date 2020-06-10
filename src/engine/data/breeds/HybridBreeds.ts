@@ -34,7 +34,7 @@ let HybridBreeds: Array<Breed> = [
     ),
     new HybridBreed("geode-dragon", "Geode Dragon", "dragon", PortraitFactory.mfPortraits("geode"),
         {
-            tooltip : "'Geode Dragon' requires a parent with breed 'Geode Dragon' OR parents with any combination of breeds: 'Stone Dragon', 'Green Dragon'.",
+            warning : "'Geode Dragon' requires a parent with breed 'Geode Dragon' OR parents with any combination of breeds: 'Stone Dragon', 'Green Dragon'.",
             validate : (dragon) => {
                 if((dragon.mother !== undefined) && (dragon.father !== undefined)) {
                     if((dragon.mother.breed.id === "geode-dragon") || (dragon.father.breed.id === "geode-dragon"))

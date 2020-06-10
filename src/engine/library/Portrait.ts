@@ -17,7 +17,7 @@ export default class Portrait {
         this.isDefault = isDefault || true;
         this.condition = condition || {
             validate: (dragon: DragonNode) => {return true;},
-            tooltip: `${this.label} is always valid.`
+            warning: `${this.label} is always valid.`
         }
     }
 };

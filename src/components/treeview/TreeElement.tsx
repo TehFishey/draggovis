@@ -19,7 +19,7 @@ interface Props {
 }
   
 interface State {
-    imgRect: any,
+    imgRect: {x: number, y: number, width: number, height: number},
     showPopover: boolean,
     showTooltip: boolean
 }
@@ -107,7 +107,7 @@ export default class TreeNode extends React.Component<Props, State> {
         return {x : px, y : py}
     }
 
-    internalDataUpdate(updatedData: any) {
+    internalDataUpdate(updatedData: DragonNode) {
         let newData = updatedData;
         newData.meta.updated = true;
         this.props.onChange(newData);

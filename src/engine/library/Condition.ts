@@ -4,10 +4,10 @@ type nodeReference = (node: DragonNode) => any;
 
 export default class Condition {
     validate: nodeReference;
-    tooltip: string;
+    warning: string;
 
-    constructor(validate: nodeReference, tooltip: string) {
+    constructor(validate: nodeReference, warning: string) {
         this.validate = validate
-        this.tooltip = tooltip
+        this.warning = warning
     }
 };

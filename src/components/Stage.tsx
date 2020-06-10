@@ -1,11 +1,13 @@
 import React from 'react';
 import DragonElement from './treeview/TreeElement';
-import ValidationRules from '../engine/data/ValidationRules';
 import './treeview/tree-root.css';
 import './stage.css';
 
-import testData from '../TestData';
 import DragonNode from '../engine/library/DragonNode';
+import {Rules} from '../engine/data/Model';
+
+import testData from '../TestData';
+import Rule from '../engine/library/Rule';
 
 interface Props {}
   
@@ -74,8 +76,8 @@ export default class Stage extends React.Component<Props, State> {
         node.meta.failedValidation = false;
         node.meta.validationWarning = [];
 
-        ValidationRules.forEach((rule)=>{
-            if(!rule.check(node)) {
+        Rules.arr.forEach((rule : Rule)=>{
+            if(!rule.validate(node)) {
                 node.meta.failedValidation = true;
                 node.meta.validationWarning.push(rule.tooltip(node));
             }}

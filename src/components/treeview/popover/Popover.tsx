@@ -4,8 +4,24 @@ import './popover.css';
 
 const overlay = document.getElementById("overlay");
 
-export default class Popover extends React.Component {
-    constructor(props) {
+type windowCoordinates = {x: number, y: number}
+
+interface Props {
+    show: boolean,
+    loc: windowCoordinates,
+    content: JSX.Element,
+    handleClose: Function
+}
+  
+interface State {
+    pos: windowCoordinates,
+}
+
+export default class Popover extends React.Component<Props, State> {
+    
+    componentRef: React.RefObject<HTMLDivElement>;
+    
+    constructor(props: Props) {
         super(props);
         this.state = {
             pos : {
@@ -13,16 +29,18 @@ export default class Popover extends React.Component {
                 y : 0
             }
         }
+
+        this.componentRef = React.createRef();
     }
     
-    handleClose(e) {
+    handleClose(e: Event | React.MouseEvent) {
         e.stopPropagation();
         this.props.handleClose();
     }
 
     adjustPosition() {
-        let newX = this.props.loc.x - (this.elementRef.clientWidth * 0.5);
-        let newY = this.props.loc.y - (this.elementRef.clientHeight * 0.5);
+        let newX = this.props.loc.x - (this.componentRef.current!.clientWidth * 0.5);
+        let newY = this.props.loc.y - (this.componentRef.current!.clientHeight * 0.5);
         if(this.state.pos.x !== newX || this.state.pos.y !== newY) {
             this.setState({
                 pos : {
@@ -50,7 +68,7 @@ export default class Popover extends React.Component {
             {createPortal((
                 <div 
                     className='popover-window'
-                    ref={(elementRef) => {this.elementRef = elementRef}}
+                    ref={this.componentRef}
                     style={{ transform : `translate(${this.state.pos.x}px, ${this.state.pos.y}px)` }}
                 >
                     <div className='popover-content'>{this.props.content}</div>
@@ -59,7 +77,7 @@ export default class Popover extends React.Component {
                         onClick={(e)=>{this.handleClose(e)}}>
                             Close
                     </button>
-                </div>), overlay)}
+                </div>), overlay!)}
             </>
         );
     }

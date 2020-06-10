@@ -9,13 +9,13 @@
   * myfunction("I can only be printed every 1 second!");
   * myfunction("I won't get printed!");
   */
-export function throttle(func, ms) {
-    let timestamp;
-    return () => {
-        let now = Date.now();
-        if(timestamp === undefined || now-timestamp > ms) {
+export function throttle(this: Function, func: Function, ms: number) {
+    let timestamp: number;
+    return function(this: any, ...args: any[]) {
+        let now: number = Date.now();
+        if(timestamp === undefined || now - timestamp > ms) {
             timestamp = now;
-            func.apply(this,arguments);
+            func.apply(this,args);
         }
     };
 }
@@ -31,13 +31,13 @@ export function throttle(func, ms) {
   * myfunction("I won't get printed!");
   * myfunction("I will print once, 1 second after I was called!");
   */
-export function debounce(func, ms) {
-    let timer
-    return () => {
+export function debounce(func: Function, ms: number) {
+    let timer: NodeJS.Timeout
+    return function(this: any, ...args: any[]) {
         clearTimeout(timer)
         timer = setTimeout(() => {
-            timer = null;
-            func.apply(this,arguments);
+            timer = null!;
+            func.apply(this,args);
         }, ms);
     };
 }

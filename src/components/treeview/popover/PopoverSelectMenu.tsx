@@ -1,8 +1,21 @@
 import React from 'react';
 import Select from 'react-select';
 
-export default class DragonSelect extends React.Component {
-    constructor(props){
+interface Props {
+    selectionPool: any,
+    currentSelection: any,
+    defaultLabel: any,
+    validationObject: any,
+    validationFactors: Array<any>,
+    onChange: Function
+}
+  
+interface State {
+    validOptions: any,
+}
+
+export default class DVSelect extends React.Component<Props, State> {
+    constructor(props: Props){
         super(props);
         this.state = {
             validOptions : null
@@ -18,7 +31,7 @@ export default class DragonSelect extends React.Component {
 
     setValidOptions() {
         // Convert selection pool dict to array of form [[key,value], [key,value] ... ] for iteration
-        let selectionPool = Object.entries(this.props.selectionPool);
+        let selectionPool : Array<Array<any>> = Object.entries(this.props.selectionPool);
         
         // If a validation object was input, filter selection pool by validating each object against it
         if(this.props.validationObject) {
@@ -45,7 +58,7 @@ export default class DragonSelect extends React.Component {
         this.setValidOptions();
     }
     
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: Props) {
         // Re-validating the options list can be computationally expensive.
         // We want to avoid doing so on each re-render; only do it if key variables have changed.
         if(this.props.validationFactors.some((object, index) => {
@@ -62,7 +75,7 @@ export default class DragonSelect extends React.Component {
             */ 
     }
     
-    handleChange(selectedOption) {
+    handleChange(selectedOption: any) {
         this.props.onChange(this.props.selectionPool[selectedOption.value]);
     }
 

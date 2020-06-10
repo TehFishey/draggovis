@@ -4,7 +4,24 @@ import './tooltip.css';
 
 const overlay = document.getElementById("overlay");
 
-export default class Popover extends React.Component {
+type windowCoordinates = {x: number, y: number}
+
+interface Props {
+    show: boolean,
+    loc: windowCoordinates,
+    content: JSX.Element,
+}
+  
+interface State {}
+
+export default class Popover extends React.Component<Props,State> {
+    
+    componentRef: React.RefObject<HTMLDivElement>;
+
+    constructor(props: Props) {
+        super(props);
+        this.componentRef = React.createRef();
+    }
 
     render () {
         if (!this.props.show) {return null;}
@@ -13,11 +30,11 @@ export default class Popover extends React.Component {
             {createPortal((
                 <div 
                     className='tooltip'
-                    ref={(elementRef) => {this.elementRef = elementRef}}
+                    ref={this.componentRef}
                     style={{ transform : `translate(${this.props.loc.x}px, ${this.props.loc.y}px)` }}
                 >
                     <div className='tooltip-content'>{this.props.content}</div>
-                </div>), overlay)}
+                </div>), overlay!)}
             </>
         );
     }

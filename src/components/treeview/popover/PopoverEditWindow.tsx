@@ -1,14 +1,37 @@
 import React from 'react';
-import SelectMenu from "./PopoverSelectMenu";
-import Dragon from '../../../engine/library/Dragon';
+import DVSelect from "./PopoverSelectMenu";
 import './popover-edit-window.css';
 
 import BreedData from '../../../engine/data/BreedData';
+import DragonNode from '../../../engine/library/DragonNode';
+import Breed from '../../../engine/library/Breed';
+import Portrait from '../../../engine/library/Portrait';
 
 const breedData = BreedData();
 
-export default class EditWindow extends React.Component {
-    constructor(props){
+enum fieldName {
+    name = 'name',
+    gender = 'gender',
+    breed = 'breed',
+    portrait = 'portrait',
+    father = 'father',
+    mother = 'mother',
+    meta = 'meta'
+}
+
+interface Props {
+    data: DragonNode,
+    update: Function
+}
+  
+interface State {
+    name: string,
+    validateBreeds: boolean,
+    validatePortraits: boolean
+}
+
+export default class EditWindow extends React.Component<Props, State> {
+    constructor(props: Props){
         super(props);
   
         this.state = {
@@ -19,7 +42,7 @@ export default class EditWindow extends React.Component {
 
     }
   
-    updateField(fieldName, fieldValue) {
+    updateField(fieldName: fieldName, fieldValue: any) {
         let newData = this.props.data;
         newData[fieldName] = fieldValue;
       
@@ -30,9 +53,9 @@ export default class EditWindow extends React.Component {
         if (this.props.data.father === undefined && 
             this.props.data.mother === undefined) {
                 let newData = this.props.data;
-                newData.father = new Dragon("Male", this.props.data.breed);
+                newData.father = new DragonNode("Male", this.props.data.breed);
                 newData.father.portrait = this.getDefaultPortrait(newData.father);
-                newData.mother = new Dragon("Female", this.props.data.breed);
+                newData.mother = new DragonNode("Female", this.props.data.breed);
                 newData.mother.portrait = this.getDefaultPortrait(newData.mother);
                 this.props.update(newData);
         }
@@ -45,14 +68,14 @@ export default class EditWindow extends React.Component {
         this.props.update(newData);
     }
   
-    onBreedChange(breed) {
+    onBreedChange(breed: Breed) {
         let newData = this.props.data;
         newData.breed = breed;
         newData.portrait = this.getDefaultPortrait(newData);
         this.props.update(newData);
     }
 
-    getDefaultPortrait(dragonData) {
+    getDefaultPortrait(dragonData: DragonNode) {
         // Convert portraits dict to array of form [[key,value], [key,value] ... ] for iteration
         let portraits = Object.entries(dragonData.breed.portraits);
 
@@ -82,11 +105,11 @@ export default class EditWindow extends React.Component {
                                     type="text"
                                     value={this.state.name}
                                     onChange={e => {this.setState({name: e.target.value})}}
-                                    onBlur={() => this.updateField('name', this.state.name)}
+                                    onBlur={() => this.updateField(fieldName.name, this.state.name)}
                                 />
                                 <div>Gender: {this.props.data.gender}</div>
                                 <div>
-                                    <SelectMenu 
+                                    <DVSelect 
                                         selectionPool={breedData}
                                         currentSelection={this.props.data.breed}
                                         defaultLabel = {'Select Breed'}
@@ -94,13 +117,13 @@ export default class EditWindow extends React.Component {
                                         validationFactors = {[
                                             this.props.data.gender,
                                             ((this.props.data.father !== undefined) ? this.props.data.father.breed : null),
-                                            ((this.props.data.mother !== undefined) ? this.props.data.father.breed : null)
+                                            ((this.props.data.mother !== undefined) ? this.props.data.mother.breed : null)
                                         ]}
-                                        onChange={(breed)=>{ this.onBreedChange(breed)}}
+                                        onChange={(breed: Breed)=>{ this.onBreedChange(breed)}}
                                     />
                                 </div>
                                 <div>
-                                    <SelectMenu 
+                                    <DVSelect 
                                         selectionPool={this.props.data.breed.portraits}
                                         currentSelection={this.props.data.portrait}
                                         defaultLabel = {'Select Portrait'}
@@ -109,9 +132,9 @@ export default class EditWindow extends React.Component {
                                             this.props.data.breed,
                                             this.props.data.gender,
                                             ((this.props.data.father !== undefined) ? this.props.data.father.portrait : null),
-                                            ((this.props.data.mother !== undefined) ? this.props.data.father.portrait : null)
+                                            ((this.props.data.mother !== undefined) ? this.props.data.mother.portrait : null)
                                         ]}
-                                        onChange={(portrait)=>{ this.updateField('portrait', portrait)}}
+                                        onChange={(portrait: Portrait)=>{ this.updateField(fieldName.portrait, portrait)}}
                                     />
                                 </div>
                             </div>

@@ -3,9 +3,33 @@ import Popover from './popover/Popover';
 import Tooltip from './tooltip/Tooltip';
 import EditWindow from './popover/PopoverEditWindow';
 import {debounce} from '../../utilities/Limiters';
+import DragonNode from '../../engine/library/DragonNode';
 
-export default class TreeNode extends React.Component {
-    constructor(props) {
+type windowCoordinates = {x: number, y: number}
+
+enum parent {
+    father = 'father',
+    mother = 'mother'
+}
+
+interface Props {
+    data: DragonNode,
+    getCanvasRef: Function,
+    onChange: Function
+}
+  
+interface State {
+    imgRect: any,
+    showPopover: boolean,
+    showTooltip: boolean
+}
+
+export default class TreeNode extends React.Component<Props, State> {
+
+    canvasRef: React.RefObject<HTMLDivElement>;
+    imgRef: React.RefObject<HTMLImageElement>;
+    
+    constructor(props: Props) {
         super(props);
 
         this.state = {
@@ -20,27 +44,41 @@ export default class TreeNode extends React.Component {
         this.updatePosition = this.updatePosition.bind(this);
     }
 
-    displayPopover(show) {
+    displayPopover(show: boolean) {
         this.setState({showPopover : show});
     }
 
-    displayTooltip(show) {
+    displayTooltip(show: boolean) {
         if(this.props.data.meta.failedValidation)
             this.setState({showTooltip : show});
     }
 
     writeTooltip() {
         if(this.props.data.meta.validationWarning !== undefined) {
-            let warnings = []
-            this.props.data.meta.validationWarning.forEach((tooltip)=>{
+            let warnings: Array<JSX.Element> = []
+            this.props.data.meta.validationWarning.forEach((tooltip: string)=>{
                 warnings.push(<div>{tooltip}</div>)
             })
             return (<div>{warnings}</div>);
         }
-        return null;
+        return (<div></div>);
     }
 
-    updatePosition = debounce(() => { 
+    update2(e?: Event) {
+        if(this.imgRef.current) {
+            let rect = this.imgRef.current.getBoundingClientRect();
+            this.setState(
+                {imgRect : {
+                    x : rect.x,
+                    y : rect.y,
+                    width : rect.width,
+                    height : rect.height
+                }}
+            )
+        }
+    }
+
+    updatePosition = debounce((e: Event) => { 
         if(this.imgRef.current) {
             let rect = this.imgRef.current.getBoundingClientRect();
             this.setState(
@@ -55,9 +93,12 @@ export default class TreeNode extends React.Component {
     }, 500);
 
     calcPopoverLoc() {
-        let px = this.state.imgRect.x + (this.state.imgRect.width * 0.5);
-        let py = this.state.imgRect.y + (this.state.imgRect.height * 0.5);
-        return {x : px, y : py}
+        let coords : windowCoordinates = {x : 0, y : 0};
+
+        coords.x = this.state.imgRect.x + (this.state.imgRect.width * 0.5);
+        coords.y = this.state.imgRect.y + (this.state.imgRect.height * 0.5);
+
+        return coords;
     }
 
     calcTooltipLoc() {
@@ -66,13 +107,13 @@ export default class TreeNode extends React.Component {
         return {x : px, y : py}
     }
 
-    internalDataUpdate(updatedData) {
+    internalDataUpdate(updatedData: any) {
         let newData = updatedData;
         newData.meta.updated = true;
         this.props.onChange(newData);
     }
 
-    recursiveDataUpdate(sourceParent, parentData) {
+    recursiveDataUpdate(sourceParent: parent, parentData: DragonNode) {
         let newData = this.props.data;
         newData[sourceParent] = parentData;
         this.props.onChange(newData);
@@ -84,12 +125,12 @@ export default class TreeNode extends React.Component {
                 (<TreeNode 
                     data={this.props.data.father} 
                     getCanvasRef={this.props.getCanvasRef}
-                    onChange={(parentData) => this.recursiveDataUpdate(this.props.data.father, parentData)}
+                    onChange={(parentData: DragonNode) => this.recursiveDataUpdate(parent.father, parentData)}
                 />),
                 (<TreeNode 
                     data={this.props.data.mother} 
                     getCanvasRef={this.props.getCanvasRef}
-                    onChange={(parentData) => this.recursiveDataUpdate(this.props.data.mother, parentData)}
+                    onChange={(parentData: DragonNode) => this.recursiveDataUpdate(parent.mother, parentData)}
                 />)
             ];
             return (<ul className='tree-unit-parents'>{parents}</ul>);
@@ -100,12 +141,12 @@ export default class TreeNode extends React.Component {
     componentDidMount() {
         this.updatePosition();
         window.addEventListener("resize", this.updatePosition);
-        this.canvasRef.current.addEventListener("scroll", this.updatePosition);
+        this.canvasRef.current!.addEventListener("scroll", this.update2);
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.updatePosition);
-        this.canvasRef.current.removeEventListener("scroll", this.updatePosition);
+        window.removeEventListener("resize", this.update2);
+        this.canvasRef.current!.removeEventListener("scroll", this.update2);
     }
 
     render () {
@@ -114,7 +155,7 @@ export default class TreeNode extends React.Component {
                 <Popover 
                     show={this.state.showPopover} 
                     loc={this.calcPopoverLoc()}
-                    content={ <EditWindow data={this.props.data} update={(popoverData) => this.internalDataUpdate(popoverData)}/> } 
+                    content={ <EditWindow data={this.props.data} update={(popoverData: DragonNode) => this.internalDataUpdate(popoverData)}/> } 
                     handleClose={()=>{this.displayPopover(false)}} 
                 />
                 <Tooltip

@@ -1,7 +1,7 @@
 export default class MetaData {
     updated: boolean;
     failedValidation: boolean;
-    validationWarning: Array<Object>;
+    validationWarning: Array<string>;
 
 
     constructor() {

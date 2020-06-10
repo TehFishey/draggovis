@@ -8,7 +8,7 @@ export default class DragonNode extends Dragon {
     mother?: DragonNode;
     meta: MetaData;
 
-    constructor(gender: string, breed: Breed, portrait: Portrait) {
+    constructor(gender: string, breed: Breed, portrait?: Portrait) {
         super(gender, breed, portrait)
         this.father = undefined;
         this.mother = undefined;

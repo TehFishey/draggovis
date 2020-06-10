@@ -1,12 +1,29 @@
 import BreedData from './engine/data/BreedData';
+import DragonNode from './engine/library/DragonNode';
 
 const breedData = BreedData();
 let breed = breedData['aeon-wyvern'];
 let mPortrait = breed.portraits['aeon-m']
 let fPortrait = breed.portraits['aeon-f']
 
-//portrait: process.env.PUBLIC_URL + 'portraits/' + 'testDrag.png',
+let rootNode = new DragonNode("Male", breed, mPortrait);
+rootNode.name = "Leafy Sea Dragon";
+rootNode.father = new DragonNode("Male", breed, mPortrait);
+rootNode.father.name = "Leafy Dad";
+rootNode.mother = new DragonNode("Female", breed, fPortrait);
+rootNode.mother.name = "Leafy Mom";
+rootNode.mother.father = new DragonNode("Male", breed, mPortrait);
+rootNode.mother.father.name = "Leafy Grandad";
+rootNode.mother.mother = new DragonNode("Female", breed, fPortrait);
+rootNode.mother.mother.name = "Leafy Grandma";
 
+export default rootNode;
+
+
+
+
+//portrait: process.env.PUBLIC_URL + 'portraits/' + 'testDrag.png',
+/*
 export default {
     name: "Leafy Sea Dragon",
     gender: "Male",
@@ -61,4 +78,6 @@ export default {
         failedValidation: false,
         validationMessage: ''
     }
+ 
 }
+   */

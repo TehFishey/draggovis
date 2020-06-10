@@ -55,4 +55,4 @@ export default class Breed {
 
         return {validate : validate, tooltip : tooltip};
     }
-};
+}

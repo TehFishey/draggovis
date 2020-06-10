@@ -51,7 +51,7 @@ export default class DVSelect extends React.Component<Props, State> {
 
             // If currently selected object is NOT in filtered pool, add it
             if(this.props.currentSelection !== undefined &&
-                selectionPool.some((item : Breed | Portrait)=>{
+                !selectionPool.some((item : Breed | Portrait)=>{
                    return item.id === this.props.currentSelection!.id
                 })) {
                 selectionPool.push(this.props.currentSelection);

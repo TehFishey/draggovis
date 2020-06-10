@@ -6,7 +6,6 @@ import {Breeds} from '../../../engine/data/Model';
 import DragonNode from '../../../engine/library/DragonNode';
 import Breed from '../../../engine/library/Breed';
 import Portrait from '../../../engine/library/Portrait';
-import MetaData from '../../../engine/library/MetaData';
 
 const breedData = Breeds;
 
@@ -77,14 +76,14 @@ export default class EditWindow extends React.Component<Props, State> {
         this.props.update(newData);
     }
 
-    getDefaultPortrait(dragonData: DragonNode) {
+    getDefaultPortrait(node: DragonNode) {
         // Convert portraits dict to array of form [[key,value], [key,value] ... ] for iteration
-        let portraits = Object.entries(dragonData.breed.portraits);
+        let portraits =  [...node.breed.portraits.values()];
 
-        let validPortraits = portraits.filter((keyValue) => {
-            return keyValue[1].condition.validate(dragonData) && keyValue[1].isDefault
+        let validPortraits = portraits.filter((portrait) => {
+            return portrait.condition.validate(node) && portrait.isDefault
         });
-        return validPortraits[0][1];
+        return validPortraits[0];
     }
 
     render() {

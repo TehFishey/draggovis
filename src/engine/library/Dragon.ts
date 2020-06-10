@@ -11,6 +11,6 @@ export default class Dragon {
         this.name = "";
         this.gender = gender || "undefined";
         this.breed = breed || undefined;
-        this.portrait = portrait || new Portrait("undefined-portrait", "Undefined Portrait", false);;
+        this.portrait = portrait || new Portrait("undefined-portrait", "Undefined Portrait", false);
     }
 };

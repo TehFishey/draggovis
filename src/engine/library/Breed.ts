@@ -16,7 +16,7 @@ export default class Breed {
         this.type = type || "dragon";                           
         this.genders = genders || "mf-mf";                      
         this.portraits = new Map<string, Portrait>();
-        if(portraits != undefined)
+        if(portraits !== undefined)
             portraits.forEach((portrait: Portrait)=>this.portraits.set(portrait.id, portrait));
             
         this.condition = condition || Breed.defaultCondition(this.id, this.genders, this.label)

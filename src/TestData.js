@@ -1,10 +1,11 @@
-import BreedData from './engine/data/BreedData';
+import {Breeds} from './engine/data/Model';
 import DragonNode from './engine/library/DragonNode';
 
-const breedData = BreedData();
-let breed = breedData['aeon-wyvern'];
-let mPortrait = breed.portraits['aeon-m']
-let fPortrait = breed.portraits['aeon-f']
+
+let breed = Breeds.dict.get('aeon-wyvern');
+console.log(breed.portraits);
+let mPortrait = breed.portraits.get('aeon-m')
+let fPortrait = breed.portraits.get('aeon-f')
 
 let rootNode = new DragonNode("Male", breed, mPortrait);
 rootNode.name = "Leafy Sea Dragon";

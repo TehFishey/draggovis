@@ -2,7 +2,6 @@ import React from 'react';
 import Popover from './popover/Popover';
 import Tooltip from './tooltip/Tooltip';
 import EditWindow from './popover/PopoverEditWindow';
-import {debounce} from '../../utilities/Limiters';
 import DragonNode from '../../engine/library/DragonNode';
 import Tree from '../../engine/library/Tree';
 
@@ -42,29 +41,32 @@ export default class TreeElement extends React.Component<Props, State> {
     }
 
     displayPopover(show: boolean) {
+        if(show) this.getImgRect();
         this.setState({showPopover : show});
     }
 
-    /*
+
     displayTooltip(show: boolean) {
-        if(this.props.data.meta.failedValidation)
+        if(this.props.node.meta.invalidData) {
+            if(show) this.getImgRect();
             this.setState({showTooltip : show});
+        }
     }
 
     writeTooltip() {
-        if(this.props.data.meta.validationWarning !== undefined) {
+        if(this.props.node.meta.warnings != null && 
+           this.props.node.meta.warnings.size > 0) {
             let warnings: Array<JSX.Element> = []
-            this.props.data.meta.validationWarning.forEach((tooltip: string)=>{
+            this.props.node.meta.warnings.forEach((tooltip: string)=>{
                 warnings.push(<div>{tooltip}</div>)
             })
             return (<div>{warnings}</div>);
         }
         return (<div></div>);
     }
-    */
 
-    updatePosition = debounce((e: Event) => { 
-        if(this.img.current) {
+    getImgRect() { 
+        if(this.img.current != null) {
             let rect = this.img.current.getBoundingClientRect();
             this.setState(
                 {imgRect : {
@@ -72,10 +74,16 @@ export default class TreeElement extends React.Component<Props, State> {
                     y : rect.y,
                     width : rect.width,
                     height : rect.height
-                }}
-            )
+                }
+            });
         }
-    }, 500);
+    }
+
+    updatePosition() { 
+        if(this.state.showPopover || this.state.showTooltip) {
+            this.getImgRect();
+        }
+    }
 
     calcPopoverLoc() {
         let coords : windowCoordinates = {x : 0, y : 0};
@@ -86,16 +94,15 @@ export default class TreeElement extends React.Component<Props, State> {
         return coords;
     }
 
-    /*
     calcTooltipLoc() {
-        let px = this.state.imgRect.x + this.state.imgRect.width;
-        let py = this.state.imgRect.y;
-        return {x : px, y : py}
-    }
-    */
-    
-    
+        let coords : windowCoordinates = {x : 0, y : 0};
 
+        coords.x = this.state.imgRect.x + this.state.imgRect.width;
+        coords.y = this.state.imgRect.y;
+
+        return coords;
+    }
+    
     updateTree(newData: Array<DragonNode>) {
         this.props.setData(newData);
     }
@@ -132,7 +139,7 @@ export default class TreeElement extends React.Component<Props, State> {
         this.canvas.current!.removeEventListener("scroll", this.updatePosition);
     }
 
-    render () {
+    render() {
         return ( 
             <li className='tree-unit'>
                 <Popover 
@@ -145,11 +152,18 @@ export default class TreeElement extends React.Component<Props, State> {
                     } 
                     handleClose={()=>{this.displayPopover(false)}} 
                 />
+                <Tooltip 
+                    show={this.state.showTooltip} 
+                    loc={this.calcTooltipLoc()}
+                    content={this.writeTooltip()} 
+                />
                 <div className='tree-unit-display'>
                     <img 
-                        className={'tree-unit-display-portrait'}
+                        className={(this.props.node.meta.invalidData) ? 'tree-unit-display-portrait highlight-warning' : 'tree-unit-display-portrait'}
                         onClick={()=>{this.displayPopover(true)}} 
                         ref={this.img}
+                        onMouseEnter={()=>{this.displayTooltip(true)}}
+                        onMouseOut={()=>{this.displayTooltip(false)}}
                         src={process.env.PUBLIC_URL + 'portraits/' + ((this.props.node.portrait !== undefined) ? 
                                                                     this.props.node.portrait.thumbPath : 
                                                                      "testDrag.png")} 

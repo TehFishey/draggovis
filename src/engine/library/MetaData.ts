@@ -1,12 +1,10 @@
 export default class MetaData {
-    updated: boolean;
-    failedValidation: boolean;
-    validationWarning: Array<string>;
+    invalidData: boolean;
+    warnings: Map<string, string>;
 
 
     constructor() {
-        this.updated = true;
-        this.failedValidation = false;
-        this.validationWarning = [];
+        this.invalidData = false;
+        this.warnings = new Map<string,string>();
     }
 };

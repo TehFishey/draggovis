@@ -64,7 +64,7 @@ export default {
     },
 
     checkFirstGeneration(label?: string) {
-        let tooltip = `'${label}' requires dragon to be first generation.`;
+        let tooltip = `'${label}' requires first generation dragon.`;
         let validate = (dragon: DragonNode) => {
             return !dragon.hasParents()
         };

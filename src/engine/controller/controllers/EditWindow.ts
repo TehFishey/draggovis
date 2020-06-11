@@ -1,4 +1,4 @@
-import Engine from "../Engine";
+import Engine from "../DataManager";
 import Tree from "../../library/Tree";
 import { Breeds, Portraits } from "../../data/Model";
 import DragonNode from "../../library/DragonNode";
@@ -15,8 +15,11 @@ export default class EditWindowController {
     updateName(index: number, name: string) {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
-            if(dragon != null)
+            if(dragon != null) {
                 dragon.name = name;
+                return[index];
+            }
+            return[];
         });
     }
 
@@ -26,29 +29,40 @@ export default class EditWindowController {
             if(dragon != null) {
                 dragon.breed = Breeds.dict.get(breedId)!;
                 dragon.portrait = this.getDefaultPortrait(dragon);
+                return[index];
             }
+            return [];
         });
     }
 
     updatePortrait(index: number, portraitId: string) {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
-            if(dragon != null)
+            if(dragon != null) {
                 dragon.portrait = Portraits.dict.get(portraitId)!;
+                return[index];
+            }
+            return [];
         });
     }
 
     createParents(index: number) {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
-            if(dragon != null)
+            if(dragon != null) {
                 if(!dragon.hasParents()) {
+                    let mi = dragon.getMotherIndex();
+                    let fi = dragon.getFatherIndex();
                     let n : DragonNode;
+                    
                     n = tree.createNode(dragon.getFatherIndex(), 'Male', dragon.breed, dragon.portrait);
                     n.portrait = this.getDefaultPortrait(n);
                     n = tree.createNode(dragon.getMotherIndex(), 'Female', dragon.breed, dragon.portrait);
                     n.portrait = this.getDefaultPortrait(n);
-                }
+                    return [index, fi, mi];
+                };
+            }
+            return [];
         });
     }
 
@@ -61,7 +75,9 @@ export default class EditWindowController {
 
                 tree.removeNode(mi);
                 tree.removeNode(fi);
+                return [index];
             }
+            return [];
         });
     }
 

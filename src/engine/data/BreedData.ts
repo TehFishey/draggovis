@@ -17,6 +17,5 @@ export default class BreedData {
         this.dict = new Map<string, Breed>();
         this.arr.forEach((breed: Breed) => {this.dict.set(breed.id, breed)});
         console.log(`Model: Defining breed data...`);
-        console.log(this.dict);
     }
 };

@@ -1,4 +1,4 @@
-import Engine from './Engine';
+import DataManager from './DataManager';
 
-const Controller = new Engine();
+const Controller = new DataManager();
 export default Controller;

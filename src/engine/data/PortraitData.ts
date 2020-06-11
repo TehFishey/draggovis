@@ -18,7 +18,6 @@ export default class PortraitData {
         })
 
         console.log(`Model: Defining portrait data...`);
-        console.log(this.dict);
     };
 };
 

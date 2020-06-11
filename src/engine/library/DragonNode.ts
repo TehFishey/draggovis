@@ -19,15 +19,15 @@ export default class DragonNode extends Dragon {
     }
 
     getMotherIndex() : number {
-        return (this.index * 2) + 1;
+        return ((this.index * 2) + 1);
     }
 
     getFatherIndex() : number {
-        return this.index * 2 + 2;
+        return ((this.index * 2) + 2);
     }
 
     getChildIndex() : number {
-        return Math.floor(this.index / 2);
+        return Math.ceil((this.index / 2) - 1);
     }
 
     mother() : DragonNode | null {
@@ -41,8 +41,11 @@ export default class DragonNode extends Dragon {
     }
 
     child() : DragonNode | null {
-        let ci = this.getChildIndex();
-        return this.tree[ci];
+        if(this.index !== 0) {
+            let ci = this.getChildIndex();
+            return this.tree[ci];
+        }
+        else throw new Error(`Model: Attempted to get child node of tree root!`)
     }
 
     hasParents() : boolean {

@@ -1,7 +1,7 @@
 import Condition from "../library/Condition";
-import DragonNode from "../library/DragonNode";
+import DragonNode, {nodeReference} from "../library/DragonNode";
 
-type nodeReference = (node: DragonNode) => any;
+
 type pseudoObject = {id: String, label: String}
 
 export default {   
@@ -65,8 +65,9 @@ export default {
 
     checkFirstGeneration(label?: string) {
         let tooltip = `'${label}' requires dragon to be first generation.`;
-        let validate = (dragon: DragonNode) => {return ((dragon.mother === undefined) &&
-                                                        (dragon.father === undefined))};
+        let validate = (dragon: DragonNode) => {
+            return !dragon.hasParents()
+        };
         return new Condition(validate, tooltip);
     },
 
@@ -84,8 +85,9 @@ export default {
         }
 
         let validate = (dragon: DragonNode) => {
-            if((dragon.mother !== undefined) && (dragon.father !== undefined)) {
-                return ids.includes(dragon.mother.portrait.id) || ids.includes(dragon.father.portrait.id);
+            if(dragon.hasParents()) {
+                return ids.includes(dragon.mother()!.portrait.id) 
+                || ids.includes(dragon.father()!.portrait.id);
             } else {
                 return false;
             }};
@@ -106,8 +108,9 @@ export default {
         }
 
         let validate = (dragon: DragonNode) => {
-            if((dragon.mother !== undefined) && (dragon.father !== undefined)) {
-                return ids.includes(dragon.mother.breed.id) || ids.includes(dragon.father.breed.id);
+            if(dragon.hasParents()) {
+                return ids.includes(dragon.mother()!.breed.id) 
+                || ids.includes(dragon.father()!.breed.id);
             } else {
                 return false;
             }};

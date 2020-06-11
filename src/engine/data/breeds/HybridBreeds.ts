@@ -3,6 +3,7 @@ import PortraitFactory from '../../utilities/PortraitFactory';
 import ConditionFactory from '../../utilities/ConditionFactory';
 import Condition from '../../library/Condition';
 import Portrait from '../../library/Portrait';
+import DragonNode from '../../library/DragonNode';
 
 class HybridBreed extends Breed {
     constructor(id: string, label: string, type: string, portraits: Array<Portrait>, condition?: Condition) {
@@ -35,12 +36,12 @@ let HybridBreeds: Array<Breed> = [
     new HybridBreed("geode-dragon", "Geode Dragon", "dragon", PortraitFactory.mfPortraits("geode"),
         {
             warning : "'Geode Dragon' requires a parent with breed 'Geode Dragon' OR parents with any combination of breeds: 'Stone Dragon', 'Green Dragon'.",
-            validate : (dragon) => {
-                if((dragon.mother !== undefined) && (dragon.father !== undefined)) {
-                    if((dragon.mother.breed.id === "geode-dragon") || (dragon.father.breed.id === "geode-dragon"))
+            validate : (dragon: DragonNode) => {
+                if(dragon.hasParents()) {
+                    if((dragon.mother()!.breed.id === "geode-dragon") || (dragon.father()!.breed.id === "geode-dragon"))
                         return true;
-                    if(["green-dragon", "stone-dragon"].indexOf(dragon.mother.breed.id) >= 0 
-                    && ["green-dragon", "stone-dragon"].indexOf(dragon.father.breed.id) >= 0)
+                    if(["green-dragon", "stone-dragon"].indexOf(dragon.mother()!.breed.id) >= 0 
+                    && ["green-dragon", "stone-dragon"].indexOf(dragon.father()!.breed.id) >= 0)
                         return true;
                 }
                 return false;

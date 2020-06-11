@@ -7,5 +7,8 @@ export default class RuleData {
     constructor() {
         let imports: Array<Array<Rule>> = [genericRules];
         this.arr = imports.flat();
+
+        console.log(`Model: Defining validation rules...`);
+        console.log(this.arr);
     }
 };

@@ -1,18 +1,16 @@
 import React from 'react';
-import DragonElement from './treeview/TreeElement';
+import TreeElement from './treeview/TreeElement';
 import './treeview/tree-root.css';
 import './stage.css';
 
 import DragonNode from '../engine/library/DragonNode';
-import {Rules} from '../engine/data/Model';
-
-import testData from '../TestData';
-import Rule from '../engine/library/Rule';
+import Tree from '../engine/library/Tree';
+import Controller from '../engine/controller/Controller'
 
 interface Props {}
   
 interface State {
-    data: DragonNode;
+    tree: Tree;
     renderCanvas: boolean;
 }
 
@@ -24,35 +22,37 @@ export default class Stage extends React.Component<Props, State> {
         super(props);
 
         this.state = {
-            data: testData,
-            renderCanvas : false
+            renderCanvas : false,
+            tree: Controller.getTree()
         }
         this.canvasRef = React.createRef();
-        this.getCanvasRef = this.getCanvasRef.bind(this);
+        this.getCanvas = this.getCanvas.bind(this);
     }
 
-    getCanvasRef() { return this.canvasRef; }
+    getCanvas() { return this.canvasRef; }
+    getData() { return this.state.tree; }
+    setData(tree: Tree) { this.setState({tree: tree})}
+    
 
-    validateDataTree(data: DragonNode) {
+    /*validateDataTree(tree: Array<DragonNode>, data: DragonNode) {
         let node: DragonNode = data;
-        function hasParents(n: DragonNode) { return (n.father !== undefined && n.mother !== undefined) };
 
-        /*  Check if the CURRENT node has updated MetaData
-            Note: This should ONLY ever happen at the root node, and ONLY if it has been updated
-            In all other cases, node.meta.updated will have already been checked by the time this
-            function runs for node. */
+        //Check if the CURRENT node has updated MetaData
+        //Note: This should ONLY ever happen at the root node, and ONLY if it has been updated
+        //In all other cases, node.meta.updated will have already been checked by the time this
+        //function runs for node.
         if(node.meta.updated) {
             node = this.validateNode(node);
-            if(hasParents(node)) {
-                node.mother = this.validateNode(node.mother!);
+            if(node.hasParents(tree)) {
+                node.getMother() = this.validateNode(node.mother!);
                 node.father = this.validateNode(node.father!);
             }
             node.meta.updated = false;
         }
 
-        /*  Check if PARENT nodes have updated MetaData
-            If so, validate self, that parent, and that parent's parents. Afterwards, continue valiating
-            data tree.  */
+        //Check if PARENT nodes have updated MetaData
+        //If so, validate self, that parent, and that parent's parents. Afterwards, continue valiating
+        //data tree.
         if(hasParents(node)) {
             [node.mother!,node.father!].forEach((parent)=> {
                 if(parent.meta.updated) {
@@ -68,11 +68,11 @@ export default class Stage extends React.Component<Props, State> {
             });
         }
         return node;
-    }
+    }*/
 
     validateNode(data: DragonNode) {
         let node = data;
-
+        /*
         node.meta.failedValidation = false;
         node.meta.validationWarning = [];
 
@@ -82,12 +82,19 @@ export default class Stage extends React.Component<Props, State> {
                 node.meta.validationWarning.push(rule.tooltip(node));
             }}
         );
-
+        */
         return node;
     }
 
     componentDidMount() {
         if(!this.state.renderCanvas) this.setState({renderCanvas : true});
+    }
+
+    componentDidUpdate() {
+        console.log('root updated ---');
+        console.log(this.state.tree);
+        console.log(this.state.tree[0]);
+        console.log('---')
     }
 
     render () {
@@ -99,14 +106,11 @@ export default class Stage extends React.Component<Props, State> {
                     {(this.state.renderCanvas) ? (
                         <div className="lineage-tree">
                             <ul id ="tree-root">
-                                <DragonElement 
-                                data={this.state.data}
-                                getCanvasRef={this.getCanvasRef}
-                                onChange={(treeData: DragonNode) => {
-                                    console.log('Detecting data update and validating data tree...')
-                                    this.setState({data : this.validateDataTree(treeData)})
-                                    console.log(this.state.data);
-                                }}
+                                <TreeElement 
+                                tree={this.state.tree}
+                                node={this.state.tree[0]!}
+                                getCanvas={this.getCanvas}
+                                setData={(tree: Tree) => {this.setData(tree)}}
                                 />
                             </ul>
                         </div> ) : null}

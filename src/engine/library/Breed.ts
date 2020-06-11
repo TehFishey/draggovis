@@ -27,10 +27,10 @@ export default class Breed {
         let validate = (dragon: DragonNode) => {
             let breedCheck = true;
             let genderCheck = true;
-            let isFirstGen = (dragon.mother === undefined || dragon.father === undefined);
+            let isFirstGen = !(dragon.hasParents());
 
             if(!isFirstGen) {
-                breedCheck = (dragon.mother?.breed.id === id || dragon.father?.breed.id === id)
+                breedCheck = (dragon.mother()?.breed.id === id || dragon.father()?.breed.id === id)
             }
 
             if(genders !== "mf-mf") {

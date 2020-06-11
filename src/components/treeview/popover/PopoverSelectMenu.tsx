@@ -87,7 +87,7 @@ export default class DVSelect extends React.Component<Props, State> {
     }
     
     handleChange(selectedOption: any) {
-        this.props.onChange(this.props.selectionPool.get(selectedOption.value));
+        this.props.onChange(selectedOption.value);
     }
 
     render() {

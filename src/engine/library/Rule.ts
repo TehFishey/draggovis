@@ -1,7 +1,5 @@
 import Condition from "./Condition";
-import DragonNode from "./DragonNode";
-
-type nodeReference = (node: DragonNode) => any;
+import {nodeReference} from "./DragonNode";
 
 export default class Rule extends Condition {
     tooltip: nodeReference;

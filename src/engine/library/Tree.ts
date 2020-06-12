@@ -17,37 +17,35 @@ export default class Tree extends Array<DragonNode | null> {
         return this[index]!;
     }
 
+
     removeNode(index: number) {
         if (this[index]==null) return;
+
+        let branch = this.getBranch(this[index]!, false);
         
-        function getBranch(branch: Array<DragonNode>, node : DragonNode | null) {
+        branch.forEach((node: DragonNode | null) => {
             if(node!=null) {
-                branch.push(node);
-                if(node.hasParents()) {
-                    getBranch(branch, node.mother());
-                    getBranch(branch, node.father());
-                }
+                this[node.index] = null;
+                this.warnings[node.index] = null;
             }
-        }
-
-        let branch: Array<DragonNode> = []
-        getBranch(branch, this[index]);
-
-        branch.forEach((node: DragonNode) => {
-            this[node.index] = null;
-            this.warnings[node.index] = null;
         });
     }
 
-    cloneTree() : Tree {
+    copyNode(node: DragonNode, index?: number) : DragonNode {
+        index = (index != null) ? index : node.index;
+        let n = this.createNode(index, node.gender, node.breed, node.portrait);
+        n.name = node.name;
+
+        return n;
+    }
+
+    copyTree() : Tree {
         let clone = new Tree();
         
         let n : DragonNode;
-        this.forEach((node : DragonNode | null, index: number) => {
+        this.forEach((node : DragonNode | null) => {
             if(node!=null) {
-                n = clone.createNode(index, node.gender, node.breed, node.portrait);
-                n.name = node.name;
-                n.meta = new MetaData();
+                n = clone.copyNode(node);
                 n.meta.invalidData = node.meta.invalidData
                 n.meta.warnings = new Map<string, string>(node.meta.warnings)
             }
@@ -61,18 +59,56 @@ export default class Tree extends Array<DragonNode | null> {
         this.slice(0,0);
         
         let n : DragonNode;
-        newData.forEach((node : DragonNode | null, index: number) => {
-            if(node!=null)
+        newData.forEach((node : DragonNode | null) => {
             if(node!=null) {
-                n = this.createNode(index, node.gender, node.breed, node.portrait);
-                n.name = node.name;
-                n.meta = node.meta;
+                n = this.copyNode(node)
+                n.meta.invalidData = node.meta.invalidData
+                n.meta.warnings = new Map<string, string>(node.meta.warnings)
             }
         });
 
         this.warnings = Tree.cloneWarnings(newData.warnings)
     }
 
+    getBranch(root: DragonNode, keepStructure: boolean) : Array<DragonNode | null> {
+
+        function iterate(branch: Array<DragonNode | null>, node : DragonNode | null, index: number=0) {
+            if(node!=null) {
+                (keepStructure) ? branch[index] = node : branch.push(node)
+                if(node.hasParents()) {
+                    iterate(branch, node.father(), index*2+1);
+                    iterate(branch, node.mother(), index*2+2);
+                }
+            }
+        }
+
+        let branch: Array<DragonNode | null> = [];
+        iterate(branch, root);
+
+        return branch;
+    }
+
+    setBranch(root: DragonNode, branch: Array<DragonNode | null>) {
+        
+        function iterate(tree: Tree, treeIndex: number, branchIndex: number) {
+            if(branch[branchIndex]!=null) {
+                tree.copyNode(branch[branchIndex]!, treeIndex)
+                if(branch[branchIndex*2+1] != null && branch[branchIndex*2+2] != null) {
+                    iterate(tree, treeIndex*2+1, branchIndex*2+1);
+                    iterate(tree, treeIndex*2+2, branchIndex*2+2);
+                }
+            }
+        }
+
+        
+
+        let ti = root.index;
+        let bi = 0;
+        
+        this.removeNode(ti);
+        iterate(this, ti, bi);
+    }
+    
     static cloneWarnings(warnings: Array<Set<string> | null>) :  Array<Set<string> | null> {
         let newWarnings : Array<Set<string> | null> = [];
 
@@ -82,4 +118,6 @@ export default class Tree extends Array<DragonNode | null> {
 
         return newWarnings;
     }
+
+    
 };

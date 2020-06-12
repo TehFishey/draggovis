@@ -58,6 +58,12 @@ export default class DataManager {
 
     pushTree() : Tree {
         console.log(`Controller: Pushing new tree data.`)
-        return this.lineageData.cloneTree();
+        let out = this.lineageData.copyTree();
+        console.log(`current:`);
+        console.log(this.lineageData);
+        console.log(`clone:`);
+        console.log(out);
+
+        return out;
     }
 }

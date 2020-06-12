@@ -58,6 +58,7 @@ export default class TreeElement extends React.Component<Props, State> {
             if(show) this.getImgRect();
             this.setState({showTooltip : show});
         }
+        else this.setState({showTooltip : false});
     }
 
     writeTooltip() {

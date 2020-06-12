@@ -19,11 +19,11 @@ export default class DragonNode extends Dragon {
     }
 
     getMotherIndex() : number {
-        return ((this.index * 2) + 1);
+        return ((this.index * 2) + 2);
     }
 
     getFatherIndex() : number {
-        return ((this.index * 2) + 2);
+        return ((this.index * 2) + 1);
     }
 
     getChildIndex() : number {

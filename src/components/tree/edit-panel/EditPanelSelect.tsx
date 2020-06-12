@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+
 import Breed from '../../../engine/library/Breed';
 import Portrait from '../../../engine/library/Portrait';
 import DragonNode from '../../../engine/library/DragonNode';
@@ -18,6 +19,32 @@ interface Props {
 interface State {
     validOptions: Array<menuOption>,
 }
+
+const targetHeight = 24;
+
+const styles = {
+  control: (base: any) => ({
+    ...base,
+    minHeight: 'initial',
+    borderColor: 'hsl(0,0%,80%)',
+    borderRadius: '2px',
+    borderWidth: '0px',
+    borderBottom: 'solid 1px #101010'
+  }),
+  valueContainer: (base: any)  => ({
+    ...base,
+    height: `${targetHeight - 1 - 1}px`,
+    padding: '0 8px',
+  }),
+  clearIndicator: (base: any)  => ({
+    ...base,
+    padding: `${(targetHeight - 20 - 1 - 1) / 2}px`,
+  }),
+  dropdownIndicator: (base: any)  => ({
+    ...base,
+    padding: `${(targetHeight - 20 - 1 - 1) / 2}px`,
+  }),
+};
 
 export default class DVSelect extends React.Component<Props, State> {
     constructor(props: Props){
@@ -93,7 +120,8 @@ export default class DVSelect extends React.Component<Props, State> {
     render() {
         return (
             <Select
-                name = "dragonTypeSelect"
+                name = "react-select-menu"
+                styles={styles}
                 value = { this.getCurrentValue() }
                 options = { this.state.validOptions }
                 isSearchable = { true }

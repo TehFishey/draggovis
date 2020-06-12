@@ -1,9 +1,23 @@
 import React from 'react';
+<<<<<<< Updated upstream:src/components/treeview/TreeElement.tsx
 import Popover from './popover/Popover';
 import Tooltip from './tooltip/Tooltip';
 import EditWindow from './popover/PopoverEditWindow';
 import {debounce} from '../../utilities/Limiters';
 import DragonNode from '../../engine/library/DragonNode';
+=======
+import Popover from '../general/popover/PopoverModal';
+import Tooltip from '../general/tooltip/Tooltip';
+import EditWindow from './edit-panel/EditPanel';
+import Draggable, { DropEffect } from '../general/drag-drop/Draggable';
+import Droppable from '../general/drag-drop/Droppable';
+import { SettingsConsumer, DragDrop } from '../../Settings';
+
+import DragonNode from '../../engine/library/DragonNode';
+import Tree from '../../engine/library/Tree';
+import Controller from '../../engine/controller/Controller';
+import Portrait from '../../engine/library/Portrait';
+>>>>>>> Stashed changes:src/components/tree/TreeElement.tsx
 
 type windowCoordinates = {x: number, y: number}
 
@@ -112,11 +126,27 @@ export default class TreeNode extends React.Component<Props, State> {
         newData.meta.updated = true;
         this.props.onChange(newData);
     }
+<<<<<<< Updated upstream:src/components/treeview/TreeElement.tsx
 
     recursiveDataUpdate(sourceParent: parent, parentData: DragonNode) {
         let newData = this.props.data;
         newData[sourceParent] = parentData;
         this.props.onChange(newData);
+=======
+    
+    updateTree(newData: Tree) {
+        this.props.setData(newData);
+>>>>>>> Stashed changes:src/components/tree/TreeElement.tsx
+    }
+
+    executeDrop(type : DragDrop, index : string) {
+        let dragI: number = +index;
+        let dropI: number = this.props.node.index;
+
+        if(type === DragDrop.CopyOne) this.updateTree(Controller.dragDrop.copyOne(dragI, dropI));
+        else if(type === DragDrop.CopySet) this.updateTree(Controller.dragDrop.copySet(dragI, dropI));
+        else if(type === DragDrop.SwapOne) this.updateTree(Controller.dragDrop.swapOne(dragI, dropI));
+        else if(type === DragDrop.SwapSet) this.updateTree(Controller.dragDrop.swapSet(dragI, dropI));
     }
 
     buildParentComponents() {
@@ -140,13 +170,24 @@ export default class TreeNode extends React.Component<Props, State> {
 
     componentDidMount() {
         this.updatePosition();
+        console.log('in tree node mount: ');
+        console.log(this.canvas);
+        console.log(this.canvas.current);
         window.addEventListener("resize", this.updatePosition);
         this.canvasRef.current!.addEventListener("scroll", this.update2);
     }
 
     componentWillUnmount() {
+<<<<<<< Updated upstream:src/components/treeview/TreeElement.tsx
         window.removeEventListener("resize", this.update2);
         this.canvasRef.current!.removeEventListener("scroll", this.update2);
+=======
+        console.log('in tree node unmount: ');
+        console.log(this.canvas);
+        console.log(this.canvas.current);
+        window.removeEventListener("resize", this.updatePosition);
+        this.canvas.current!.removeEventListener("scroll", this.updatePosition);
+>>>>>>> Stashed changes:src/components/tree/TreeElement.tsx
     }
 
     render () {
@@ -155,7 +196,15 @@ export default class TreeNode extends React.Component<Props, State> {
                 <Popover 
                     show={this.state.showPopover} 
                     loc={this.calcPopoverLoc()}
+<<<<<<< Updated upstream:src/components/treeview/TreeElement.tsx
                     content={ <EditWindow data={this.props.data} update={(popoverData: DragonNode) => this.internalDataUpdate(popoverData)}/> } 
+=======
+                    content={ <EditWindow 
+                        tree={this.props.tree} 
+                        node={this.props.node} 
+                        updateTree={(newTree: Tree) => this.updateTree(newTree)}/> 
+                    } 
+>>>>>>> Stashed changes:src/components/tree/TreeElement.tsx
                     handleClose={()=>{this.displayPopover(false)}} 
                 />
                 <Tooltip
@@ -163,6 +212,7 @@ export default class TreeNode extends React.Component<Props, State> {
                     loc={this.calcTooltipLoc()}
                     content={this.writeTooltip()} 
                 />
+<<<<<<< Updated upstream:src/components/treeview/TreeElement.tsx
                 <div className='tree-unit-display'>
                     <img 
                         className={(this.props.data.meta.failedValidation) ? 'tree-unit-display-portrait invalid-portrait' : 'tree-unit-display-portrait'}
@@ -177,6 +227,31 @@ export default class TreeNode extends React.Component<Props, State> {
                     />
                     <label className='tree-unit-display-label'>{(this.props.data.name) ? this.props.data.name : "(code)"}</label>
                 </div>
+=======
+                <SettingsConsumer>
+                {value => { return (
+                    <div className='tree-unit-display'>
+                        <Droppable onDrop={(index : string)=>{this.executeDrop(value.dragDrop, index)}} dropEffect={DropEffect.Move}>
+                            <Draggable dragData={this.props.node.index.toString()} dropEffect={DropEffect.Move}>
+                                <div 
+                                    className={(this.props.node.meta.invalidData && value.enableWarn) ? 'tree-unit-display-portrait highlight-warning' : 'tree-unit-display-portrait'}
+                                    onClick={e=>{this.displayPopover(true)}} 
+                                    ref={this.img}
+                                    onMouseEnter={e=>{this.displayTooltip(value.enableWarn)}}
+                                    onMouseOut={e=>{this.displayTooltip(false)}}
+                                    style={{
+                                        backgroundImage : `url(${Portrait.getThumbImg(this.props.node.portrait)})`,
+                                        backgroundRepeat : 'no-repeat', 
+                                        backgroundPosition : '50% 50%'
+                                    }}
+                                />      
+                            </Draggable> 
+                            <label className='tree-unit-display-label'>{(this.props.node.name !== "") ? this.props.node.name : "(code)"}</label>
+                        </Droppable>
+                    </div> 
+                )}}
+                </SettingsConsumer>
+>>>>>>> Stashed changes:src/components/tree/TreeElement.tsx
                 {this.buildParentComponents()}
             </li>
         );

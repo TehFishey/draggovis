@@ -1,0 +1,81 @@
+.edit-panel {
+	display: flex;
+	padding: 5px;
+	background: #ffffff;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#101010;
+	box-shadow: inset 0 0 10px black, 5px 5px 10px;
+}
+
+.edit-panel-body {
+	display: grid;
+	grid-template-areas: 'image   properties'
+						 'label   controls'
+						 'toggles controls';
+	grid-template-rows: 115px 46px auto;
+	grid-template-columns: 115px 1fr;
+	grid-column-gap: 5px;
+	padding: 15px 8px 8px 8px;
+}
+
+.ep-image {
+	grid-area: image;
+	width: 110px;
+	height: 110px;
+	border: solid 2px #101010;
+	border-radius: 2px;
+	background-color: rgb(218, 200, 178);
+	box-shadow: inset 0 0 3px black;
+}
+
+.ep-label {
+	grid-area: label;
+	text-align: center;
+	margin-top: -1px;
+	width: 114px;
+	background-color: rgb(190, 190, 190);
+}
+
+.ep-toggles {
+	grid-area: toggles;
+}
+
+.ep-properties {
+	grid-area: properties;
+	display: grid;
+	grid-template-areas: 'n-label n-set'
+						 'g-label g-set'
+						 'b-label b-set'
+						 'p-label p-set';
+	grid-template-rows: 26px 26px 26px 26px;
+	grid-template-columns: 55px 1fr;
+}
+.ep-props-label {
+}
+.ep-props-control {
+	width: 200px;
+}
+
+.ep-controls {
+	grid-area: controls;
+	display: grid;
+	grid-template-areas: 'label label'
+						 'addp addp'
+						 'remp remp'
+						 'blnk ancestor';
+	margin: 10px 0px 0px 10px;
+	padding: 3px 5px 5px 5px;
+	border: solid 2px #101010;
+	box-shadow: inset 0 0 3px black;
+	
+
+}
+.ep-controls button {
+	
+}
+.ep-cont-label {
+	grid-area: label;
+	border-bottom: solid 1px black;
+	margin-bottom: 2px;
+}

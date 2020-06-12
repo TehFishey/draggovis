@@ -20,4 +20,20 @@ export default class Portrait {
             warning: `${this.label} is always valid.`
         }
     }
+
+    static imgRoot = `${process.env.PUBLIC_URL}portraits/`
+    static unkLargeImgPath = `${Portrait.imgRoot}/unknown_large.png`;
+    static unkThumbImgPath = `${Portrait.imgRoot}/unknown_small.png`;
+
+    static getLargeImg(portrait : Portrait | null) : string {
+        let path: string;
+        if(portrait != null) return path = Portrait.imgRoot+portrait.imagePath;
+        return Portrait.unkLargeImgPath;
+    }
+
+    static getThumbImg(portrait : Portrait | null) : string {
+        let path: string;
+        if(portrait != null) return path = Portrait.imgRoot+portrait.thumbPath;
+        return Portrait.unkThumbImgPath;
+    }
 };

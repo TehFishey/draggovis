@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< Updated upstream
 import DragonElement from './treeview/TreeElement';
 import './treeview/tree-root.css';
 import './stage.css';
@@ -8,9 +9,20 @@ import {Rules} from '../engine/data/Model';
 
 import testData from '../TestData';
 import Rule from '../engine/library/Rule';
+=======
+import TreeElement from './tree/TreeElement';
+import Menu from './menu/Menu';
+import Sidebar from './sidebar/Sidebar';
+import './tree/tree.css';
+import './stage.css';
+
+import Tree from '../engine/library/Tree';
+
+import Controller from '../engine/controller/Controller'
+>>>>>>> Stashed changes
 
 interface Props {}
-  
+
 interface State {
     data: DragonNode;
     renderCanvas: boolean;
@@ -27,7 +39,9 @@ export default class Stage extends React.Component<Props, State> {
             data: testData,
             renderCanvas : false
         }
+
         this.canvasRef = React.createRef();
+<<<<<<< Updated upstream
         this.getCanvasRef = this.getCanvasRef.bind(this);
     }
 
@@ -85,20 +99,37 @@ export default class Stage extends React.Component<Props, State> {
 
         return node;
     }
+=======
+    }
+
+    getCanvas = () => { return this.canvasRef; }
+    getData = () => { return this.state.tree; }
+    setData = (tree: Tree) => { this.setState({tree: tree})}
+>>>>>>> Stashed changes
 
     componentDidMount() {
-        if(!this.state.renderCanvas) this.setState({renderCanvas : true});
+        if(!this.state.renderCanvas) {
+            this.setState({renderCanvas : true});
+            console.log(this.canvasRef.current);
+        }
+    
     }
 
     render () {
         return ( 
             <div className='app-stage'>
-                <div className='stage-top-menu'></div>
-                <div className='stage-side-menu'></div>
+                <Menu
+                    tree={this.state.tree}
+                    setTree={this.setData}
+                />
+                <Sidebar
+                    mouseOver={this.state.tree[0]!}
+                />
                 <div className='stage-canvas' ref={this.canvasRef}>
                     {(this.state.renderCanvas) ? (
                         <div className="lineage-tree">
                             <ul id ="tree-root">
+<<<<<<< Updated upstream
                                 <DragonElement 
                                 data={this.state.data}
                                 getCanvasRef={this.getCanvasRef}
@@ -107,6 +138,13 @@ export default class Stage extends React.Component<Props, State> {
                                     this.setState({data : this.validateDataTree(treeData)})
                                     console.log(this.state.data);
                                 }}
+=======
+                                <TreeElement 
+                                tree={this.state.tree}
+                                node={this.state.tree[0]!}
+                                getCanvas={this.getCanvas}
+                                setData={this.setData}
+>>>>>>> Stashed changes
                                 />
                             </ul>
                         </div> ) : null}

@@ -10,7 +10,7 @@
 	padding:0;
 	margin:0
 }
-.lineage-tree div::after {
+.tree-unit-display::after {
 	content:"";
 	position:absolute;
 	top:calc(50% - 12px);
@@ -19,7 +19,7 @@
 	width:24px;
 	height:0
 }
-.lineage-tree div:only-child::after {
+.tree-unit-display:only-child::after {
 	display:none
 }
 .lineage-tree li > * {

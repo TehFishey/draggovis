@@ -1,9 +1,17 @@
 import React from 'react';
-import Popover from './popover/Popover';
-import Tooltip from './tooltip/Tooltip';
-import EditWindow from './popover/PopoverEditWindow';
+=======
+import Popover from '../general/popover/PopoverModal';
+import Tooltip from '../general/tooltip/Tooltip';
+import EditWindow from './edit-panel/EditPanel';
+import Draggable, { DropEffect } from '../general/drag-drop/Draggable';
+import Droppable from '../general/drag-drop/Droppable';
+import { SettingsConsumer, DragDrop } from '../../Settings';
+
 import DragonNode from '../../engine/library/DragonNode';
 import Tree from '../../engine/library/Tree';
+import Controller from '../../engine/controller/Controller';
+import Portrait from '../../engine/library/Portrait';
+>>>>>>> dev:src/components/tree/TreeElement.tsx
 
 type windowCoordinates = {x: number, y: number}
 
@@ -13,7 +21,7 @@ interface Props {
     setData: Function,
     getCanvas: Function,
 }
-  
+
 interface State {
     imgRect: {x: number, y: number, width: number, height: number},
     showPopover: boolean,
@@ -24,7 +32,7 @@ export default class TreeElement extends React.Component<Props, State> {
 
     canvas: React.RefObject<HTMLDivElement>;
     img: React.RefObject<HTMLImageElement>;
-    
+
     constructor(props: Props) {
         super(props);
 
@@ -33,7 +41,7 @@ export default class TreeElement extends React.Component<Props, State> {
             showPopover : false,
             showTooltip : false,
         }
-        
+
         this.img = React.createRef();
         this.canvas = this.props.getCanvas();
 
@@ -54,7 +62,7 @@ export default class TreeElement extends React.Component<Props, State> {
     }
 
     writeTooltip() {
-        if(this.props.node.meta.warnings != null && 
+        if(this.props.node.meta.warnings != null &&
            this.props.node.meta.warnings.size > 0) {
             let warnings: Array<JSX.Element> = []
             this.props.node.meta.warnings.forEach((tooltip: string)=>{
@@ -65,7 +73,7 @@ export default class TreeElement extends React.Component<Props, State> {
         return (<div></div>);
     }
 
-    getImgRect() { 
+    getImgRect() {
         if(this.img.current != null) {
             let rect = this.img.current.getBoundingClientRect();
             this.setState(
@@ -79,7 +87,7 @@ export default class TreeElement extends React.Component<Props, State> {
         }
     }
 
-    updatePosition() { 
+    updatePosition() {
         if(this.state.showPopover || this.state.showTooltip) {
             this.getImgRect();
         }
@@ -102,23 +110,34 @@ export default class TreeElement extends React.Component<Props, State> {
 
         return coords;
     }
-    
+
     updateTree(newData: Array<DragonNode>) {
         this.props.setData(newData);
+    }
+
+    executeDrop(type : DragDrop, index : string) {
+        let dragI: number = +index;
+        let dropI: number = this.props.node.index;
+
+        if(type === DragDrop.CopyOne) this.updateTree(Controller.dragDrop.copyOne(dragI, dropI));
+        else if(type === DragDrop.CopySet) this.updateTree(Controller.dragDrop.copySet(dragI, dropI));
+        else if(type === DragDrop.SwapOne) this.updateTree(Controller.dragDrop.swapOne(dragI, dropI));
+        else if(type === DragDrop.SwapSet) this.updateTree(Controller.dragDrop.swapSet(dragI, dropI));
+>>>>>>> dev:src/components/tree/TreeElement.tsx
     }
 
     buildParentComponents() {
         if(this.props.node.hasParents()) {
             let parents = [
-                (<TreeElement 
+                (<TreeElement
                     tree={this.props.tree}
-                    node={this.props.node.father()!} 
+                    node={this.props.node.father()!}
                     getCanvas={this.props.getCanvas}
                     setData={(treeData: Array<DragonNode>) => {this.props.setData(treeData)}}
                 />),
-                (<TreeElement 
+                (<TreeElement
                     tree={this.props.tree}
-                    node={this.props.node.mother()!} 
+                    node={this.props.node.mother()!}
                     getCanvas={this.props.getCanvas}
                     setData={(treeData: Array<DragonNode>) => {this.props.setData(treeData)}}
                 />)
@@ -130,6 +149,9 @@ export default class TreeElement extends React.Component<Props, State> {
 
     componentDidMount() {
         this.updatePosition();
+        console.log('in tree node mount: ');
+        console.log(this.canvas);
+        console.log(this.canvas.current);
         window.addEventListener("resize", this.updatePosition);
         this.canvas.current!.addEventListener("scroll", this.updatePosition);
     }
@@ -137,40 +159,51 @@ export default class TreeElement extends React.Component<Props, State> {
     componentWillUnmount() {
         window.removeEventListener("resize", this.updatePosition);
         this.canvas.current!.removeEventListener("scroll", this.updatePosition);
+>>>>>>> dev:src/components/tree/TreeElement.tsx
     }
 
     render() {
-        return ( 
+        return (
             <li className='tree-unit'>
-                <Popover 
-                    show={this.state.showPopover} 
+                <Popover
+                    show={this.state.showPopover}
                     loc={this.calcPopoverLoc()}
-                    content={ <EditWindow 
-                        tree={this.props.tree} 
-                        node={this.props.node} 
-                        updateTree={(newTree: Array<DragonNode>) => this.updateTree(newTree)}/> 
-                    } 
-                    handleClose={()=>{this.displayPopover(false)}} 
+                    content={ <EditWindow
+                        tree={this.props.tree}
+                        node={this.props.node}
+                        updateTree={(newTree: Array<DragonNode>) => this.updateTree(newTree)}/>
+                    }
+>>>>>>> dev:src/components/tree/TreeElement.tsx
+                    handleClose={()=>{this.displayPopover(false)}}
                 />
-                <Tooltip 
-                    show={this.state.showTooltip} 
+                <Tooltip
+                    show={this.state.showTooltip}
                     loc={this.calcTooltipLoc()}
-                    content={this.writeTooltip()} 
+                    content={this.writeTooltip()}
                 />
-                <div className='tree-unit-display'>
-                    <img 
-                        className={(this.props.node.meta.invalidData) ? 'tree-unit-display-portrait highlight-warning' : 'tree-unit-display-portrait'}
-                        onClick={()=>{this.displayPopover(true)}} 
-                        ref={this.img}
-                        onMouseEnter={()=>{this.displayTooltip(true)}}
-                        onMouseOut={()=>{this.displayTooltip(false)}}
-                        src={process.env.PUBLIC_URL + 'portraits/' + ((this.props.node.portrait !== undefined) ? 
-                                                                    this.props.node.portrait.thumbPath : 
-                                                                     "testDrag.png")} 
-                        alt={this.props.node.name + "'s portrait"} 
-                    />
-                    <label className='tree-unit-display-label'>{(this.props.node.name !== "") ? this.props.node.name : "(code)"}</label>
-                </div>
+                <SettingsConsumer>
+                {value => { return (
+                    <div className='tree-unit-display'>
+                        <Droppable onDrop={(index : string)=>{this.executeDrop(value.dragDrop, index)}} dropEffect={DropEffect.Move}>
+                            <Draggable dragData={this.props.node.index.toString()} dropEffect={DropEffect.Move}>
+                                <div 
+                                    className={(this.props.node.meta.invalidData && value.enableWarn) ? 'tree-unit-display-portrait highlight-warning' : 'tree-unit-display-portrait'}
+                                    onClick={e=>{this.displayPopover(true)}}
+                                    ref={this.img}
+                                    onMouseEnter={e=>{this.displayTooltip(value.enableWarn)}}
+                                    onMouseOut={e=>{this.displayTooltip(false)}}
+                                    style={{
+                                        backgroundImage : `url(${Portrait.getThumbImg(this.props.node.portrait)})`,
+                                        backgroundRepeat : 'no-repeat',
+                                        backgroundPosition : '50% 50%'
+                                    }}
+                                />
+                            </Draggable>
+                            <label className='tree-unit-display-label'>{(this.props.node.name !== "") ? this.props.node.name : "(code)"}</label>
+                        </Droppable>
+                    </div>
+                )}}
+                </SettingsConsumer>
                 {this.buildParentComponents()}
             </li>
         );

@@ -6,9 +6,10 @@ import './stage.css';
 import DragonNode from '../engine/library/DragonNode';
 import Tree from '../engine/library/Tree';
 import Controller from '../engine/controller/Controller'
+>>>>>>> dev
 
 interface Props {}
-  
+
 interface State {
     tree: Tree;
     renderCanvas: boolean;
@@ -17,7 +18,7 @@ interface State {
 export default class Stage extends React.Component<Props, State> {
 
     canvasRef: React.RefObject<HTMLDivElement>;
-    
+
     constructor(props: Props) {
         super(props);
 
@@ -25,6 +26,7 @@ export default class Stage extends React.Component<Props, State> {
             renderCanvas : false,
             tree: Controller.pushTree()
         }
+
         this.canvasRef = React.createRef();
         this.getCanvas = this.getCanvas.bind(this);
     }
@@ -48,9 +50,20 @@ export default class Stage extends React.Component<Props, State> {
         */
         return node;
     }
+=======
+    }
+
+    getCanvas = () => { return this.canvasRef; }
+    getData = () => { return this.state.tree; }
+    setData = (tree: Tree) => { this.setState({tree: tree})}
+>>>>>>> Stashed changes
 
     componentDidMount() {
-        if(!this.state.renderCanvas) this.setState({renderCanvas : true});
+        if(!this.state.renderCanvas) {
+            this.setState({renderCanvas : true});
+            console.log(this.canvasRef.current);
+        }
+
     }
 
     componentDidUpdate() {
@@ -60,23 +73,29 @@ export default class Stage extends React.Component<Props, State> {
     }
 
     render () {
-        return ( 
+        return (
             <div className='app-stage'>
-                <div className='stage-top-menu'></div>
-                <div className='stage-side-menu'></div>
+                <Menu
+                    tree={this.state.tree}
+                    setTree={this.setData}
+                />
+                <Sidebar
+                    mouseOver={this.state.tree[0]!}
+                />
                 <div className='stage-canvas' ref={this.canvasRef}>
                     {(this.state.renderCanvas) ? (
                         <div className="lineage-tree">
                             <ul id ="tree-root">
-                                <TreeElement 
+                                <TreeElement
                                 tree={this.state.tree}
                                 node={this.state.tree[0]!}
                                 getCanvas={this.getCanvas}
-                                setData={(tree: Tree) => {this.setData(tree)}}
+                                setData={this.setData}
+>>>>>>> dev
                                 />
                             </ul>
                         </div> ) : null}
-                </div>    
+                </div>
             </div>
         );
     }

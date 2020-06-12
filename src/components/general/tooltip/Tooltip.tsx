@@ -14,7 +14,7 @@ interface Props {
   
 interface State {}
 
-export default class Popover extends React.Component<Props,State> {
+export default class Tooltip extends React.Component<Props,State> {
     
     componentRef: React.RefObject<HTMLDivElement>;
 

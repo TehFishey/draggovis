@@ -1,6 +1,6 @@
 import React from 'react';
 import {createPortal} from "react-dom";
-import './popover.css';
+import './popover-modal.css';
 
 const overlay = document.getElementById("overlay");
 
@@ -33,9 +33,12 @@ export default class Popover extends React.Component<Props, State> {
         this.componentRef = React.createRef();
     }
     
-    handleClose(e: Event | React.MouseEvent) {
-        e.stopPropagation();
+    closeModal = (e: Event | React.MouseEvent) => {
         this.props.handleClose();
+    }
+
+    clickWithin = (e: Event | React.MouseEvent) => {
+        e.stopPropagation();
     }
 
     adjustPosition() {
@@ -66,17 +69,13 @@ export default class Popover extends React.Component<Props, State> {
         return ( 
             <>
             {createPortal((
-                <div 
-                    className='popover-window'
-                    ref={this.componentRef}
-                    style={{ transform : `translate(${this.state.pos.x}px, ${this.state.pos.y}px)` }}
-                >
-                    <div className='popover-content'>{this.props.content}</div>
-                    <button 
-                        className='popover-close'
-                        onClick={(e)=>{this.handleClose(e)}}>
-                            Close
-                    </button>
+                <div className='popover-overlay' onClick={this.closeModal}>
+                    <div className='popover-modal'
+                        ref={this.componentRef}
+                        style={{ transform : `translate(${this.state.pos.x}px, ${this.state.pos.y}px)`}}
+                        onClick={this.clickWithin}>
+                        <div className='popover-content'>{this.props.content}</div>
+                    </div>
                 </div>), overlay!)}
             </>
         );

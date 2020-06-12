@@ -1,12 +1,12 @@
 import React from 'react';
-import TreeElement from './treeview/TreeElement';
-import './treeview/tree-root.css';
+import TreeElement from './tree/TreeElement';
+import Menu from './menu/Menu';
+import Sidebar from './sidebar/Sidebar';
+import './tree/tree.css';
 import './stage.css';
 
-import DragonNode from '../engine/library/DragonNode';
 import Tree from '../engine/library/Tree';
 import Controller from '../engine/controller/Controller'
->>>>>>> dev
 
 interface Props {}
 
@@ -31,32 +31,9 @@ export default class Stage extends React.Component<Props, State> {
         this.getCanvas = this.getCanvas.bind(this);
     }
 
-    getCanvas() { return this.canvasRef; }
-    getData() { return this.state.tree; }
-    setData(tree: Tree) { this.setState({tree: tree})}
-
-    validateNode(data: DragonNode) {
-        let node = data;
-        /*
-        node.meta.failedValidation = false;
-        node.meta.validationWarning = [];
-
-        Rules.arr.forEach((rule : Rule)=>{
-            if(!rule.validate(node)) {
-                node.meta.failedValidation = true;
-                node.meta.validationWarning.push(rule.tooltip(node));
-            }}
-        );
-        */
-        return node;
-    }
-=======
-    }
-
     getCanvas = () => { return this.canvasRef; }
     getData = () => { return this.state.tree; }
     setData = (tree: Tree) => { this.setState({tree: tree})}
->>>>>>> Stashed changes
 
     componentDidMount() {
         if(!this.state.renderCanvas) {
@@ -91,7 +68,6 @@ export default class Stage extends React.Component<Props, State> {
                                 node={this.state.tree[0]!}
                                 getCanvas={this.getCanvas}
                                 setData={this.setData}
->>>>>>> dev
                                 />
                             </ul>
                         </div> ) : null}

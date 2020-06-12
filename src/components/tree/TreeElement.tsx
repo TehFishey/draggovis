@@ -1,5 +1,5 @@
 import React from 'react';
-=======
+
 import Popover from '../general/popover/PopoverModal';
 import Tooltip from '../general/tooltip/Tooltip';
 import EditWindow from './edit-panel/EditPanel';
@@ -11,7 +11,6 @@ import DragonNode from '../../engine/library/DragonNode';
 import Tree from '../../engine/library/Tree';
 import Controller from '../../engine/controller/Controller';
 import Portrait from '../../engine/library/Portrait';
->>>>>>> dev:src/components/tree/TreeElement.tsx
 
 type windowCoordinates = {x: number, y: number}
 
@@ -111,7 +110,7 @@ export default class TreeElement extends React.Component<Props, State> {
         return coords;
     }
 
-    updateTree(newData: Array<DragonNode>) {
+    updateTree(newData: Tree) {
         this.props.setData(newData);
     }
 
@@ -123,7 +122,6 @@ export default class TreeElement extends React.Component<Props, State> {
         else if(type === DragDrop.CopySet) this.updateTree(Controller.dragDrop.copySet(dragI, dropI));
         else if(type === DragDrop.SwapOne) this.updateTree(Controller.dragDrop.swapOne(dragI, dropI));
         else if(type === DragDrop.SwapSet) this.updateTree(Controller.dragDrop.swapSet(dragI, dropI));
->>>>>>> dev:src/components/tree/TreeElement.tsx
     }
 
     buildParentComponents() {
@@ -159,7 +157,6 @@ export default class TreeElement extends React.Component<Props, State> {
     componentWillUnmount() {
         window.removeEventListener("resize", this.updatePosition);
         this.canvas.current!.removeEventListener("scroll", this.updatePosition);
->>>>>>> dev:src/components/tree/TreeElement.tsx
     }
 
     render() {
@@ -171,9 +168,8 @@ export default class TreeElement extends React.Component<Props, State> {
                     content={ <EditWindow
                         tree={this.props.tree}
                         node={this.props.node}
-                        updateTree={(newTree: Array<DragonNode>) => this.updateTree(newTree)}/>
+                        updateTree={(newTree: Tree) => this.updateTree(newTree)}/>
                     }
->>>>>>> dev:src/components/tree/TreeElement.tsx
                     handleClose={()=>{this.displayPopover(false)}}
                 />
                 <Tooltip

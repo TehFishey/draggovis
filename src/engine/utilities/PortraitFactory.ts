@@ -1,6 +1,7 @@
 import Portrait from '../library/Portrait';
 import ConditionFactory from './ConditionFactory';
 import Condition from '../library/Condition';
+import { Gender } from '../library/Dragon';
 
 export default {
     customPortrait(id: string, label: string, isDefault: boolean, condition?: Condition) {
@@ -19,8 +20,8 @@ export default {
     mfPortraits(id: string) {
         let mId: string = id + "-m";
         let fId: string = id + "-f";
-        let mPortrait = new Portrait(mId, "Standard ♂", true, ConditionFactory.checkGender("Male", "Standard ♂"));
-        let fPortrait = new Portrait(fId, "Standard ♀", true, ConditionFactory.checkGender("Female", "Standard ♀")); 
+        let mPortrait = new Portrait(mId, "Standard ♂", true, ConditionFactory.checkGender(Gender.Male, "Standard ♂"));
+        let fPortrait = new Portrait(fId, "Standard ♀", true, ConditionFactory.checkGender(Gender.Female, "Standard ♀")); 
         
         return [mPortrait,fPortrait];
     },
@@ -40,10 +41,10 @@ export default {
         let mAltId = id + "-alt-m";
         let fAltId = id + "-alt-f";
     
-        let mPortrait = new Portrait(mId, "Standard ♂", true, ConditionFactory.checkGender("Male", "Standard ♂"));
-        let fPortrait = new Portrait(fId, "Standard ♀", true, ConditionFactory.checkGender("Female", "Standard ♀")); 
-        let mAltPortrait = new Portrait(mAltId, "Alt ♂", false, ConditionFactory.checkGender("Male", "Alt ♂"));
-        let fAltPortrait = new Portrait(fAltId, "Alt ♀", false, ConditionFactory.checkGender("Female", "Alt ♀")); 
+        let mPortrait = new Portrait(mId, "Standard ♂", true, ConditionFactory.checkGender(Gender.Male, "Standard ♂"));
+        let fPortrait = new Portrait(fId, "Standard ♀", true, ConditionFactory.checkGender(Gender.Female, "Standard ♀")); 
+        let mAltPortrait = new Portrait(mAltId, "Alt ♂", false, ConditionFactory.checkGender(Gender.Male, "Alt ♂"));
+        let fAltPortrait = new Portrait(fAltId, "Alt ♀", false, ConditionFactory.checkGender(Gender.Female, "Alt ♀")); 
 
         return [mPortrait,fPortrait,mAltPortrait,fAltPortrait];
     }

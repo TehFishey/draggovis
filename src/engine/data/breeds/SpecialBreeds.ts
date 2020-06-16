@@ -1,6 +1,7 @@
 import Breed from '../../library/Breed';
 import PortraitFactory from '../../utilities/PortraitFactory';
 import ConditionFactory from '../../utilities/ConditionFactory';
+import { Gender } from '../../library/Dragon';
 
 let SpecialBreeds: Array<Breed> = [
     new Breed("tinsel-dragon", "Tinsel Dragon", "dragon", "mf-mf", [
@@ -28,7 +29,7 @@ let SpecialBreeds: Array<Breed> = [
         PortraitFactory.customPortrait('tinsel-salt-u', "Salt", false, 
             ConditionFactory.and("Salt", [
                 ConditionFactory.checkFirstGeneration(),
-                ConditionFactory.checkGender("Female")
+                ConditionFactory.checkGender(Gender.Female)
             ])
         )
     ]),
@@ -58,7 +59,7 @@ let SpecialBreeds: Array<Breed> = [
         PortraitFactory.customPortrait('shimmer-salt-u', "Salt", false, 
             ConditionFactory.and("Salt", [
                 ConditionFactory.checkFirstGeneration(),
-                ConditionFactory.checkGender("Female")
+                ConditionFactory.checkGender(Gender.Female)
             ])
         )
     ]),
@@ -193,60 +194,60 @@ let SpecialBreeds: Array<Breed> = [
         PortraitFactory.customPortrait('shadow-walker-salt2-u', "Purple Salt", false)
     ]),
     new Breed("cavern-lurker-dragon", "Cavern Lurker Dragon", "dragon", "mf-mf", [
-        PortraitFactory.customPortrait('cavern-lurker-f', "Standard ♀", true, ConditionFactory.checkGender("Female","Standard ♀")),
-        PortraitFactory.customPortrait('cavern-lurker-m', "Standard ♂", true, ConditionFactory.checkGender("Male","Standard ♂")),
-        PortraitFactory.customPortrait('cavern-lurker-salt-f', "Salt ♀", false, ConditionFactory.checkGender("Female","Salt ♀")),
-        PortraitFactory.customPortrait('cavern-lurker-salt-m', "Salt ♂", false, ConditionFactory.checkGender("Male","Salt ♂"))
+        PortraitFactory.customPortrait('cavern-lurker-f', "Standard ♀", true, ConditionFactory.checkGender(Gender.Female,"Standard ♀")),
+        PortraitFactory.customPortrait('cavern-lurker-m', "Standard ♂", true, ConditionFactory.checkGender(Gender.Male,"Standard ♂")),
+        PortraitFactory.customPortrait('cavern-lurker-salt-f', "Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Salt ♀")),
+        PortraitFactory.customPortrait('cavern-lurker-salt-m', "Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Salt ♂"))
     ]),
     new Breed("grave-dragon", "Grave Dragon", "dragon", "mf-mf", [
-        PortraitFactory.customPortrait('grave-f', "Standard ♀", true, ConditionFactory.checkGender("Female","Standard ♀")),
-        PortraitFactory.customPortrait('grave-m', "Standard ♂", true, ConditionFactory.checkGender("Male","Standard ♂")),
-        PortraitFactory.customPortrait('grave-salt-f', "Salt ♀", false, ConditionFactory.checkGender("Female","Salt ♀")),
-        PortraitFactory.customPortrait('grave-salt-m', "Salt ♂", false, ConditionFactory.checkGender("Male","Salt ♂"))
+        PortraitFactory.customPortrait('grave-f', "Standard ♀", true, ConditionFactory.checkGender(Gender.Female,"Standard ♀")),
+        PortraitFactory.customPortrait('grave-m', "Standard ♂", true, ConditionFactory.checkGender(Gender.Male,"Standard ♂")),
+        PortraitFactory.customPortrait('grave-salt-f', "Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Salt ♀")),
+        PortraitFactory.customPortrait('grave-salt-m', "Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Salt ♂"))
     ]),
     new Breed("desipis-dragon", "Desipis Dragon", "dragon", "mf-mf", [
-        PortraitFactory.customPortrait('desipis-f', "Standard ♀", true, ConditionFactory.checkGender("Female","Standard ♀")),
-        PortraitFactory.customPortrait('desipis-m', "Standard ♂", true, ConditionFactory.checkGender("Male","Standard ♂")),
-        PortraitFactory.customPortrait('desipis-salt1-f', "Turquoise Salt ♀", false, ConditionFactory.checkGender("Female","Turquoise Salt ♀")),
-        PortraitFactory.customPortrait('desipis-salt1-m', "Turquoise Salt ♂", false, ConditionFactory.checkGender("Male","Turquoise Salt ♂")),
-        PortraitFactory.customPortrait('desipis-salt2-f', "Green Salt ♀", false, ConditionFactory.checkGender("Female","Green Salt ♀")),
-        PortraitFactory.customPortrait('desipis-salt2-m', "Green Salt ♂", false, ConditionFactory.checkGender("Male","Green Salt ♂")),
+        PortraitFactory.customPortrait('desipis-f', "Standard ♀", true, ConditionFactory.checkGender(Gender.Female,"Standard ♀")),
+        PortraitFactory.customPortrait('desipis-m', "Standard ♂", true, ConditionFactory.checkGender(Gender.Male,"Standard ♂")),
+        PortraitFactory.customPortrait('desipis-salt1-f', "Turquoise Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Turquoise Salt ♀")),
+        PortraitFactory.customPortrait('desipis-salt1-m', "Turquoise Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Turquoise Salt ♂")),
+        PortraitFactory.customPortrait('desipis-salt2-f', "Green Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Green Salt ♀")),
+        PortraitFactory.customPortrait('desipis-salt2-m', "Green Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Green Salt ♂")),
     ]),
     new Breed("caligene-dragon", "Caligene Dragon", "dragon", "mf-mf", [
-        PortraitFactory.customPortrait('caligene-f', "Standard ♀", true, ConditionFactory.checkGender("Female","Standard ♀")),
-        PortraitFactory.customPortrait('caligene-m', "Standard ♂", true, ConditionFactory.checkGender("Male","Standard ♂")),
-        PortraitFactory.customPortrait('caligene-salt-f', "Salt ♀", false, ConditionFactory.checkGender("Female","Salt ♀")),
-        PortraitFactory.customPortrait('caligene-salt-m', "Salt ♂", false, ConditionFactory.checkGender("Male","Salt ♂"))
+        PortraitFactory.customPortrait('caligene-f', "Standard ♀", true, ConditionFactory.checkGender(Gender.Female,"Standard ♀")),
+        PortraitFactory.customPortrait('caligene-m', "Standard ♂", true, ConditionFactory.checkGender(Gender.Male,"Standard ♂")),
+        PortraitFactory.customPortrait('caligene-salt-f', "Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Salt ♀")),
+        PortraitFactory.customPortrait('caligene-salt-m', "Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Salt ♂"))
     ]),
     new Breed("witchlight-dragon", "Witchlight Dragon", "dragon", "mf-mf", [
-        PortraitFactory.customPortrait('witchlight-f', "Standard ♀", true, ConditionFactory.checkGender("Female","Standard ♀")),
-        PortraitFactory.customPortrait('witchlight-m', "Standard ♂", true, ConditionFactory.checkGender("Male","Standard ♂")),
-        PortraitFactory.customPortrait('witchlight-salt-f', "Salt ♀", false, ConditionFactory.checkGender("Female","Salt ♀")),
-        PortraitFactory.customPortrait('witchlight-salt-m', "Salt ♂", false, ConditionFactory.checkGender("Male","Salt ♂"))
+        PortraitFactory.customPortrait('witchlight-f', "Standard ♀", true, ConditionFactory.checkGender(Gender.Female,"Standard ♀")),
+        PortraitFactory.customPortrait('witchlight-m', "Standard ♂", true, ConditionFactory.checkGender(Gender.Male,"Standard ♂")),
+        PortraitFactory.customPortrait('witchlight-salt-f', "Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Salt ♀")),
+        PortraitFactory.customPortrait('witchlight-salt-m', "Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Salt ♂"))
     ]),
     new Breed("omen-wyrm", "Omen Wyrm", "dragon", "mf-mf", [
-        PortraitFactory.customPortrait('omen-f', "Standard ♀", true, ConditionFactory.checkGender("Female","Standard ♀")),
-        PortraitFactory.customPortrait('omen-m', "Standard ♂", true, ConditionFactory.checkGender("Male","Standard ♂")),
-        PortraitFactory.customPortrait('omen-salt1-f', "Blue Salt ♀", false, ConditionFactory.checkGender("Female","Blue Salt ♀")),
-        PortraitFactory.customPortrait('omen-salt1-m', "Blue Salt ♂", false, ConditionFactory.checkGender("Male","Blue Salt ♂")),
-        PortraitFactory.customPortrait('omen-salt2-f', "Red Salt ♀", false, ConditionFactory.checkGender("Female","Red Salt ♀")),
-        PortraitFactory.customPortrait('omen-salt2-m', "Red Salt ♂", false, ConditionFactory.checkGender("Male","Red Salt ♂")),
+        PortraitFactory.customPortrait('omen-f', "Standard ♀", true, ConditionFactory.checkGender(Gender.Female,"Standard ♀")),
+        PortraitFactory.customPortrait('omen-m', "Standard ♂", true, ConditionFactory.checkGender(Gender.Male,"Standard ♂")),
+        PortraitFactory.customPortrait('omen-salt1-f', "Blue Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Blue Salt ♀")),
+        PortraitFactory.customPortrait('omen-salt1-m', "Blue Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Blue Salt ♂")),
+        PortraitFactory.customPortrait('omen-salt2-f', "Red Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Red Salt ♀")),
+        PortraitFactory.customPortrait('omen-salt2-m', "Red Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Red Salt ♂")),
     ]),
     new Breed("arcana-dragon", "Arcana Dragon", "dragon", "mf-mf", [
-        PortraitFactory.customPortrait('arcana-f', "Standard ♀", true, ConditionFactory.checkGender("Female","Standard ♀")),
-        PortraitFactory.customPortrait('arcana-m', "Standard ♂", true, ConditionFactory.checkGender("Male","Standard ♂")),
-        PortraitFactory.customPortrait('arcana-salt1-f', "Blue Salt ♀", false, ConditionFactory.checkGender("Female","Blue Salt ♀")),
-        PortraitFactory.customPortrait('arcana-salt1-m', "Blue Salt ♂", false, ConditionFactory.checkGender("Male","Blue Salt ♂")),
-        PortraitFactory.customPortrait('arcana-salt2-f', "Green Salt ♀", false, ConditionFactory.checkGender("Female","Green Salt ♀")),
-        PortraitFactory.customPortrait('arcana-salt2-m', "Green Salt ♂", false, ConditionFactory.checkGender("Male","Green Salt ♂")),
+        PortraitFactory.customPortrait('arcana-f', "Standard ♀", true, ConditionFactory.checkGender(Gender.Female,"Standard ♀")),
+        PortraitFactory.customPortrait('arcana-m', "Standard ♂", true, ConditionFactory.checkGender(Gender.Male,"Standard ♂")),
+        PortraitFactory.customPortrait('arcana-salt1-f', "Blue Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Blue Salt ♀")),
+        PortraitFactory.customPortrait('arcana-salt1-m', "Blue Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Blue Salt ♂")),
+        PortraitFactory.customPortrait('arcana-salt2-f', "Green Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Green Salt ♀")),
+        PortraitFactory.customPortrait('arcana-salt2-m', "Green Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Green Salt ♂")),
     ]),
     new Breed("kohraki-dragon", "Kohraki Dragon", "dragon", "mf-mf", [
-        PortraitFactory.customPortrait('kohraki-f', "Standard ♀", true, ConditionFactory.checkGender("Female","Standard ♀")),
-        PortraitFactory.customPortrait('kohraki-m', "Standard ♂", true, ConditionFactory.checkGender("Male","Standard ♂")),
-        PortraitFactory.customPortrait('kohraki-salt1-f', "Blue Salt ♀", false, ConditionFactory.checkGender("Female","Blue Salt ♀")),
-        PortraitFactory.customPortrait('kohraki-salt1-m', "Blue Salt ♂", false, ConditionFactory.checkGender("Male","Blue Salt ♂")),
-        PortraitFactory.customPortrait('kohraki-salt2-f', "White Salt ♀", false, ConditionFactory.checkGender("Female","White Salt ♀")),
-        PortraitFactory.customPortrait('kohraki-salt2-m', "White Salt ♂", false, ConditionFactory.checkGender("Male","White Salt ♂")),
+        PortraitFactory.customPortrait('kohraki-f', "Standard ♀", true, ConditionFactory.checkGender(Gender.Female,"Standard ♀")),
+        PortraitFactory.customPortrait('kohraki-m', "Standard ♂", true, ConditionFactory.checkGender(Gender.Male,"Standard ♂")),
+        PortraitFactory.customPortrait('kohraki-salt1-f', "Blue Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"Blue Salt ♀")),
+        PortraitFactory.customPortrait('kohraki-salt1-m', "Blue Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"Blue Salt ♂")),
+        PortraitFactory.customPortrait('kohraki-salt2-f', "White Salt ♀", false, ConditionFactory.checkGender(Gender.Female,"White Salt ♀")),
+        PortraitFactory.customPortrait('kohraki-salt2-m', "White Salt ♂", false, ConditionFactory.checkGender(Gender.Male,"White Salt ♂")),
     ]),
 ]
 

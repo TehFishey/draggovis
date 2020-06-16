@@ -1,6 +1,7 @@
 import Portrait from './Portrait';
 import DragonNode from './DragonNode';
 import Condition from './Condition';
+import { Gender } from './Dragon';
 
 export default class Breed {
     id: string;                         // String Id for backend reference & dictionary lookups
@@ -37,14 +38,14 @@ export default class Breed {
                 if(isFirstGen) {
                     let genderString = dragon.breed.genders.split("-")[0];
                     genderCheck = (
-                        (genderString.includes('m') && dragon.gender === "Male") || 
-                        (genderString.includes('f') && dragon.gender === "Female")
+                        (genderString.includes('m') && dragon.gender === Gender.Male) || 
+                        (genderString.includes('f') && dragon.gender === Gender.Female)
                     );
                 } else {
                     let genderString = dragon.breed.genders.split("-")[1];
                     genderCheck = (
-                        (genderString.includes('m') && dragon.gender === "Male") || 
-                        (genderString.includes('f') && dragon.gender === "Female")
+                        (genderString.includes('m') && dragon.gender === Gender.Male) || 
+                        (genderString.includes('f') && dragon.gender === Gender.Female)
                     );
                 }
             }

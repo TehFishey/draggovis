@@ -74,6 +74,13 @@ export default class EditPanel extends React.Component<Props, State> {
             this.createParents();
     }
 
+    addRemoveChild = () => {
+        if(this.props.node.index === 0)
+            this.createChild();
+        else
+            this.removeChild();
+    }
+
     createParents() {
         this.props.updateTree(
             Controller.editWindow.createParents(this.props.node.index)
@@ -83,6 +90,19 @@ export default class EditPanel extends React.Component<Props, State> {
     removeParents() {
         this.props.updateTree(
             Controller.editWindow.removeParents(this.props.node.index)
+        );
+    }
+
+    createChild() {
+        console.log(`creating child for ${this.props.node.index}`);
+        this.props.updateTree(
+            Controller.editWindow.createChild(this.props.node.index)
+        );
+    }
+
+    removeChild() {
+        this.props.updateTree(
+            Controller.editWindow.removeChild(this.props.node.index)
         );
     }
 
@@ -166,7 +186,7 @@ export default class EditPanel extends React.Component<Props, State> {
                         </button>
                         <button 
                             style={{gridArea: 'remp'}}
-                            >
+                            onClick={this.addRemoveChild}>
                             Add/Remove Child
                         </button>
                         <DropDownButton

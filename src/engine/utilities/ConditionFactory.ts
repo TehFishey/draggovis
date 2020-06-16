@@ -1,5 +1,6 @@
 import Condition from "../library/Condition";
 import DragonNode, {nodeReference} from "../library/DragonNode";
+import { Gender } from "../library/Dragon";
 
 
 type pseudoObject = {id: String, label: String}
@@ -57,7 +58,7 @@ export default {
         return new Condition(validate, tooltip);
     },
     
-    checkGender(gender: string, label?: string) {
+    checkGender(gender: Gender, label?: string) {
         let tooltip = `'${label}' requires ${gender} gender.`;
         let validate = (dragon: DragonNode) => {return (dragon.gender === gender)};
         return new Condition(validate, tooltip);

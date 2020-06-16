@@ -1,7 +1,7 @@
 import DragonNode from './DragonNode';
 import Breed from './Breed';
 import Portrait from './Portrait';
-import MetaData from './MetaData';
+import { Gender } from './Dragon';
 
 export default class Tree extends Array<DragonNode | null> {
     
@@ -12,7 +12,7 @@ export default class Tree extends Array<DragonNode | null> {
         this.warnings = [];
     }
 
-    createNode(index: number, gender: string, breed: Breed, portrait:Portrait) : DragonNode {
+    createNode(index: number, gender: Gender, breed: Breed, portrait:Portrait) : DragonNode {
         this[index] = new DragonNode(this, index, gender, breed, portrait);
         return this[index]!;
     }
@@ -21,7 +21,7 @@ export default class Tree extends Array<DragonNode | null> {
     removeNode(index: number) {
         if (this[index]==null) return;
 
-        let branch = this.getBranch(this[index]!, false);
+        let branch = this.getBranch(index, false);
         
         branch.forEach((node: DragonNode | null) => {
             if(node!=null) {
@@ -70,7 +70,7 @@ export default class Tree extends Array<DragonNode | null> {
         this.warnings = Tree.cloneWarnings(newData.warnings)
     }
 
-    getBranch(root: DragonNode, keepStructure: boolean) : Array<DragonNode | null> {
+    getBranch(index: number, keepStructure: boolean) : Array<DragonNode | null> {
 
         function iterate(branch: Array<DragonNode | null>, node : DragonNode | null, index: number=0) {
             if(node!=null) {
@@ -83,12 +83,12 @@ export default class Tree extends Array<DragonNode | null> {
         }
 
         let branch: Array<DragonNode | null> = [];
-        iterate(branch, root);
+        iterate(branch, this[index]);
 
         return branch;
     }
 
-    setBranch(root: DragonNode, branch: Array<DragonNode | null>) {
+    setBranch(index: number, branch: Array<DragonNode | null>) {
         
         function iterate(tree: Tree, treeIndex: number, branchIndex: number) {
             if(branch[branchIndex]!=null) {
@@ -100,9 +100,8 @@ export default class Tree extends Array<DragonNode | null> {
             }
         }
 
-        
 
-        let ti = root.index;
+        let ti = index;
         let bi = 0;
 
         this.removeNode(ti);

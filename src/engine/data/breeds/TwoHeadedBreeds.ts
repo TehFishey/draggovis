@@ -3,6 +3,7 @@ import Portrait from '../../library/Portrait';
 import PortraitFactory from '../../utilities/PortraitFactory';
 import ConditionFactory from '../../utilities/ConditionFactory';
 import Condition from '../../library/Condition';
+import { Gender } from '../../library/Dragon';
 
 class TwoHeadedBreed extends Breed {
     constructor(id: string, label: string, portraits: Array<Portrait>, condition?: Condition) {
@@ -12,10 +13,10 @@ class TwoHeadedBreed extends Breed {
 
 let TwoHeadedBreeds: Array<Breed> = [
     new TwoHeadedBreed("baikala-dragon", "Baikala Dragon", [
-        PortraitFactory.customPortrait('baikala-b-f', "Blue", true, ConditionFactory.checkGender("Female")),
-        PortraitFactory.customPortrait('baikala-b-m', "Blue", true, ConditionFactory.checkGender("Male")),
-        PortraitFactory.customPortrait('baikala-g-f', "Green", true, ConditionFactory.checkGender("Female")),
-        PortraitFactory.customPortrait('baikala-g-m', "Green", true, ConditionFactory.checkGender("Male")),
+        PortraitFactory.customPortrait('baikala-b-f', "Blue", true, ConditionFactory.checkGender(Gender.Female)),
+        PortraitFactory.customPortrait('baikala-b-m', "Blue", true, ConditionFactory.checkGender(Gender.Male)),
+        PortraitFactory.customPortrait('baikala-g-f', "Green", true, ConditionFactory.checkGender(Gender.Female)),
+        PortraitFactory.customPortrait('baikala-g-m', "Green", true, ConditionFactory.checkGender(Gender.Male)),
     ]),
     new TwoHeadedBreed("bauta-dragon", "Bauta Dragon", PortraitFactory.uPortraits("bauta")),
     new TwoHeadedBreed("blancblack-dragon", "Blancblack Dragon", PortraitFactory.mfPortraits("blancblack")),
@@ -26,10 +27,10 @@ let TwoHeadedBreeds: Array<Breed> = [
     new TwoHeadedBreed("nexus-dragon", "Nexus Dragon", PortraitFactory.mfPortraits("nexus")),
     new TwoHeadedBreed("split-dragon", "Split Dragon", PortraitFactory.mfPortraits("split")),
     new TwoHeadedBreed("two-headed-lindwyrm", "Two-headed Lindwyrm", [
-        PortraitFactory.customPortrait('two-headed-g-f', "Green", true, ConditionFactory.checkGender("Female")),
-        PortraitFactory.customPortrait('two-headed-g-m', "Green", true, ConditionFactory.checkGender("Male")),
-        PortraitFactory.customPortrait('two-headed-p-f', "Purple", true, ConditionFactory.checkGender("Female")),
-        PortraitFactory.customPortrait('two-headed-p-m', "Purple", true, ConditionFactory.checkGender("Male")),
+        PortraitFactory.customPortrait('two-headed-g-f', "Green", true, ConditionFactory.checkGender(Gender.Female)),
+        PortraitFactory.customPortrait('two-headed-g-m', "Green", true, ConditionFactory.checkGender(Gender.Male)),
+        PortraitFactory.customPortrait('two-headed-p-f', "Purple", true, ConditionFactory.checkGender(Gender.Female)),
+        PortraitFactory.customPortrait('two-headed-p-m', "Purple", true, ConditionFactory.checkGender(Gender.Male)),
     ]),
 ]
 

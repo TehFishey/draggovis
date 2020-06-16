@@ -5,6 +5,7 @@ import DragDropController from "./controllers/DragDropController"
 import DragonNode from "../library/DragonNode";
 import Rule from "../library/Rule";
 import Stack from "../library/Stack";
+import { Gender } from "../library/Dragon";
 
 export type protoCommand = (tree: Tree) => Array<number>;
 
@@ -18,7 +19,7 @@ export default class DataManager {
 
     constructor() {
         this.lineageTree = new Tree();
-        this.lineageTree.createNode(0,'Male',Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!);
+        this.lineageTree.createNode(0,Gender.Male,Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!);
         //for(let i = 0; i <4094; i++) { this.lineageData.createNode(i, (i%2===0) ? 'Male' : 'Female', Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!); }
         this.lineageSnapshot = this.lineageTree.copyTree();
 

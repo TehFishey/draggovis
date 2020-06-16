@@ -1,6 +1,6 @@
 import { Breeds, Portraits, Rules } from "../data/Model";
 import Tree from "../library/Tree";
-import EditWindowController from "./controllers/EditWindowController"
+import EditPanelController from "./controllers/EditPanelController"
 import DragDropController from "./controllers/DragDropController"
 import DragonNode from "../library/DragonNode";
 import Rule from "../library/Rule";
@@ -14,7 +14,7 @@ export default class DataManager {
     private readonly undoStack : Stack;
     private readonly redoStack : Stack;
     private lineageSnapshot : Tree;
-    readonly editWindow : EditWindowController;
+    readonly editWindow : EditPanelController;
     readonly dragDrop : DragDropController;
 
     constructor() {
@@ -26,7 +26,7 @@ export default class DataManager {
         this.undoStack = new Stack();
         this.redoStack = new Stack();
 
-        this.editWindow = new EditWindowController(this);
+        this.editWindow = new EditPanelController(this);
         this.dragDrop = new DragDropController(this);
     }
 

@@ -71,41 +71,33 @@ export default class Tree extends Array<DragonNode | null> {
     }
 
     getBranch(index: number, keepStructure: boolean) : Array<DragonNode | null> {
-
-        function iterate(branch: Array<DragonNode | null>, node : DragonNode | null, index: number=0) {
-            if(node!=null) {
-                (keepStructure) ? branch[index] = node : branch.push(node)
-                if(node.hasParents()) {
-                    iterate(branch, node.father(), index*2+1);
-                    iterate(branch, node.mother(), index*2+2);
-                }
-            }
+        let branch: Array<DragonNode | null> = [];
+        let nodeToBranch = (t: Tree, ti: number, b: Array<DragonNode | null>, bi: number) => {
+            (keepStructure) ? branch[bi] = t[ti] : branch.push(t[ti]);
         }
 
-        let branch: Array<DragonNode | null> = [];
-        iterate(branch, this[index]);
-
+        Tree.iterate(this, index, branch, 0, nodeToBranch);
         return branch;
     }
 
     setBranch(index: number, branch: Array<DragonNode | null>) {
-        
-        function iterate(tree: Tree, treeIndex: number, branchIndex: number) {
-            if(branch[branchIndex]!=null) {
-                tree.copyNode(branch[branchIndex]!, treeIndex)
-                if(branch[branchIndex*2+1] != null && branch[branchIndex*2+2] != null) {
-                    iterate(tree, treeIndex*2+1, branchIndex*2+1);
-                    iterate(tree, treeIndex*2+2, branchIndex*2+2);
-                }
-            }
+        let nodeFromBranch = (t: Tree, ti: number, b: Array<DragonNode | null>, bi: number) => {
+            t.copyNode(b[bi]!, ti);
         }
 
+        this.removeNode(index);
+        Tree.iterate(this, index, branch, 0, nodeFromBranch);
+    }
 
-        let ti = index;
-        let bi = 0;
-
-        this.removeNode(ti);
-        iterate(this, ti, bi);
+    static iterate(tree: Tree, treeIndex: number, branch: Array<DragonNode | null>, branchIndex: number, callback: (tree: Tree, treeIndex: number, branch: Array<DragonNode | null>, branchIndex: number) => any) {
+        if(branch[branchIndex]!=null || tree[treeIndex]!=null) {
+            callback(tree, treeIndex, branch, branchIndex);
+            if((branch[branchIndex*2+1] != null && branch[branchIndex*2+2] != null) ||
+              (tree[treeIndex*2+1] != null && tree[treeIndex*2+2] != null)) { 
+                this.iterate(tree, treeIndex*2+1, branch, branchIndex*2+1, callback);
+                this.iterate(tree, treeIndex*2+2, branch, branchIndex*2+2, callback);
+            }
+        }
     }
     
     static cloneWarnings(warnings: Array<Set<string> | null>) :  Array<Set<string> | null> {

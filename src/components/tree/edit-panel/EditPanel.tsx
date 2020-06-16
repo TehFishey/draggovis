@@ -106,6 +106,12 @@ export default class EditPanel extends React.Component<Props, State> {
         );
     }
 
+    swapParents() {
+        this.props.updateTree(
+            Controller.editWindow.invertParents(this.props.node.index)
+        );
+    }
+
     render() {
         return (
             <div className='edit-panel'>
@@ -194,7 +200,7 @@ export default class EditPanel extends React.Component<Props, State> {
                             data={[
                                 {label: 'Copy', onClick: new Function()},
                                 {label: 'Paste', onClick: new Function()},
-                                {label: 'Invert', onClick: new Function()}
+                                {label: 'Invert', onClick: ()=>{this.swapParents()}}
                                 ]}
                             />
                     </div>

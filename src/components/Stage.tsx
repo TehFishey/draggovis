@@ -24,7 +24,7 @@ export default class Stage extends React.Component<Props, State> {
 
         this.state = {
             renderCanvas : false,
-            tree: Controller.pushTree()
+            tree: Controller.getSnapshot()
         }
 
         this.canvasRef = React.createRef();

@@ -30,9 +30,11 @@ export default class Menu extends React.Component<Props, State> {
     }
 
     undo = () => {
+        this.props.setTree(Controller.undo());
     }
 
     redo = () => {
+        this.props.setTree(Controller.redo());
     }
 
     openTemplates = () => {

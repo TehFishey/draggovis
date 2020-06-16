@@ -56,7 +56,7 @@ export default class Tree extends Array<DragonNode | null> {
     }
 
     replaceTree(newData : Tree) {
-        this.slice(0,0);
+        this.length = 0;
         
         let n : DragonNode;
         newData.forEach((node : DragonNode | null) => {
@@ -104,7 +104,7 @@ export default class Tree extends Array<DragonNode | null> {
 
         let ti = root.index;
         let bi = 0;
-        
+
         this.removeNode(ti);
         iterate(this, ti, bi);
     }

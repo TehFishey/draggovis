@@ -6,6 +6,7 @@ import DragonNode from "../library/DragonNode";
 import Rule from "../library/Rule";
 import Stack from "../library/Stack";
 import { Gender } from "../library/Dragon";
+import IOManager from "./IOManager";
 
 export type protoCommand = (tree: Tree) => Array<number>;
 
@@ -13,19 +14,21 @@ export default class DataManager {
     private readonly lineageTree : Tree;
     private readonly undoStack : Stack;
     private readonly redoStack : Stack;
-    private lineageSnapshot : Tree;
+    lineageSnapshot : Tree;
+    readonly IOManager : IOManager;
     readonly editWindow : EditPanelController;
     readonly dragDrop : DragDropController;
 
     constructor() {
         this.lineageTree = new Tree();
-        this.lineageTree.createNode(0,Gender.Male,Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!);
-        //for(let i = 0; i <4094; i++) { this.lineageData.createNode(i, (i%2===0) ? 'Male' : 'Female', Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!); }
+        //this.lineageTree.createNode(0,Gender.Male,Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!);
+        for(let i = 0; i <4094; i++) { this.lineageTree.createNode(i, (i%2===0) ? Gender.Male : Gender.Female, Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!); }
         this.lineageSnapshot = this.lineageTree.copyTree();
 
         this.undoStack = new Stack();
         this.redoStack = new Stack();
 
+        this.IOManager = new IOManager(this);
         this.editWindow = new EditPanelController(this);
         this.dragDrop = new DragDropController(this);
     }
@@ -41,15 +44,33 @@ export default class DataManager {
         return this.getSnapshot();
     }
 
-    private validateChanges(tree: Tree, changed: Array<number>) {
-        changed.forEach((nodeIndex)=>{
-            if(tree[nodeIndex] != null) {
-                let node: DragonNode = tree[nodeIndex]!
-                console.log(`checking all rules for node index: ${nodeIndex}`)
-                Rules.checkAll(node);
-            }
-            else throw new Error(`Controller: node index ${nodeIndex} was marked as changed, but node no longer exists!`)
-        });
+    setTree(tree: Tree) {
+        this.undoStack.put(this.lineageSnapshot);
+        this.lineageTree.replaceTree(tree);
+        this.validateChanges(this.lineageTree);
+
+        this.lineageSnapshot = this.lineageTree.copyTree();
+        return this.getSnapshot();
+    }
+
+    private validateChanges(tree: Tree, changed?: Array<number>) {
+        if(changed != null) {
+            changed.forEach((nodeIndex)=>{
+                if(tree[nodeIndex] != null) {
+                    let node: DragonNode = tree[nodeIndex]!
+                    console.log(`checking all rules for node index: ${nodeIndex}`)
+                    Rules.checkAll(node);
+                }
+                else throw new Error(`Controller Error: node index ${nodeIndex} was marked as changed, but node no longer exists!`)
+            });
+        } else {
+            tree.forEach((node) =>{
+                if(node != null) {
+                    console.log(`checking all rules for node index: ${node.index}`)
+                    Rules.checkAll(node);
+                }
+            });
+        }
     }
 
     private updateWarnings(tree: Tree) {

@@ -7,6 +7,7 @@ import './stage.css';
 
 import Tree from '../engine/library/Tree';
 import Controller from '../engine/controller/Controller'
+import IOManager from '../engine/controller/IOManager';
 
 interface Props {}
 
@@ -40,7 +41,7 @@ export default class Stage extends React.Component<Props, State> {
             this.setState({renderCanvas : true});
             console.log(this.canvasRef.current);
         }
-
+       //let io = (new IOManager).generateLookups();
     }
 
     componentDidUpdate() {

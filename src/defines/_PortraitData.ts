@@ -1,6 +1,6 @@
 import Breed from '../library/defines/Breed';
 import Portrait from '../library/defines/Portrait';
-import BreedData from './BreedData';
+import BreedData from './_BreedData';
 
 export default class PortraitData {
     readonly dict: Map<string, Portrait>;

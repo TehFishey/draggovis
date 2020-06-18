@@ -1,9 +1,10 @@
-import DataManager from "../DataManager";
-import Tree from "../../library/Tree";
-import { Breeds, Portraits } from "../../data/Model";
-import DragonNode from "../../library/DragonNode";
-import { Gender } from "../../library/Dragon";
+import DataManager from "../_DataManager";
 
+import Tree from "../../library/controller/Tree";
+import DragonNode from "../../library/controller/DragonNode";
+import { Gender } from "../../library/defines/Dragon";
+
+import { Portraits, Breeds } from "../../defines/Defines";
 
 
 export default class EditPanelController {

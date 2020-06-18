@@ -1,12 +1,14 @@
-import { Breeds, Portraits, Rules } from "../data/Model";
-import Tree from "../library/Tree";
+import IOManager from "./IOManager/IOManager";
 import EditPanelController from "./controllers/EditPanelController"
 import DragDropController from "./controllers/DragDropController"
-import DragonNode from "../library/DragonNode";
-import Rule from "../library/Rule";
-import Stack from "../library/Stack";
-import { Gender } from "../library/Dragon";
-import IOManager from "./IOManager";
+
+import Tree from "../library/controller/Tree";
+import DragonNode from "../library/controller/DragonNode";
+import Rule from "../library/controller/Rule";
+import Stack from "../library/controller/Stack";
+import { Gender } from "../library/defines/Dragon";
+
+import { Portraits, Breeds, Rules } from "../defines/Defines";
 
 export type protoCommand = (tree: Tree) => Array<number>;
 

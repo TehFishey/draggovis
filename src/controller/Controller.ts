@@ -1,4 +1,4 @@
-import DataManager from './DataManager';
+import DataManager from './_DataManager';
 
 const Controller = new DataManager();
 export default Controller;

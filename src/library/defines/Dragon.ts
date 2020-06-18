@@ -9,9 +9,9 @@ export enum Gender {
 
 export enum DragonState {
     Healthy = 'Healthy',
-    Dead = 'Dead',
+    Zombie = 'Zombie',
     Vampire = 'Vampire',
-    Sick = 'Sick'
+    Neglected = 'Neglected'
 }
 
 export default class Dragon {

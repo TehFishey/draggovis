@@ -1,22 +1,22 @@
 import Condition from '../../library/defines/Condition';
 import Portrait from '../../library/defines/Portrait';
-import Breed from '../../library/defines/Breed';
+import Breed, { DragonType, DragonSubType } from '../../library/defines/Breed';
 import DragonNode from '../../library/controller/DragonNode'
 
-import PortraitFactory from '../utilities/PortraitFactory';
-import ConditionFactory from '../utilities/ConditionFactory';
+import PortraitFactory from '../_utilities/PortraitFactory';
+import ConditionFactory from '../_utilities/ConditionFactory';
 
 class HybridBreed extends Breed {
-    constructor(id: string, label: string, type: string, portraits: Array<Portrait>, condition?: Condition) {
-        super(id, label, type, "mf-mf", portraits, condition)
+    constructor(id: string, label: string, type: DragonType, subType: DragonSubType, portraits: Array<Portrait>, condition?: Condition) {
+        super(id, label, type, subType, "mf-mf", portraits, condition)
     }
 }
 
 let HybridBreeds: Array<Breed> = [
-    new HybridBreed("avatar-of-change", "Avatar of Change", "dragon", PortraitFactory.uPortraits("avatar-of-change")),
-    new HybridBreed("avatar-of-creation", "Avatar of Creation", "dragon", PortraitFactory.uPortraits("avatar-of-creation")),
-    new HybridBreed("avatar-of-destruction", "Avatar of Destruction", "dragon", PortraitFactory.uPortraits("avatar-of-destruction")),
-    new HybridBreed("carina-dragon", "Carina Dragon", "dragon", PortraitFactory.mfPortraits("carina"), 
+    new HybridBreed("avatar-of-change", "Avatar of Change", DragonType.Dragon, DragonSubType.Western, PortraitFactory.uPortraits("avatar-of-change")),
+    new HybridBreed("avatar-of-creation", "Avatar of Creation", DragonType.Dragon, DragonSubType.Western, PortraitFactory.uPortraits("avatar-of-creation")),
+    new HybridBreed("avatar-of-destruction", "Avatar of Destruction", DragonType.Dragon, DragonSubType.Western, PortraitFactory.uPortraits("avatar-of-destruction")),
+    new HybridBreed("carina-dragon", "Carina Dragon", DragonType.Dragon, DragonSubType.Western, PortraitFactory.mfPortraits("carina"), 
         ConditionFactory.or("Carina Dragon", [
             ConditionFactory.checkParentBreedIds([{id: "carina-dragon", label: "Carina Dragon"}]),
             ConditionFactory.and("", [
@@ -25,7 +25,7 @@ let HybridBreeds: Array<Breed> = [
             ])
         ])
     ),
-    new HybridBreed("dusk-pygmy", "Dusk Pygmy", "pygmy", PortraitFactory.mfPortraits("dusk"), 
+    new HybridBreed("dusk-pygmy", "Dusk Pygmy", DragonType.Pygmy, DragonSubType.Western, PortraitFactory.mfPortraits("dusk"), 
         ConditionFactory.or("Dusk Pygmy", [
             ConditionFactory.checkParentBreedIds([{id: "dusk-pygmy", label: "Dusk Pygmy"}]),
             ConditionFactory.and("", [
@@ -34,7 +34,7 @@ let HybridBreeds: Array<Breed> = [
             ])
         ])
     ),
-    new HybridBreed("geode-dragon", "Geode Dragon", "dragon", PortraitFactory.mfPortraits("geode"),
+    new HybridBreed("geode-dragon", "Geode Dragon", DragonType.Dragon, DragonSubType.Western, PortraitFactory.mfPortraits("geode"),
         {
             warning : "'Geode Dragon' requires a parent with breed 'Geode Dragon' OR parents with any combination of breeds: 'Stone Dragon', 'Green Dragon'.",
             validate : (dragon: DragonNode) => {
@@ -49,7 +49,7 @@ let HybridBreeds: Array<Breed> = [
             }
         }
     ),
-    new HybridBreed("hellhorse-dragon", "Hellorse Dragon", "dragon", PortraitFactory.mfPortraits("hellhorse"),
+    new HybridBreed("hellhorse-dragon", "Hellorse Dragon", DragonType.Dragon, DragonSubType.Western, PortraitFactory.mfPortraits("hellhorse"),
         ConditionFactory.or("Hellorse Dragon", [
             ConditionFactory.checkParentBreedIds([{id: "hellhorse-dragon", label: "Hellorse Dragon"}]),
             ConditionFactory.and("", [
@@ -58,7 +58,7 @@ let HybridBreeds: Array<Breed> = [
             ])
         ])
     ),
-    new HybridBreed("risensong-dragon", "Risensong Dragon", "dragon", PortraitFactory.uPortraits("risensong"),
+    new HybridBreed("risensong-dragon", "Risensong Dragon", DragonType.Dragon, DragonSubType.Lindwyrm, PortraitFactory.uPortraits("risensong"),
         ConditionFactory.or("Risensong Dragon", [
             ConditionFactory.checkParentBreedIds([{id: "risensong-dragon", label: "Risensong Dragon"}]),
             ConditionFactory.and("", [
@@ -70,7 +70,7 @@ let HybridBreeds: Array<Breed> = [
             ]),
         ])
     ),
-    new HybridBreed("setsong-dragon", "Setsong Dragon", "dragon", PortraitFactory.uPortraits("setsong"),
+    new HybridBreed("setsong-dragon", "Setsong Dragon", DragonType.Dragon, DragonSubType.Lindwyrm, PortraitFactory.uPortraits("setsong"),
         ConditionFactory.or("Setsong Dragon", [
             ConditionFactory.checkParentBreedIds([{id: "setsong-dragon", label: "Setsong Dragon"}]),
             ConditionFactory.and("", [
@@ -82,7 +82,7 @@ let HybridBreeds: Array<Breed> = [
             ]),
         ])
     ),
-    new HybridBreed("shallow-water-dragon", "Shallow Water Dragon", "dragon", PortraitFactory.mfPortraits("shallow-water"),
+    new HybridBreed("shallow-water-dragon", "Shallow Water Dragon", DragonType.Dragon, DragonSubType.SeaSerpent, PortraitFactory.mfPortraits("shallow-water"),
         ConditionFactory.or("Shallow Water Dragon", [
             ConditionFactory.checkParentBreedIds([{id: "shallow-water-dragon", label: "Shallow Water Dragon"}]),
             ConditionFactory.and("", [
@@ -91,7 +91,7 @@ let HybridBreeds: Array<Breed> = [
             ])
         ])
     ),
-    new HybridBreed("soulpeace-dragon", "Soulpeace Dragon", "dragon", PortraitFactory.mfPortraits("soulpeace"),
+    new HybridBreed("soulpeace-dragon", "Soulpeace Dragon", DragonType.Dragon, DragonSubType.Western, PortraitFactory.mfPortraits("soulpeace"),
         ConditionFactory.or("Soulpeace Dragon", [
             ConditionFactory.checkParentBreedIds([{id: "soulpeace-dragon", label: "Soulpeace Dragon"}]),
             ConditionFactory.and("", [
@@ -101,7 +101,7 @@ let HybridBreeds: Array<Breed> = [
         ])
     ),
     //new HybridModel("storm-rider-dragon", "Storm-Rider Dragon", "dragon"), TBD TBD
-    new HybridBreed("two-finned-bluna", "Two-Finned Bluna", "dragon", PortraitFactory.mfPortraits("two-finned-bluna"),
+    new HybridBreed("two-finned-bluna", "Two-Finned Bluna", DragonType.Dragon, DragonSubType.Amphiptere, PortraitFactory.mfPortraits("two-finned-bluna"),
         ConditionFactory.or("Two-Finned Bluna", [
             ConditionFactory.checkParentBreedIds([{id: "two-finned-bluna", label: "Two-Finned Bluna"}]),
             ConditionFactory.and("", [
@@ -113,7 +113,7 @@ let HybridBreeds: Array<Breed> = [
             ]),
         ])
     ),
-    new HybridBreed("ultraviolet-dragon", "Ultraviolet Dragon", "dragon", PortraitFactory.uPortraits("ultraviolet"),
+    new HybridBreed("ultraviolet-dragon", "Ultraviolet Dragon", DragonType.Dragon, DragonSubType.Western, PortraitFactory.uPortraits("ultraviolet"),
         ConditionFactory.or("Ultraviolet Dragon", [
             ConditionFactory.checkParentBreedIds([{id: "ultraviolet-dragon", label: "Ultraviolet Dragon"}]),
             ConditionFactory.and("", [

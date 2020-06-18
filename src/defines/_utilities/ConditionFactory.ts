@@ -1,4 +1,5 @@
 import Condition from "../../library/defines/Condition";
+import Breed, { DragonType, DragonSubType } from "../../library/defines/Breed";
 import { Gender } from "../../library/defines/Dragon";
 
 import DragonNode, {nodeReference} from "../../library/controller/DragonNode";
@@ -119,17 +120,21 @@ export default {
         return new Condition(validate, tooltip);
     },
 
-    /*
-    checkFatherBreed(breedId, label) {
-        return (dragon) => {return (dragon.father.breed.breedId === breedId)};
-    },
-
-    checkMotherBreed(breedId, label) {
-        return (dragon) => {return (dragon.mother.breed.breedId === breedId)};
-    },
-
-    
-    */
-
-    
+    checkTypes(type: DragonType, subType?: DragonSubType, label?: string) {
+        let tooltip : string;
+        let validate : nodeReference;
+        if(subType != null) {
+            tooltip = `'${label}' requires dragon type '${type}' and sub-type '${subType}'.`;
+            validate = (dragon: DragonNode) => {
+                return (dragon.breed.type === type && dragon.breed.subType === subType);
+            };
+        } else {
+            tooltip = `'${label}' requires dragon type '${type}'.`;
+            validate = (dragon: DragonNode) => {
+                return (dragon.breed.type === type);
+            };
+        }
+        return new Condition(validate, tooltip);
+    }
+        
 }

@@ -1,8 +1,10 @@
-import DataManager from "../DataManager";
-import Tree from "../../library/Tree";
-import DragonNode from "../../library/DragonNode";
-import { Portraits } from "../../data/Model";
-import { Gender } from "../../library/Dragon";
+import DataManager from "../_DataManager";
+
+import Tree from "../../library/controller/Tree";
+import DragonNode from "../../library/controller/DragonNode";
+import { Gender } from "../../library/defines/Dragon";
+
+import { Portraits } from "../../defines/Defines";
 
 export default class DragDropController {
     readonly parent: DataManager;

@@ -1,4 +1,4 @@
-import Portrait from "../../library/Portrait";
+import Portrait from "../../library/defines/Portrait";
 
 let zombieDrakes = new Map<String,Portrait>();
 let portrait = new Portrait('zombie-drake', "Drake", false);

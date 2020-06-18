@@ -1,12 +1,12 @@
 import Condition from '../../library/defines/Condition';
 import Portrait from '../../library/defines/Portrait';
-import Breed from '../../library/defines/Breed';
+import Breed, { DragonType, DragonSubType } from '../../library/defines/Breed';
 
-import PortraitFactory from '../utilities/PortraitFactory';
+import PortraitFactory from '../_utilities/PortraitFactory';
 
 class DrakeBreed extends Breed {
     constructor(id: string, label: string, portraits: Array<Portrait>, condition?: Condition) {
-        super(id, label, "drake", "mf-mf", portraits, condition)
+        super(id, label, DragonType.Drake, DragonSubType.Western, "mf-mf", portraits, condition)
     }
 }
 

@@ -1,12 +1,14 @@
-import {Breeds, Portraits} from "../data/Model";
-import Portrait from "../library/Portrait";
-import Breed from "../library/Breed";
-import Tree from "../library/Tree";
-import DataManager from "./DataManager";
-import { Gender } from "../library/Dragon";
+import DataManager from "../_DataManager";
 
-import breed0 from "../data/io/breeds/breed0.json";
-import portrait0 from "../data/io/portraits/portrait0.json";
+import Tree from "../../library/controller/Tree";
+import Breed from "../../library/defines/Breed"
+import Portrait from "../../library/defines/Portrait"
+import { Gender } from "../../library/defines/Dragon";
+
+import { Portraits, Breeds } from "../../defines/Defines";
+
+import breed0 from "./breed-keys/breed0.json";
+import portrait0 from "./portrait-keys/portrait0.json";
 
 interface Lookup {
     [key: string]: string

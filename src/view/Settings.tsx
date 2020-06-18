@@ -1,4 +1,5 @@
 import React from 'react';
+import { Time } from '../library/defines/Time';
 
 enum DragDrop {
     CopyOne = 'copyOne',
@@ -10,12 +11,14 @@ enum DragDrop {
 interface SettingValues {
     showName : boolean
     showGen : boolean
+    caveTime: Time
     dragDrop : DragDrop
     disableValid : boolean
     enableWarn : boolean
     update: {
         showName: (show: boolean) => void,
         showGen : (show: boolean) => void,
+        caveTime : (time: Time) => void,
         dragDrop : (type: DragDrop) => void,
         disableValid : (disable: boolean) => void,
         enableWarn : (enable: boolean) => void,
@@ -25,12 +28,14 @@ interface SettingValues {
 const {Provider, Consumer} = React.createContext<SettingValues>({
     showName : true,
     showGen : false,
+    caveTime: new Time('12','00'),
     dragDrop : DragDrop.CopyOne,
     disableValid : false,
     enableWarn : true,
     update: {
         showName: (show: boolean) => {},
         showGen : (show: boolean) => {},
+        caveTime : (time: Time) => {},
         dragDrop : (type: DragDrop) => {},
         disableValid : (disable: boolean) => {},
         enableWarn : (enable: boolean) => {},
@@ -47,12 +52,14 @@ class SettingsControl extends React.Component<Props, SettingValues> {
         this.state = {
             showName : true,
             showGen : false,
+            caveTime: new Time('12','00'),
             dragDrop : DragDrop.CopyOne,
             disableValid : false,
             enableWarn : true,
             update: {
                 showName: (show: boolean) => {this.setState({showName: show})},
                 showGen : (show: boolean) => {this.setState({showGen: show})},
+                caveTime : (time: Time) => {this.setState({caveTime : time})},
                 dragDrop : (type: DragDrop) => {this.setState({dragDrop: type})},
                 disableValid : (disable: boolean) => {this.setState({disableValid: disable})},
                 enableWarn : (enable: boolean) => {this.setState({enableWarn: enable})},

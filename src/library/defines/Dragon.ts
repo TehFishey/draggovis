@@ -9,7 +9,8 @@ export enum Gender {
 
 export enum DragonState {
     Healthy = 'Healthy',
-    Zombie = 'Zombie',
+    Dead = 'Dead',
+    Undead = 'Undead',
     Vampire = 'Vampire',
     Neglected = 'Neglected'
 }
@@ -27,9 +28,5 @@ export default class Dragon {
         this.breed = breed || undefined;
         this.portrait = portrait || new Portrait("undefined-portrait", "Undefined Portrait", false);
         this.state = state || DragonState.Healthy;
-    }
-
-    getPortraitImage(thumb:boolean=true) {
-        
     }
 };

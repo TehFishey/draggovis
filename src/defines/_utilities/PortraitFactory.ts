@@ -3,11 +3,21 @@ import ConditionFactory from './ConditionFactory';
 import Condition from "../../library/defines/Condition";
 import { Gender } from "../../library/defines/Dragon";
 import Portrait from "../../library/defines/Portrait";
+import { TimeRange } from '../../library/defines/Time';
 
+export type TimeSwapDefine = {
+    range: TimeRange,
+    portraits: Array<Portrait>
+}
 
 export default {
-    customPortrait(id: string, label: string, isDefault: boolean, condition?: Condition) {
+    customPortrait(id: string, label: string, isDefault: boolean, condition?: Condition, swaps?: Array<TimeSwapDefine>) {
         let portrait = new Portrait(id, label, isDefault, condition);
+        if(swaps != null) {
+            swaps.forEach((define) => {
+                portrait.timeSwaps.set(define.range, define.portraits);
+            })
+        }
 
         return portrait;
     },

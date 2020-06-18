@@ -3,8 +3,9 @@ import Portrait from '../../library/defines/Portrait';
 import Breed, { DragonType, DragonSubType } from '../../library/defines/Breed';
 import { Gender } from '../../library/defines/Dragon';
 
-import PortraitFactory from '../_utilities/PortraitFactory';
+import PortraitFactory, { TimeSwapDefine } from '../_utilities/PortraitFactory';
 import ConditionFactory from '../_utilities/ConditionFactory';
+import { TimeRange, Time } from '../../library/defines/Time';
 
 class DragonBreed extends Breed {
     constructor(id: string, label: string, subType: DragonSubType, Portraits: Array<Portrait>, condition?: Condition) {
@@ -127,7 +128,17 @@ let DragonBreeds: Array<Breed> = [
     ]),
     new DragonBreed("neotropical-dragon", "Neotropical Dragon", DragonSubType.Western, PortraitFactory.mfPortraits("neotropical")),
     new DragonBreed("nhiostrife-wyvern", "Nhiostrife Wyvern", DragonSubType.Wyvern, PortraitFactory.uPortraits("nhiostrife")),
-    new DragonBreed("nocturne-dragon", "Nocturne Dragon", DragonSubType.Western, PortraitFactory.uPortraits("nocturne")),
+    new DragonBreed("nocturne-dragon", "Nocturne Dragon", DragonSubType.Western, [
+        PortraitFactory.customPortrait('nocturne-u', "Standard", true, ConditionFactory.alwaysTrue("Standard"), [
+            {
+                range: new TimeRange(new Time('18','00'), new Time('05','59')), 
+                portraits: [
+                    PortraitFactory.customPortrait('nocturne-t1-f', "Night ♀", true, ConditionFactory.checkGender(Gender.Female,"Night ♀")),
+                    PortraitFactory.customPortrait('nocturne-t1-m', "Night ♂", true, ConditionFactory.checkGender(Gender.Male,"Night ♂")),
+                ]
+            }
+        ])
+    ]),
     new DragonBreed("olive-dragon", "Olive Dragon", DragonSubType.Western, PortraitFactory.mfPortraits("olive")),
     new DragonBreed("pillow-dragon", "Pillow Dragon", DragonSubType.Western, PortraitFactory.mfPortraits("pillow")),
     new DragonBreed("pink-dragon", "Pink Dragon", DragonSubType.Western, PortraitFactory.mfPortraits("pink")),

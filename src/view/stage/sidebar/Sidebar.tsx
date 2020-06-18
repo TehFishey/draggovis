@@ -1,35 +1,69 @@
 import React from 'react';
+import Image from '../../general/image/Image'
 import { SettingsConsumer, DragDrop } from '../../Settings';
 import './sidebar.css';
+
 import Portrait from '../../../library/defines/Portrait';
 import DragonNode from '../../../library/controller/DragonNode'
+import { Time } from '../../../library/defines/Time';
+
+import ViewUtils from '../../_utilities/Utilities';
 
 interface Props {
     mouseOver : DragonNode;
 }
 
-interface State {}
+interface State {
+    imgError : boolean
+}
 
 export default class Sidebar extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
 
-        this.state = {}
+        this.state = {
+            imgError : false
+        }
     }
 
-    render () {
+    createTimeSelect(value: Time, onChange: (e: React.ChangeEvent<HTMLSelectElement>)=>void): JSX.Element {
+        let options: Array<JSX.Element> = [];
+        let v = `${value.hours}:${value.minutes}`
+
+        for (let i = 0; i < 24; i++) {
+            ['00', '30'].forEach((minute: string) => {
+                options.push(timeOption(i.toString().padStart(2,'0'), minute));
+            })
+        }
+
+        return(
+            <select 
+                value={v}
+                onChange={onChange}>
+                {options}
+            </select>
+        )
+
+        function timeOption(hour: string, minute: string) : JSX.Element {
+            let h: number = parseInt(hour);
+            let hLabel: number = (h > 12) ? h - 12 : ((h != 0) ? h : 12);
+            let hSuffix: string = (h > 11) ? 'pm' : 'am';
+
+            return (<option value={`${hour}:${minute}`}>{`${hLabel}:${minute}${hSuffix}`}</option>)
+        }
+    }
+
+    render() {
         return (
             <div className='stage-sidebar'>
-                <div className='sidebar-content'>
-                    <div className='sidebar-image'
-                        style={{
-                            backgroundImage : `url(${Portrait.getLargeImg(this.props.mouseOver.portrait)})`,
-                            backgroundRepeat : 'no-repeat', 
-                            backgroundPosition : '50% 50%'}}/>
-                    <div className='sidebar-feedback'></div>
-                    <SettingsConsumer>
-                        {value => { return (
+                <SettingsConsumer>
+                    {value => { return (
+                    <div className='sidebar-content'>
+                        <div className='sidebar-image'>
+                            <Image node={this.props.mouseOver} time={value.caveTime}/>
+                            </div>
+                        <div className='sidebar-feedback'></div>
                         <div className='sidebar-settings'>
                             <div className='sb-setting-label'>Display</div>
                             <div className='sb-setting'>
@@ -47,6 +81,15 @@ export default class Sidebar extends React.Component<Props, State> {
                                     />
                                     Show Generations
                                 </div>
+                                <div>
+                                    Cave Time: 
+                                    {this.createTimeSelect(
+                                        value.caveTime,
+                                        (e: React.ChangeEvent<HTMLSelectElement>)=>{
+                                            let [h, m] = e.target.value.split(':');
+                                            value.update.caveTime(new Time(h, m))}
+                                    )}
+                                </div>
                             </div>
                             <div className='sb-setting-label'>Drag - Drop</div>
                             <div className='sb-setting'>
@@ -61,25 +104,25 @@ export default class Sidebar extends React.Component<Props, State> {
                             </div>
                             <div className='sb-setting-label'>Validation</div>
                             <div className='sb-setting'>
-                                <div onClick={e=>{value.update.disableValid(!value.disableValid)}} style={{cursor: 'default'}}>
-                                    <input type='checkbox'
-                                        checked={value.disableValid}
-                                        readOnly
-                                    />
-                                    Ignore Validation
+                                    <div onClick={e=>{value.update.disableValid(!value.disableValid)}} style={{cursor: 'default'}}>
+                                        <input type='checkbox'
+                                            checked={value.disableValid}
+                                            readOnly
+                                        />
+                                        Ignore Validation
+                                    </div>
+                                    <div onClick={e=>{value.update.enableWarn(!value.enableWarn)}} style={{cursor: 'default'}}>
+                                        <input type='checkbox'
+                                            checked={value.enableWarn}
+                                            readOnly
+                                        />
+                                        Highlight Warnings
+                                    </div>
                                 </div>
-                                <div onClick={e=>{value.update.enableWarn(!value.enableWarn)}} style={{cursor: 'default'}}>
-                                    <input type='checkbox'
-                                        checked={value.enableWarn}
-                                        readOnly
-                                    />
-                                    Highlight Warnings
-                                </div>
-                            </div>
                         </div>
-                        )}}
-                    </SettingsConsumer>
-                </div>
+                    </div>
+                    )}}
+                </SettingsConsumer>
                 <div className='sidebar-spacer'/>
             </div>
         );

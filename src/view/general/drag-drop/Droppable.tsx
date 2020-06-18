@@ -14,6 +14,7 @@ export enum DropEffect {
 interface Props {
     onDrop: (dragData: string) => any
     dropEffect : DropEffect
+    className? : string
 }
 
 interface State {}
@@ -44,7 +45,7 @@ export default class Droppable extends React.Component<Props, State> {
 
     render () {
         return (
-            <div className='drop-area' onDragOver={this.dragOver} onDragEnter={this.dragEnter} onDrop={this.startDrop}>
+            <div className={this.props.className} onDragOver={this.dragOver} onDragEnter={this.dragEnter} onDrop={this.startDrop}>
                 {this.props.children}
             </div>
         );

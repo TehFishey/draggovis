@@ -12,8 +12,9 @@ export enum DropEffect {
 }
 
 interface Props {
-    dragData: string
-    dropEffect: DropEffect
+    dragData : string
+    dropEffect : DropEffect
+    className? : string
 }
 
 interface State {}
@@ -33,7 +34,7 @@ export default class Draggable extends React.Component<Props, State> {
 
     render () {
         return (
-            <div className='drag-area' draggable onDragStart={this.startDrag}>
+            <div className={this.props.className} draggable onDragStart={this.startDrag}>
                 {this.props.children}
             </div>
         );

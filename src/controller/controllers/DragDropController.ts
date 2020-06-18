@@ -1,4 +1,5 @@
 import DataManager from "../_DataManager";
+import ControllerUtils from "../_utilities/Utilities"
 
 import Tree from "../../library/controller/Tree";
 import DragonNode from "../../library/controller/DragonNode";
@@ -18,8 +19,8 @@ export default class DragDropController {
             let dragon = tree[dragNodeIndex];
             if(dragon != null) {
                 let n = tree.copyNode(dragon, dropNodeIndex);
-                this.correctGender(n);
-                this.correctPortrait(n);
+                n.gender = ControllerUtils.correctDragonGender(n);
+                n.portrait = ControllerUtils.correctPortraitGender(n);
             }
             return [dropNodeIndex];
         })
@@ -31,12 +32,12 @@ export default class DragDropController {
             let dropped = tree[dropNodeIndex];
             if(dragged != null && dropped != null){
                 let n = tree.copyNode(dragged, dropNodeIndex);
-                this.correctGender(n);
-                this.correctPortrait(n);
+                n.gender = ControllerUtils.correctDragonGender(n);
+                n.portrait = ControllerUtils.correctPortraitGender(n);
 
                 n = tree.copyNode(dropped, dragNodeIndex);
-                this.correctGender(n);
-                this.correctPortrait(n);
+                n.gender = ControllerUtils.correctDragonGender(n);
+                n.portrait = ControllerUtils.correctPortraitGender(n);
 
                 return [dragNodeIndex, dropNodeIndex];
             }
@@ -50,10 +51,13 @@ export default class DragDropController {
             let dropped = tree[dropNodeIndex];
             if(dragged != null && dropped != null){
                 let branch = tree.getBranch(dragNodeIndex, true);
+                let n : DragonNode;
 
                 tree.setBranch(dropNodeIndex, branch);
-                this.correctGender(tree[dropNodeIndex]!);
-                this.correctPortrait(tree[dropNodeIndex]!);
+                n = tree[dropNodeIndex]!
+
+                n.gender = ControllerUtils.correctDragonGender(n);
+                n.portrait = ControllerUtils.correctPortraitGender(n);
 
                 return tree.getBranch(dropNodeIndex, false).reduce(
                     function(result, node) {
@@ -73,14 +77,17 @@ export default class DragDropController {
             if(dragged != null && dropped != null){
                 let dragBranch = tree.getBranch(dragNodeIndex, true);
                 let dropBranch = tree.getBranch(dropNodeIndex, true);
+                let n : DragonNode;
 
                 tree.setBranch(dropNodeIndex, dragBranch);
-                this.correctGender(tree[dropNodeIndex]!);
-                this.correctPortrait(tree[dropNodeIndex]!);
+                n = tree[dropNodeIndex]!;
+                n.gender = ControllerUtils.correctDragonGender(n);
+                n.portrait = ControllerUtils.correctPortraitGender(n);
 
                 tree.setBranch(dragNodeIndex, dropBranch);
-                this.correctGender(tree[dragNodeIndex]!);
-                this.correctPortrait(tree[dragNodeIndex]!);
+                n = tree[dragNodeIndex]!;
+                n.gender = ControllerUtils.correctDragonGender(n);
+                n.portrait = ControllerUtils.correctPortraitGender(n);
 
                 let i1 = tree.getBranch(dragNodeIndex, false).reduce(
                     function(result, node) {
@@ -100,24 +107,5 @@ export default class DragDropController {
             }
             return [];
         })
-    }
-
-    correctPortrait(node: DragonNode) {
-        let pid = node.portrait.id;
-        let portrait;
-        if(pid.endsWith("-m") && node.gender === Gender.Female) {
-            let npid = pid.slice(0,-1)+"f"
-            portrait = Portraits.dict.get(npid);
-        }
-        else if(pid.endsWith("-f") && node.gender === Gender.Male) {
-            let npid = pid.slice(0,-1)+"m"
-            portrait = Portraits.dict.get(npid);
-        }
-
-        node.portrait = (portrait != null) ? portrait : node.portrait;
-    }
-
-    correctGender(node: DragonNode) {
-        node.gender = (node.index % 2 === 0) ? Gender.Female : Gender.Male;
     }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Image from '../../general/image/Image'
 import Popover from '../../general/popover/PopoverModal';
 import Tooltip from '../../general/tooltip/Tooltip';
 import EditWindow from './edit-panel/EditPanel';
@@ -9,10 +10,8 @@ import { SettingsConsumer, DragDrop } from '../../Settings';
 
 import Tree from '../../../library/controller/Tree';
 import DragonNode from '../../../library/controller/DragonNode';
-import Portrait from '../../../library/defines/Portrait';
 
 import Controller from '../../../controller/Controller';
-
 
 type windowCoordinates = {x: number, y: number}
 
@@ -26,7 +25,8 @@ interface Props {
 interface State {
     imgRect: {x: number, y: number, width: number, height: number},
     showPopover: boolean,
-    showTooltip: boolean
+    showTooltip: boolean,
+    imgError: boolean;
 }
 
 export default class TreeElement extends React.Component<Props, State> {
@@ -41,6 +41,7 @@ export default class TreeElement extends React.Component<Props, State> {
             imgRect : {x : 0, y : 0, width : 0, height : 0},
             showPopover : false,
             showTooltip : false,
+            imgError : false,
         }
 
         this.img = React.createRef();
@@ -182,25 +183,20 @@ export default class TreeElement extends React.Component<Props, State> {
                 />
                 <SettingsConsumer>
                 {value => { return (
-                    <div className='tree-unit-display'>
-                        <Droppable onDrop={(index : string)=>{this.executeDrop(value.dragDrop, index)}} dropEffect={DropEffect.Move}>
-                            <Draggable dragData={this.props.node.index.toString()} dropEffect={DropEffect.Move}>
-                                <div 
-                                    className={(this.props.node.meta.invalidData && value.enableWarn) ? 'tree-unit-display-portrait highlight-warning' : 'tree-unit-display-portrait'}
-                                    onClick={e=>{this.displayPopover(true)}}
-                                    ref={this.img}
-                                    onMouseEnter={e=>{this.displayTooltip(value.enableWarn)}}
-                                    onMouseOut={e=>{this.displayTooltip(false)}}
-                                    style={{
-                                        backgroundImage : `url(${Portrait.getThumbImg(this.props.node.portrait)})`,
-                                        backgroundRepeat : 'no-repeat',
-                                        backgroundPosition : '50% 50%'
-                                    }}
-                                />
-                            </Draggable>
-                            <label className='tree-unit-display-label'>{(this.props.node.name !== "") ? this.props.node.name : "(code)"}</label>
-                        </Droppable>
-                    </div>
+                    <Droppable className={'tree-unit-display'} onDrop={(index : string)=>{this.executeDrop(value.dragDrop, index)}} dropEffect={DropEffect.Move}>
+                        <Draggable dragData={this.props.node.index.toString()} dropEffect={DropEffect.Move}>
+                            <div className={(this.props.node.meta.invalidData && value.enableWarn) ? 'tree-unit-display-button highlight-warning' : 'tree-unit-display-button'}
+                                onClick={e=>{this.displayPopover(true)}}
+                                ref={this.img}
+                                onMouseEnter={e=>{this.displayTooltip(value.enableWarn)}}
+                                onMouseOut={e=>{this.displayTooltip(false)}}
+                                onError={(e)=>{this.setState({imgError : true})}}
+                            >
+                                <Image node={this.props.node} time={value.caveTime} thumbnail={true}/>
+                            </div>
+                        </Draggable>
+                        <label className='tree-unit-display-label'>{(this.props.node.name !== "") ? this.props.node.name : "(code)"}</label>
+                    </Droppable>
                 )}}
                 </SettingsConsumer>
                 {this.buildParentComponents()}

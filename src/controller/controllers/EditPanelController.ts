@@ -1,8 +1,9 @@
 import DataManager from "../_DataManager";
+import ControllerUtils from "../_utilities/Utilities";
 
 import Tree from "../../library/controller/Tree";
 import DragonNode from "../../library/controller/DragonNode";
-import { Gender } from "../../library/defines/Dragon";
+import { Gender, DragonState } from "../../library/defines/Dragon";
 
 import { Portraits, Breeds } from "../../defines/Defines";
 
@@ -32,7 +33,7 @@ export default class EditPanelController {
             let dragon = tree[index];
             if(dragon != null) {
                 dragon.breed = Breeds.dict.get(breedId)!;
-                dragon.portrait = this.getDefaultPortrait(dragon);
+                dragon.portrait = ControllerUtils.getDefaultPortrait(dragon, [...dragon.breed.portraits.values()]);
                 return[index];
             }
             return [];
@@ -55,19 +56,22 @@ export default class EditPanelController {
             let dragon = tree[index];
             if(index === 0 && dragon != null) {
                 let branch = tree.getBranch(index, true);
+                let n : DragonNode;
+
                 tree.removeNode(0);
-                tree.createNode(0, Gender.Male, dragon.breed, dragon.portrait)
-                this.correctPortrait(tree[0]!);
+                n = tree.createNode(0, Gender.Male, dragon.breed, dragon.portrait)
+                
+                n.portrait = ControllerUtils.correctPortraitGender(n);
 
                 if(dragon.gender === Gender.Male) {
                     tree.setBranch(1, branch);
-                    tree.createNode(2, Gender.Female, dragon.breed, dragon.portrait);
-                    this.correctPortrait(tree[2]!);
+                    n = tree.createNode(2, Gender.Female, dragon.breed, dragon.portrait);
+                    n.portrait = ControllerUtils.correctPortraitGender(n);
                 }
                 else if(dragon.gender === Gender.Female) {
                     tree.setBranch(2, branch);
-                    tree.createNode(1, Gender.Male, dragon.breed, dragon.portrait);
-                    this.correctPortrait(tree[1]!);
+                    n = tree.createNode(1, Gender.Male, dragon.breed, dragon.portrait);
+                    n.portrait = ControllerUtils.correctPortraitGender(n);
                 }
 
                 return tree.getBranch(0, false).reduce(
@@ -87,7 +91,7 @@ export default class EditPanelController {
             if(index !== 0 && dragon != null) {
                 let branch = tree.getBranch(index, true);
                 tree.setBranch(0, branch);
-                this.correctPortrait(tree[0]!);
+                tree[0]!.portrait = ControllerUtils.correctPortraitGender(tree[0]!);
 
                 return tree.getBranch(0, false).reduce(
                     function(result, node) {
@@ -110,9 +114,9 @@ export default class EditPanelController {
                     let n : DragonNode;
                     
                     n = tree.createNode(dragon.getFatherIndex(), Gender.Male, dragon.breed, dragon.portrait);
-                    n.portrait = this.getDefaultPortrait(n);
+                    n.portrait = ControllerUtils.getDefaultPortrait(n, [...n.breed.portraits.values()]);
                     n = tree.createNode(dragon.getMotherIndex(), Gender.Female, dragon.breed, dragon.portrait);
-                    n.portrait = this.getDefaultPortrait(n);
+                    n.portrait = ControllerUtils.getDefaultPortrait(n, [...n.breed.portraits.values()]);
                     return [index, fi, mi];
                 };
             }
@@ -153,8 +157,8 @@ export default class EditPanelController {
                         tree.setBranch(mi, fBranch);
                         tree.setBranch(fi, mBranch);
                         [tree[mi], tree[fi]].forEach((n: DragonNode | null) =>{
-                            this.correctGender(n!);
-                            this.correctPortrait(n!);
+                            n!.gender = ControllerUtils.correctDragonGender(n!);
+                            n!.portrait = ControllerUtils.correctPortraitGender(n!);
                         });
                         changed.push(mi,fi);
                     }
@@ -166,37 +170,14 @@ export default class EditPanelController {
         });
     }
 
-    getDefaultPortrait(node: DragonNode) {
-        let portraits =  [...node.breed.portraits.values()];
-        let validPortrait;
-
-        portraits.some((portrait) => {
-            if(portrait.condition.validate(node) && portrait.isDefault) {
-                validPortrait = portrait;
-                return true;
+    setDragonState(index: number, state: DragonState) : Tree {
+        return this.parent.updateTree((tree: Tree) => {
+            let dragon = tree[index];
+            if(dragon != null) {
+                dragon.state = state;
+                return[index];
             }
-            return false;
-        })
-
-        return (validPortrait != null) ? validPortrait : portraits[0];
-    }
-
-    correctPortrait(node: DragonNode) {
-        let pid = node.portrait.id;
-        let portrait;
-        if(pid.endsWith("-m") && node.gender === Gender.Female) {
-            let npid = pid.slice(0,-1)+"f"
-            portrait = Portraits.dict.get(npid);
-        }
-        else if(pid.endsWith("-f") && node.gender === Gender.Male) {
-            let npid = pid.slice(0,-1)+"m"
-            portrait = Portraits.dict.get(npid);
-        }
-
-        node.portrait = (portrait != null) ? portrait : node.portrait;
-    }
-
-    correctGender(node: DragonNode) {
-        node.gender = (node.index % 2 === 0) ? Gender.Female : Gender.Male;
+            return [];
+        });
     }
 }

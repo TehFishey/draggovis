@@ -1,5 +1,5 @@
 import Condition from "../../library/defines/Condition";
-import Breed, { DragonType, DragonSubType } from "../../library/defines/Breed";
+import { DragonType, DragonSubType } from "../../library/defines/Breed";
 import { Gender } from "../../library/defines/Dragon";
 
 import DragonNode, {nodeReference} from "../../library/controller/DragonNode";
@@ -134,6 +134,13 @@ export default {
                 return (dragon.breed.type === type);
             };
         }
+        return new Condition(validate, tooltip);
+    },
+
+    alwaysTrue(label?: string) {
+        let tooltip = `${label} is always valid.`;
+        let validate = (dragon: DragonNode) => {return true;};
+
         return new Condition(validate, tooltip);
     }
         

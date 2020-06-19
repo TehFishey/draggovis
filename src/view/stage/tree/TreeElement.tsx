@@ -183,8 +183,8 @@ export default class TreeElement extends React.Component<Props, State> {
                 />
                 <SettingsConsumer>
                 {value => { return (
-                    <Droppable className={'tree-unit-display'} onDrop={(index : string)=>{this.executeDrop(value.dragDrop, index)}} dropEffect={DropEffect.Move}>
-                        <Draggable dragData={this.props.node.index.toString()} dropEffect={DropEffect.Move}>
+                    <Droppable className={'tree-unit-display'} onDrop={(index : string)=>{this.executeDrop(value.dragDrop, index)}} dropEffect={DropEffect.Copy}>
+                        <Draggable dragData={this.props.node.index.toString()} dropEffect={DropEffect.Copy}>
                             <div className={(this.props.node.meta.invalidData && value.enableWarn) ? 'tree-unit-display-button highlight-warning' : 'tree-unit-display-button'}
                                 onClick={e=>{this.displayPopover(true)}}
                                 ref={this.img}

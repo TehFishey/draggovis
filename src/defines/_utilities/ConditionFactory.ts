@@ -1,5 +1,5 @@
 import Condition from "../../library/defines/Condition";
-import { DragonType, DragonSubType } from "../../library/defines/Breed";
+import { DragonType, DragonSubType, Affinity } from "../../library/defines/Breed";
 import { Gender } from "../../library/defines/Dragon";
 
 import DragonNode, {nodeReference} from "../../library/controller/DragonNode";
@@ -142,6 +142,5 @@ export default {
         let validate = (dragon: DragonNode) => {return true;};
 
         return new Condition(validate, tooltip);
-    }
-        
+    }        
 }

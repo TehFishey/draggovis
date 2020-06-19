@@ -22,20 +22,39 @@ export enum DragonSubType {
     Amphiptere = 'Amphiptere'
 }
 
+export enum Affinity {
+    None = 'None',
+    Neutral = 'Neutral',
+    Magi = 'Magi',
+    Air = 'Air',
+    Time = 'Time',
+    Ice = 'Ice',
+    Light = 'Light',
+    Life = 'Life',
+    Earth = 'Earth',
+    Water = 'Water',
+    Dark = 'Dark',
+    Lightning = 'Lightning',
+    Death = 'Death',
+    Fire = 'Fire'
+}
+
 export default class Breed {
     id: string;                         // String Id for backend reference & dictionary lookups
     label: string;                      // String Label for frontend display
     type: DragonType;                   // Type of dragon. Used for breeding logic.
     subType: DragonSubType;
+    affinity: Array<Affinity>;
     genders: string;                    // String representing possble dragon genders. Format: "{Genders possible for gen1}-{Genders possible for later gens}"
     portraits: Map<string, Portrait>;   // Dictionary of Portraits associated with this breed, keyed by Portrait.id
     condition: Condition;               // Condition to be used for validation checks
 
-    constructor(id: string, label: string, type?: DragonType, subType?: DragonSubType, genders?: string, portraits?: Array<Portrait>, condition?: Condition) {
+    constructor(id: string, label: string, type?: DragonType, subType?: DragonSubType, affinity?: Array<Affinity>, genders?: string, portraits?: Array<Portrait>, condition?: Condition) {
         this.id = id;                                           
         this.label = label;                                     
         this.type = type || DragonType.Dragon;
-        this.subType = subType || DragonSubType.Western;                           
+        this.subType = subType || DragonSubType.Western;
+        this.affinity = affinity || [Affinity.Neutral]                         
         this.genders = genders || "mf-mf";                      
         this.portraits = new Map<string, Portrait>();
         if(portraits !== undefined)

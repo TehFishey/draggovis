@@ -37,6 +37,7 @@ export default class Droppable extends React.Component<Props, State> {
     }
 
     startDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
         let data = e.dataTransfer.getData("drag-data");
         if (data != null) {
             this.props.onDrop(data);

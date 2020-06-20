@@ -18,10 +18,7 @@ export default class Portrait {
         this.imagePath = "art/" + this.id + ".png";
         this.thumbPath = "thumbs/" + this.id + ".png";
         this.isDefault = isDefault || true;
-        this.condition = condition || {
-            validate: (dragon: DragonNode) => {return true;},
-            warning: `${this.label} is always valid.`
-        }
+        this.condition = condition || new Condition();
         this.timeSwaps = timeSwaps || new Map<TimeRange, Array<Portrait>>();
     }
 

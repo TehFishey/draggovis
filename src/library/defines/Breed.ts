@@ -1,8 +1,8 @@
 import Portrait from './Portrait';
-import Condition from './Condition';
-import { Gender } from './Dragon';
+import Condition, { CompoundCondition, Operator } from './Condition';
+import Dragon, { Gender } from './Dragon';
 
-import DragonNode from '../controller/DragonNode';
+import DragonNode, { nodeReference } from '../controller/DragonNode';
 
 export enum DragonType {
     Dragon = 'Dragon',
@@ -60,38 +60,46 @@ export default class Breed {
         if(portraits !== undefined)
             portraits.forEach((portrait: Portrait)=>this.portraits.set(portrait.id, portrait));
             
-        this.condition = condition || Breed.defaultCondition(this.id, this.genders, this.label)
+        this.condition = Breed.setBreedCondition(this.id, this.genders, this.label, condition);
     }
 
-    static defaultCondition(id: string, genders: string, label: string) {
-        let warning = `Invalid gender or parent breeds for ${label}.`;
-        let validate = (dragon: DragonNode) => {
-            let breedCheck = true;
-            let genderCheck = true;
-            let isFirstGen = !(dragon.hasParents());
+    static setBreedCondition(id: string, genders: string, label: string, condition?: Condition) : Condition {
+        let subConditions: Array<Condition>;
+        subConditions = (genders !== "mf-mf") ? Breed.breedGenderConditions(genders, label) : [];
+        subConditions.push((condition != null) ? condition : Breed.defaultBreedCondition(id, label));
 
-            if(!isFirstGen) {
-                breedCheck = (dragon.mother()?.breed.id === id || dragon.father()?.breed.id === id)
-            }
+        if(subConditions.length < 2) return subConditions[0]
+        else return new CompoundCondition(subConditions, Operator.AND, label);
+    }
 
-            if(genders !== "mf-mf") {
-                if(isFirstGen) {
-                    let genderString = dragon.breed.genders.split("-")[0];
-                    genderCheck = (
-                        (genderString.includes('m') && dragon.gender === Gender.Male) || 
-                        (genderString.includes('f') && dragon.gender === Gender.Female)
-                    );
-                } else {
-                    let genderString = dragon.breed.genders.split("-")[1];
-                    genderCheck = (
-                        (genderString.includes('m') && dragon.gender === Gender.Male) || 
-                        (genderString.includes('f') && dragon.gender === Gender.Female)
-                    );
-                }
-            }
-            return (breedCheck && genderCheck);
-        };
+    static defaultBreedCondition(id: string, label: string) : Condition {
+        let validate = (node: DragonNode) => { 
+            if(node.hasParents()) return (node.mother()?.breed.id === id || node.father()?.breed.id === id)
+            else return true;
+        }
+        let description = `requires a parent with breed '${label}' if not first generation.`;
+        
+        return new Condition(validate, description, label);
+    }
 
-        return new Condition(validate, warning);
+    static breedGenderConditions(genders: string, label: string) : Array<Condition> {
+        let conditions = new Array<Condition>();
+        let genderDef: Array<String> = genders.split('-');
+        let description: string;
+        let validate: nodeReference;
+
+        if(genderDef[0]!=='mf') {
+            let g : Gender = (genderDef[0].includes('m')) ? Gender.Male : Gender.Female;
+            validate = (node: DragonNode) => { return !(!node.hasParents() && node.gender !== g) }
+            description = `requires ${g} gender if first generation.`
+            conditions.push(new Condition(validate,description,label));
+        }
+        if(genderDef[1]!=='mf') {
+            let g : Gender = (genderDef[1].includes('m')) ? Gender.Male : Gender.Female;
+            validate = (node: DragonNode) => { return !(node.hasParents() && node.gender !== g) }
+            description = `requires ${g} gender if not first generation.`
+            conditions.push(new Condition(validate,description,label));
+        }
+        return conditions;
     }
 }

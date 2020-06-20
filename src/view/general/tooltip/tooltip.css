@@ -16,3 +16,13 @@
     box-shadow: 5px 5px 10px;
     will-change: transform;
 }
+
+.tooltip-warnings {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.tooltip-warning-item {
+    margin: 5px;
+}

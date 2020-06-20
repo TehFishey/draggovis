@@ -3,11 +3,7 @@ import Image from '../../general/image/Image'
 import { SettingsConsumer, DragDrop } from '../../Settings';
 import './sidebar.css';
 
-import Portrait from '../../../library/defines/Portrait';
 import DragonNode from '../../../library/controller/DragonNode'
-import { Time } from '../../../library/defines/Time';
-
-import ViewUtils from '../../_utilities/Utilities';
 
 interface Props {
     mouseOver : DragonNode;
@@ -27,9 +23,8 @@ export default class Sidebar extends React.Component<Props, State> {
         }
     }
 
-    createTimeSelect(value: Time, onChange: (e: React.ChangeEvent<HTMLSelectElement>)=>void): JSX.Element {
+    createTimeSelect(value: string, onChange: (e: React.ChangeEvent<HTMLSelectElement>)=>void): JSX.Element {
         let options: Array<JSX.Element> = [];
-        let v = `${value.hours}:${value.minutes}`
 
         for (let i = 0; i < 24; i++) {
             ['00', '30'].forEach((minute: string) => {
@@ -39,7 +34,7 @@ export default class Sidebar extends React.Component<Props, State> {
 
         return(
             <select 
-                value={v}
+                value={value}
                 onChange={onChange}>
                 {options}
             </select>
@@ -50,7 +45,7 @@ export default class Sidebar extends React.Component<Props, State> {
             let hLabel: number = (h > 12) ? h - 12 : ((h != 0) ? h : 12);
             let hSuffix: string = (h > 11) ? 'pm' : 'am';
 
-            return (<option value={`${hour}:${minute}`}>{`${hLabel}:${minute}${hSuffix}`}</option>)
+            return (<option value={`${hour}:${minute}:00`}>{`${hLabel}:${minute}${hSuffix}`}</option>)
         }
     }
 
@@ -86,8 +81,7 @@ export default class Sidebar extends React.Component<Props, State> {
                                     {this.createTimeSelect(
                                         value.caveTime,
                                         (e: React.ChangeEvent<HTMLSelectElement>)=>{
-                                            let [h, m] = e.target.value.split(':');
-                                            value.update.caveTime(new Time(h, m))}
+                                            value.update.caveTime(e.target.value)}
                                     )}
                                 </div>
                             </div>

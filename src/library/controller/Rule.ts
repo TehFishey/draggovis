@@ -1,17 +1,17 @@
-import Condition from "../defines/Condition";
 import DragonNode, {nodeReference} from "./DragonNode";
 
-export default class Rule extends Condition {
+export default class Rule {
     readonly id: string;
-    check: nodeReference;
-    targets: nodeReference;
-    tooltip: nodeReference;
+    readonly check: nodeReference;
+    readonly targets: nodeReference;
+    readonly validate: nodeReference;
+    readonly tooltip: string;
 
-    constructor(id: string, check: nodeReference, targets: nodeReference, validate: nodeReference, tooltip: nodeReference) {
-        super(validate, "");
+    constructor(id: string, check: nodeReference, targets: nodeReference, validate: nodeReference, tooltip: string) {
         this.id = id;
         this.check = check;
         this.targets = targets;
+        this.validate = validate;
         this.tooltip = tooltip;
     }
 
@@ -24,16 +24,15 @@ export default class Rule extends Condition {
             targets.forEach((tnode)=>{
                 if(!this.validate(tnode)) {
                     console.log(`${this.id}: node ${tnode.index} FAILED validation, setting warning...`)
-                    Rule.setWarning(tnode, this);
+                    Rule.setWarning(tnode, this, this.tooltip);
                 }
             });
         }
-        
     }
 
-    static setWarning(node: DragonNode, rule: Rule) {
+    static setWarning(node: DragonNode, rule: Rule, tooltip: string) {
         node.meta.invalidData = true;
-        node.meta.warnings.set(rule.id, rule.tooltip(node));
+        node.meta.warnings.set(rule.id, tooltip);
         if(node.tree.warnings[node.index] != null) 
             node.tree.warnings[node.index]!.add(rule.id);
         else

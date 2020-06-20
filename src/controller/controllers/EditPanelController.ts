@@ -117,7 +117,7 @@ export default class EditPanelController {
                     n.portrait = ControllerUtils.getDefaultPortrait(n, [...n.breed.portraits.values()]);
                     n = tree.createNode(dragon.getMotherIndex(), Gender.Female, dragon.breed, dragon.portrait);
                     n.portrait = ControllerUtils.getDefaultPortrait(n, [...n.breed.portraits.values()]);
-                    return [index, fi, mi];
+                    return [fi, mi];
                 };
             }
             return [];

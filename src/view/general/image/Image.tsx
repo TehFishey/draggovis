@@ -1,13 +1,12 @@
 import React from 'react';
 
 import DragonNode from '../../../library/controller/DragonNode';
-import { Time } from '../../../library/defines/Time';
 import ViewUtils from '../../_utilities/Utilities';
 import Portrait from '../../../library/defines/Portrait';
 
 interface Props {
     node : DragonNode,
-    time : Time,
+    time : string,
     thumbnail? : boolean
 }
 

@@ -10,9 +10,7 @@ import DragonNode from '../../../../library/controller/DragonNode';
 
 import {Breeds} from '../../../../defines/Defines';
 import Controller from '../../../../controller/Controller'
-import ViewUtils from '../../../_utilities/Utilities';
 import { DragonState } from '../../../../library/defines/Dragon';
-import Portrait from '../../../../library/defines/Portrait';
 
 const breedData = Breeds.dict;
 
@@ -40,12 +38,6 @@ export default class EditPanel extends React.Component<Props, State> {
         return (this.props.node.name !== "") ? this.props.node.name : "Unnamed Dragon";
     }
 
-    onImgError = (e:any)=> {
-        e.target.onerror = null; 
-        e.target.src="image_path_here"
-    }
-
-    
     typeName = (e: React.ChangeEvent<HTMLInputElement>) => {
         let name: string = e.target.value;
         if(name.length>22) name = name.slice(0,22);

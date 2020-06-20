@@ -3,9 +3,9 @@ import Portrait from '../../library/defines/Portrait';
 import Breed, { DragonType, DragonSubType, Affinity } from '../../library/defines/Breed';
 import { Gender } from '../../library/defines/Dragon';
 
-import PortraitFactory, { TimeSwapDefine }  from '../_utilities/PortraitFactory';
+import PortraitFactory from '../_utilities/PortraitFactory';
 import ConditionFactory from '../_utilities/ConditionFactory';
-import { TimeRange, Time } from '../../library/defines/Time';
+import { TimeRange } from '../../library/defines/Time';
 
 class DragonBreed extends Breed {
     constructor(id: string, label: string, subType: DragonSubType, affinity: Array<Affinity>, Portraits: Array<Portrait>, condition?: Condition) {
@@ -144,7 +144,7 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("nhiostrife-wyvern", "Nhiostrife Wyvern", DragonSubType.Wyvern, [Affinity.Air], PortraitFactory.uPortraits("nhiostrife")),
     new DragonBreed("nocturne-dragon", "Nocturne Dragon", DragonSubType.Western, [Affinity.Time], [
         PortraitFactory.customPortrait('nocturne-u', "Standard", true, ConditionFactory.alwaysTrue("Standard"), [
-            {range: new TimeRange(new Time('18','00'), new Time('05','59')), 
+            {range: new TimeRange('18:00:00','05:59:00'), 
             portraits: [
                 PortraitFactory.customPortrait('nocturne-t1-f', "Night ♀", true, ConditionFactory.checkGender(Gender.Female,"Night ♀")),
                 PortraitFactory.customPortrait('nocturne-t1-m', "Night ♂", true, ConditionFactory.checkGender(Gender.Male,"Night ♂")),
@@ -204,11 +204,11 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("storm-dragon", "Storm Dragon", DragonSubType.Western, [Affinity.Air], PortraitFactory.uPortraits("storm")),
     new DragonBreed("stratos-dragon", "Stratos Dragon", DragonSubType.SeaSerpent, [Affinity.Air, Affinity.Light], [
         PortraitFactory.customPortrait('stratos-u', "Standard", true, ConditionFactory.alwaysTrue("Standard"), [
-            {range: new TimeRange(new Time('03','00'), new Time('08','59')), 
+            {range: new TimeRange('03:00:00','08:59:00'), 
             portraits: [PortraitFactory.customPortrait('stratos-t1-u', "Dawn", true, ConditionFactory.alwaysTrue("Dawn")),]},
-            {range: new TimeRange(new Time('15','00'), new Time('20','59')), 
+            {range: new TimeRange('15:00:00','20:59:00'), 
             portraits: [PortraitFactory.customPortrait('stratos-t2-u', "Dusk", true, ConditionFactory.alwaysTrue("Dusk")),]},
-            {range: new TimeRange(new Time('21','00'), new Time('02','59')), 
+            {range: new TimeRange('21:00:00','02:59:00'), 
             portraits: [PortraitFactory.customPortrait('stratos-t3-u', "Night", true, ConditionFactory.alwaysTrue("Night")),]}
         ])
     ]),
@@ -259,7 +259,7 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("yellow-crowned-dragon", "Yellow-Crowned Dragon", DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("yellow-crowned-dragon")),
     new DragonBreed("zyumorph-dragon", "Zyumorph", DragonSubType.Western, [Affinity.Neutral], [
         PortraitFactory.customPortrait('zyumorph-alpine-u', "Alpine", true),
-        PortraitFactory.customPortrait('zyumorph-coast-u', "Brown", true),
+        PortraitFactory.customPortrait('zyumorph-coast-u', "Coast", true),
         PortraitFactory.customPortrait('zyumorph-desert-u', "Desert", true),
         PortraitFactory.customPortrait('zyumorph-forest-u', "Forest", true),
         PortraitFactory.customPortrait('zyumorph-jungle-u', "Jungle", true),
@@ -279,21 +279,21 @@ function generateSpiritWardSwaps() {
     let t4f = PortraitFactory.customPortrait('spirit-ward-t4-f', "Midnight ♀", true, ConditionFactory.checkGender(Gender.Female,"Midnight ♀"))
     let t4m = PortraitFactory.customPortrait('spirit-ward-t4-m', "Midnight ♂", true, ConditionFactory.checkGender(Gender.Male,"Midnight ♂"))
 
-    t0f.timeSwaps.set(new TimeRange(new Time('18','00'), new Time('19','59')), [t1f])
-    t0f.timeSwaps.set(new TimeRange(new Time('04','00'), new Time('06','59')), [t1f])
-    t0f.timeSwaps.set(new TimeRange(new Time('20','00'), new Time('21','59')), [t2f])
-    t0f.timeSwaps.set(new TimeRange(new Time('02','00'), new Time('03','59')), [t2f])
-    t0f.timeSwaps.set(new TimeRange(new Time('22','00'), new Time('22','59')), [t3f])
-    t0f.timeSwaps.set(new TimeRange(new Time('01','00'), new Time('01','59')), [t3f])
-    t0f.timeSwaps.set(new TimeRange(new Time('23','00'), new Time('00','59')), [t4f])
+    t0f.timeSwaps.set(new TimeRange('18:00:00', '19:59:00'), [t1f])
+    t0f.timeSwaps.set(new TimeRange('04:00:00', '06:59:00'), [t1f])
+    t0f.timeSwaps.set(new TimeRange('20:00:00', '21:59:00'), [t2f])
+    t0f.timeSwaps.set(new TimeRange('02:00:00', '03:59:00'), [t2f])
+    t0f.timeSwaps.set(new TimeRange('22:00:00', '22:59:00'), [t3f])
+    t0f.timeSwaps.set(new TimeRange('01:00:00', '01:59:00'), [t3f])
+    t0f.timeSwaps.set(new TimeRange('23:00:00', '00:59:00'), [t4f])
 
-    t0m.timeSwaps.set(new TimeRange(new Time('18','00'), new Time('19','59')), [t1m])
-    t0m.timeSwaps.set(new TimeRange(new Time('04','00'), new Time('06','59')), [t1m])
-    t0m.timeSwaps.set(new TimeRange(new Time('20','00'), new Time('21','59')), [t2m])
-    t0m.timeSwaps.set(new TimeRange(new Time('02','00'), new Time('03','59')), [t2m])
-    t0m.timeSwaps.set(new TimeRange(new Time('22','00'), new Time('22','59')), [t3m])
-    t0m.timeSwaps.set(new TimeRange(new Time('01','00'), new Time('01','59')), [t3m])
-    t0m.timeSwaps.set(new TimeRange(new Time('23','00'), new Time('00','59')), [t4m])
+    t0m.timeSwaps.set(new TimeRange('18:00:00', '19:59:00'), [t1m])
+    t0m.timeSwaps.set(new TimeRange('04:00:00', '06:59:00'), [t1m])
+    t0m.timeSwaps.set(new TimeRange('20:00:00', '21:59:00'), [t2m])
+    t0m.timeSwaps.set(new TimeRange('02:00:00', '03:59:00'), [t2m])
+    t0m.timeSwaps.set(new TimeRange('22:00:00', '22:59:00'), [t3m])
+    t0m.timeSwaps.set(new TimeRange('01:00:00', '01:59:00'), [t3m])
+    t0m.timeSwaps.set(new TimeRange('23:00:00', '00:59:00'), [t4m])
     return [t0f, t0m]
 }
 

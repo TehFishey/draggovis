@@ -2,7 +2,7 @@ import ControllerUtils from "../../controller/_utilities/Utilities";
 import { Swaps } from "../../defines/Defines";
 
 import Portrait from "../../library/defines/Portrait";
-import { Time, TimeRange } from "../../library/defines/Time";
+import { TimeRange } from "../../library/defines/Time";
 import DragonNode from "../../library/controller/DragonNode";
 import { DragonState } from "../../library/defines/Dragon";
 
@@ -12,11 +12,11 @@ export default {
      * (undead portraits, etc.) and time-based swaps as necessary.
      * 
      * @param node DragonNode to find image.
-     * @param time Current view time context.
+     * @param time Current time context, as 'HH:MM:SS'.
      * @param thumb Whether to return thumbnail path.
      * @returns image file path.
      */
-    getImagePath(node: DragonNode, time: Time, thumb?: boolean) : string {
+    getImagePath(node: DragonNode, time: string, thumb?: boolean) : string {
         let portrait = node.portrait;
 
         if(node.state !== DragonState.Healthy) {

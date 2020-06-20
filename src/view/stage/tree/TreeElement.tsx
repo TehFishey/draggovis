@@ -64,14 +64,14 @@ export default class TreeElement extends React.Component<Props, State> {
         else this.setState({showTooltip : false});
     }
 
-    writeTooltip() {
+    buildTooltip() {
         if(this.props.node.meta.warnings != null &&
            this.props.node.meta.warnings.size > 0) {
-            let warnings: Array<JSX.Element> = []
+            let content: Array<JSX.Element> = []
             this.props.node.meta.warnings.forEach((tooltip: string)=>{
-                warnings.push(<div>{tooltip}</div>)
+                content.push(<div className='tooltip-warning-item' dangerouslySetInnerHTML={{ __html: tooltip }}></div>)
             })
-            return (<div>{warnings}</div>);
+            return (<div className='tooltip-warnings'>{content}</div>);
         }
         return (<div></div>);
     }
@@ -179,7 +179,7 @@ export default class TreeElement extends React.Component<Props, State> {
                 <Tooltip
                     show={this.state.showTooltip}
                     loc={this.calcTooltipLoc()}
-                    content={this.writeTooltip()}
+                    content={this.buildTooltip()}
                 />
                 <SettingsConsumer>
                 {value => { return (

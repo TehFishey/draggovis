@@ -14,58 +14,82 @@ class HybridBreed extends Breed {
 
 let HybridBreeds: Array<Breed> = [
     new HybridBreed("avatar-of-change", "Avatar of Change", DragonType.Dragon, DragonSubType.Western, [Affinity.Magi], PortraitFactory.uPortraits("avatar-of-change"), 
-        {
-            warning : "'Avatar of Change' requires an 'Avatar of Change' parent, OR a 'Guardian of Nature' or Avatar parent AND a second parent with a Change-aligned Elemental Affinity.",
-            validate : (dragon: DragonNode) => {
-                if(dragon.hasParents()) {
-                    if(dragon.mother()!.breed.id === 'avatar-of-change', dragon.father()!.breed.id === 'avatar-of-change')
-                        return true;
-                    if(['avatar-of-creation','avatar-of-destruction','guardian-of-nature'].includes(dragon.mother()!.breed.id) && 
-                      (['Magi','Air','Time','Ice'].includes(dragon.father()!.breed.affinity[0])))
-                        return true;
-                    if(['avatar-of-creation','avatar-of-destruction','guardian-of-nature'].includes(dragon.father()!.breed.id) && 
-                      (['Magi','Air','Time','Ice'].includes(dragon.mother()!.breed.affinity[0])))
-                        return true;
-                }
-                return false;
-            }
-        }
+        ConditionFactory.or('Avatar of Change', [
+            ConditionFactory.checkParentBreedIds([{id: 'avatar-of-change', label: 'Avatar of Change'}]),
+            ConditionFactory.and('', [
+                ConditionFactory.checkParentBreedIds([
+                    {id: 'guardian-of-nature', label: 'Guardian of Nature'},
+                    {id: 'avatar-of-destruction', label: 'Avatar of Destruction'},
+                    {id: 'avatar-of-creation', label: 'Avatar of Creation'}
+                ]),
+                new Condition(
+                    (dragon: DragonNode) => {
+                        if(dragon.hasParents()) {
+                            if(['avatar-of-creation','avatar-of-destruction','guardian-of-nature'].includes(dragon.mother()!.breed.id) && 
+                              (['Magi','Air','Time','Ice'].includes(dragon.father()!.breed.affinity[0])))
+                                return true;
+                            if(['avatar-of-creation','avatar-of-destruction','guardian-of-nature'].includes(dragon.father()!.breed.id) && 
+                              (['Magi','Air','Time','Ice'].includes(dragon.mother()!.breed.affinity[0])))
+                                return true;
+                        } 
+                        return false;
+                    },
+                    'a second parent with primary affinity: Magi, Air, Time, or Ice.'
+                )
+            ])
+        ])
     ),
     new HybridBreed("avatar-of-creation", "Avatar of Creation", DragonType.Dragon, DragonSubType.Western, [Affinity.Light], PortraitFactory.uPortraits("avatar-of-creation"),
-        {
-            warning : "'Avatar of Creation' requires an 'Avatar of Creation' parent, OR a 'Guardian of Nature' or Avatar parent AND a second parent with a Creation-aligned Elemental Affinity.",
-            validate : (dragon: DragonNode) => {
-                if(dragon.hasParents()) {
-                    if(dragon.mother()!.breed.id === 'avatar-of-creation', dragon.father()!.breed.id === 'avatar-of-creation')
-                        return true;
-                    if(['avatar-of-change','avatar-of-destruction','guardian-of-nature'].includes(dragon.mother()!.breed.id) && 
-                      (['Light','Life','Earth','Water'].includes(dragon.father()!.breed.affinity[0])))
-                        return true;
-                    if(['avatar-of-change','avatar-of-destruction','guardian-of-nature'].includes(dragon.father()!.breed.id) && 
-                      (['Light','Life','Earth','Water'].includes(dragon.mother()!.breed.affinity[0])))
-                        return true;
-                }
-                return false;
-            }
-        }
+        ConditionFactory.or('Avatar of Change', [
+            ConditionFactory.checkParentBreedIds([{id: 'avatar-of-creation', label: 'Avatar of Creation'}]),
+            ConditionFactory.and('', [
+                ConditionFactory.checkParentBreedIds([
+                    {id: 'guardian-of-nature', label: 'Guardian of Nature'},
+                    {id: 'avatar-of-destruction', label: 'Avatar of Destruction'},
+                    {id: 'avatar-of-change', label: 'Avatar of Change'}
+                ]),
+                new Condition(
+                    (dragon: DragonNode) => {
+                        if(dragon.hasParents()) {
+                            if(['avatar-of-change','avatar-of-destruction','guardian-of-nature'].includes(dragon.mother()!.breed.id) && 
+                              (['Light','Life','Earth','Water'].includes(dragon.father()!.breed.affinity[0])))
+                            return true;
+                            if(['avatar-of-change','avatar-of-destruction','guardian-of-nature'].includes(dragon.father()!.breed.id) && 
+                              (['Light','Life','Earth','Water'].includes(dragon.mother()!.breed.affinity[0])))
+                            return true;
+                        } 
+                        return false;
+                    },
+                    'a second parent with primary affinity: Light, Life, Earth, or Water.'
+                )
+            ])
+        ])
     ),
     new HybridBreed("avatar-of-destruction", "Avatar of Destruction", DragonType.Dragon, DragonSubType.Western, [Affinity.Dark], PortraitFactory.uPortraits("avatar-of-destruction"),
-        {
-            warning : "'Avatar of Destruction' requires an 'Avatar of Destruction' parent, OR a 'Guardian of Nature' or Avatar parent AND a second parent with a Destruction-aligned Elemental Affinity.",
-            validate : (dragon: DragonNode) => {
-                if(dragon.hasParents()) {
-                    if(dragon.mother()!.breed.id === 'avatar-of-destruction', dragon.father()!.breed.id === 'avatar-of-destruction')
-                        return true;
-                    if(['avatar-of-change','avatar-of-creation','guardian-of-nature'].includes(dragon.mother()!.breed.id) && 
-                      (['Dark','Lightning','Death','Fire'].includes(dragon.father()!.breed.affinity[0])))
-                        return true;
-                    if(['avatar-of-change','avatar-of-creation','guardian-of-nature'].includes(dragon.father()!.breed.id) && 
-                      (['Dark','Lightning','Death','Fire'].includes(dragon.mother()!.breed.affinity[0])))
-                        return true;
-                }
-                return false;
-            }
-        }
+        ConditionFactory.or('Avatar of Destruction', [
+            ConditionFactory.checkParentBreedIds([{id: 'avatar-of-destruction', label: 'Avatar of Destruction'}]),
+            ConditionFactory.and('', [
+                ConditionFactory.checkParentBreedIds([
+                    {id: 'guardian-of-nature', label: 'Guardian of Nature'},
+                    {id: 'avatar-of-creation', label: 'Avatar of Creation'},
+                    {id: 'avatar-of-change', label: 'Avatar of Change'}
+                ]),
+                new Condition(
+                    (dragon: DragonNode) => {
+                        if(dragon.hasParents()) {
+                            if(['avatar-of-change','avatar-of-creation','guardian-of-nature'].includes(dragon.mother()!.breed.id) && 
+                              (['Dark','Lightning','Death','Fire'].includes(dragon.father()!.breed.affinity[0])))
+                            return true;
+                            if(['avatar-of-change','avatar-of-creation','guardian-of-nature'].includes(dragon.father()!.breed.id) && 
+                              (['Dark','Lightning','Death','Fire'].includes(dragon.mother()!.breed.affinity[0])))
+                            return true;
+                        } 
+                        return false;
+                    },
+                    'a second parent with primary affinity: Dark, Lightning, Death, or Fire.'
+                )
+            ])
+        ])
     ),
     new HybridBreed("amalthean-dragon", "Amalthean Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Life, Affinity.Water], PortraitFactory.mfPortraits("amalthean"),
         ConditionFactory.and("Amalthean Dragon", [
@@ -92,19 +116,20 @@ let HybridBreeds: Array<Breed> = [
         ])
     ),
     new HybridBreed("geode-dragon", "Geode Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Earth], PortraitFactory.mfPortraits("geode"),
-        {
-            warning : "'Geode Dragon' requires a parent with breed 'Geode Dragon' OR parents with any combination of breeds: 'Stone Dragon', 'Green Dragon'.",
-            validate : (dragon: DragonNode) => {
-                if(dragon.hasParents()) {
-                    if((dragon.mother()!.breed.id === "geode-dragon") || (dragon.father()!.breed.id === "geode-dragon"))
-                        return true;
-                    if(["green-dragon", "stone-dragon"].indexOf(dragon.mother()!.breed.id) >= 0 
-                    && ["green-dragon", "stone-dragon"].indexOf(dragon.father()!.breed.id) >= 0)
-                        return true;
-                }
-                return false;
-            }
-        }
+        ConditionFactory.or('Geode Dragon', [
+            ConditionFactory.checkParentBreedIds([{id: "geode-dragon", label: "Geode Dragon"}]),
+            new Condition(
+                (dragon: DragonNode) => {
+                    if(dragon.hasParents()) {
+                        if(["green-dragon", "stone-dragon"].indexOf(dragon.mother()!.breed.id) >= 0 
+                        && ["green-dragon", "stone-dragon"].indexOf(dragon.father()!.breed.id) >= 0)
+                            return true;
+                    }
+                    return false;
+                },
+                "parents with any combination of breeds: 'Stone Dragon', 'Green Dragon'."
+            )
+        ]),
     ),
     new HybridBreed("hellhorse-dragon", "Hellhorse Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Fire], PortraitFactory.mfPortraits("hellhorse"),
         ConditionFactory.or("Hellorse Dragon", [

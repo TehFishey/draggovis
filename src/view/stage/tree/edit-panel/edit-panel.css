@@ -43,6 +43,12 @@
 .ep-toggles {
 	grid-area: toggles;
 }
+.ep-checkbox {
+	margin: 1px;
+}
+.ep-checkbox-disabled {
+
+}
 
 .ep-properties {
 	grid-area: properties;

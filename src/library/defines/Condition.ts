@@ -25,8 +25,8 @@ export default class Condition {
     validateVerbose(node: DragonNode, subCondition?: boolean) : [boolean, string] {
         let result = this.validate(node);
         return (subCondition) ? 
-            [result, (result)? '✓ '+this.description : '✖ '+this.description] :
-            [result, this.prefix+this.description]
+            [result, (result)? `✓ ${this.description}` : `✖ ${this.description}`] :
+            [result, (result)? `✓ ${this.prefix}${this.description}` : `✖ ${this.prefix}${this.description}`]
     }
 };
 
@@ -74,7 +74,7 @@ export class CompoundCondition extends Condition {
         
         out = (subCondition) ? 
               (result)? `✓ ${this.description}` : `✖ ${this.description}` : 
-              `${this.prefix}${this.description}`;
+              (result)? `✓ ${this.prefix}${this.description}` : `✖ ${this.prefix}${this.description}` ;
 
         out += `<ul>`
         subOuts.forEach((o: string)=>{

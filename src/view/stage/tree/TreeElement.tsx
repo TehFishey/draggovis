@@ -19,7 +19,6 @@ interface Props {
     tree: Tree,
     node: DragonNode,
     setData: Function,
-    getCanvas: Function,
 }
 
 interface State {
@@ -31,8 +30,7 @@ interface State {
 
 export default class TreeElement extends React.Component<Props, State> {
 
-    canvas: React.RefObject<HTMLDivElement>;
-    img: React.RefObject<HTMLImageElement>;
+    img: React.RefObject<HTMLDivElement>;
 
     constructor(props: Props) {
         super(props);
@@ -45,7 +43,6 @@ export default class TreeElement extends React.Component<Props, State> {
         }
 
         this.img = React.createRef();
-        this.canvas = this.props.getCanvas();
 
         this.updatePosition = this.updatePosition.bind(this);
     }
@@ -64,16 +61,12 @@ export default class TreeElement extends React.Component<Props, State> {
         else this.setState({showTooltip : false});
     }
 
-    buildTooltip() {
+    getTooltipContent() : string | Array<string> {
         if(this.props.node.meta.warnings != null &&
            this.props.node.meta.warnings.size > 0) {
-            let content: Array<JSX.Element> = []
-            this.props.node.meta.warnings.forEach((tooltip: string)=>{
-                content.push(<div className='tooltip-warning-item' dangerouslySetInnerHTML={{ __html: tooltip }}></div>)
-            })
-            return (<div className='tooltip-warnings'>{content}</div>);
+            return [...this.props.node.meta.warnings.values()]
         }
-        return (<div></div>);
+        return '';
     }
 
     getImgRect() {
@@ -134,13 +127,11 @@ export default class TreeElement extends React.Component<Props, State> {
                 (<TreeElement
                     tree={this.props.tree}
                     node={this.props.node.father()!}
-                    getCanvas={this.props.getCanvas}
                     setData={(treeData: Array<DragonNode>) => {this.props.setData(treeData)}}
                 />),
                 (<TreeElement
                     tree={this.props.tree}
                     node={this.props.node.mother()!}
-                    getCanvas={this.props.getCanvas}
                     setData={(treeData: Array<DragonNode>) => {this.props.setData(treeData)}}
                 />)
             ];
@@ -151,16 +142,11 @@ export default class TreeElement extends React.Component<Props, State> {
 
     componentDidMount() {
         this.updatePosition();
-        console.log('in tree node mount: ');
-        console.log(this.canvas);
-        console.log(this.canvas.current);
         window.addEventListener("resize", this.updatePosition);
-        this.canvas.current!.addEventListener("scroll", this.updatePosition);
     }
 
     componentWillUnmount() {
         window.removeEventListener("resize", this.updatePosition);
-        this.canvas.current!.removeEventListener("scroll", this.updatePosition);
     }
 
     render() {
@@ -179,7 +165,7 @@ export default class TreeElement extends React.Component<Props, State> {
                 <Tooltip
                     show={this.state.showTooltip}
                     loc={this.calcTooltipLoc()}
-                    content={this.buildTooltip()}
+                    content={this.getTooltipContent()}
                 />
                 <SettingsConsumer>
                 {value => { return (
@@ -189,7 +175,7 @@ export default class TreeElement extends React.Component<Props, State> {
                                 onClick={e=>{this.displayPopover(true)}}
                                 ref={this.img}
                                 onMouseEnter={e=>{this.displayTooltip(value.enableWarn)}}
-                                onMouseOut={e=>{this.displayTooltip(false)}}
+                                onMouseLeave={e=>{this.displayTooltip(false)}}
                                 onError={(e)=>{this.setState({imgError : true})}}
                             >
                                 <Image node={this.props.node} time={value.caveTime} thumbnail={true}/>

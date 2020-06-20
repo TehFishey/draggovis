@@ -5,21 +5,6 @@ import Breed from '../../../../library/defines/Breed';
 import Portrait from '../../../../library/defines/Portrait';
 import DragonNode from '../../../../library/controller/DragonNode';
 
-type menuOption = {value : string, label: string}
-
-interface Props {
-    selectionPool: Map<string,Breed> | Map<string,Portrait>,
-    currentSelection?: Breed | Portrait,
-    defaultLabel: string,
-    validationObject?: DragonNode,
-    validationFactors: Array<any>,
-    onChange: Function
-}
-  
-interface State {
-    validOptions: Array<menuOption>,
-}
-
 const targetHeight = 24;
 
 const styles = {
@@ -46,7 +31,22 @@ const styles = {
   }),
 };
 
-export default class DVSelect extends React.Component<Props, State> {
+type menuOption = {value : string, label: string}
+
+interface Props {
+    selectionPool: Map<string,Breed> | Map<string,Portrait>,
+    currentSelection?: Breed | Portrait,
+    defaultLabel: string,
+    validationNode?: DragonNode,
+    validationFactors: Array<any>,
+    onChange: Function
+}
+  
+interface State {
+    validOptions: Array<menuOption>,
+}
+
+export default class EditPanelPulldown extends React.Component<Props, State> {
     constructor(props: Props){
         super(props);
         this.state = {
@@ -62,21 +62,20 @@ export default class DVSelect extends React.Component<Props, State> {
     }
     
     /**
-     * Iterates through Breeds/Portraits in a dictionary (selectionPool prop), determining which are valid
-     * for the current DragonNode (validationObject prop, optional). If no DragonNode was input, all Breeds/Portraits 
-     * are considered valid. Populates menuOption array (validOptions state) for each valid option found.
+     * Filters through Breeds/Portraits in a dictionary (selectionPool prop), determining which are valid
+     * choices for the current DragonNode (validationNode prop). If no validationNode exists, all Breeds/Portraits 
+     * are considered valid. Populates menuOption array (validOptions state) with validated items.
      */
     setValidOptions() {
-        // Convert selection pool dict to array of form [[key,value], [key,value] ... ] for iteration
         let selectionPool : Array<Breed | Portrait> = [...this.props.selectionPool.values()];
         
-        // If a validation object was input, filter selection pool by validating each object against it
-        if(this.props.validationObject !== undefined) {
+        // If a DragonNode was input, filter selection pool by validating each Breed/Portrait against it
+        if(this.props.validationNode !== undefined) {
             selectionPool = selectionPool.filter((item : Breed | Portrait)=>{
-                return item.condition.validate(this.props.validationObject!);
+                return item.condition.validate(this.props.validationNode!);
             });
 
-            // If currently selected object is NOT in filtered pool, add it
+            // If currently selected Breed/Portrait is NOT in filtered pool, add it
             if(this.props.currentSelection !== undefined &&
                 !selectionPool.some((item : Breed | Portrait)=>{
                    return item.id === this.props.currentSelection!.id
@@ -85,10 +84,12 @@ export default class DVSelect extends React.Component<Props, State> {
             }
         }
 
-        // Map selection pool to form used by react-select
+        // Map selection pool to form used by react-select library
         let options : Array<menuOption> = selectionPool.map((item : Breed | Portrait)=>{ 
             return { value: item.id, label: item.label }
         });
+
+        // Set new selection pool to options
         this.setState({validOptions : options});
     }
 
@@ -97,20 +98,13 @@ export default class DVSelect extends React.Component<Props, State> {
     }
     
     componentDidUpdate(prevProps: Props) {
-        // Re-validating the options list can be computationally expensive.
+        // Re-validating the options list can get very expensive.
         // We want to avoid doing so on each re-render; only do it if key variables have changed.
         if(this.props.validationFactors.some((object, index) => {
             return object !== prevProps.validationFactors[index];
         })) {
             this.setValidOptions();
         }
-        
-        /*
-        (
-            this.props.selectionPool !== prevProps.selectionPool || 
-            this.props.validationObject !== prevProps.validationObject || 
-            this.props.currentSelection !== prevProps.currentSelection))
-            */ 
     }
     
     handleChange(selectedOption: any) {

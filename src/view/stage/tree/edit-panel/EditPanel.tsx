@@ -1,16 +1,19 @@
 import React from 'react';
-import Image from '../../../general/image/Image'
-import Select from "./EditPanelSelect";
-import DropDownButton from '../../../general/dropdown/DropDownButton';
 import { SettingsConsumer } from '../../../Settings';
+import Image from '../../../general/image/Image'
+import EditPanelPulldown from "./EditPanelPulldown";
+import DropDownButton from '../../../general/dropdown/DropDownButton';
 import './edit-panel.css';
 
 import Tree from '../../../../library/controller/Tree';
 import DragonNode from '../../../../library/controller/DragonNode';
 
-import {Breeds} from '../../../../defines/Defines';
+import {Breeds, Swaps} from '../../../../defines/Defines';
 import Controller from '../../../../controller/Controller'
 import { DragonState } from '../../../../library/defines/Dragon';
+import Tooltip from '../../../general/tooltip/Tooltip';
+import EditPanelCheckbox from './EditPanelCheckbox';
+import Condition from '../../../../library/defines/Condition';
 
 const breedData = Breeds.dict;
 
@@ -140,11 +143,11 @@ export default class EditPanel extends React.Component<Props, State> {
                                 </div>
                                 <div className='ep-props-label' style={{gridArea: 'b-label'}}>Breed</div>
                                 <div className='ep-props-control' style={{gridArea: 'b-set'}}>
-                                    <Select 
+                                    <EditPanelPulldown 
                                         selectionPool={breedData}
                                         currentSelection={this.props.node.breed}
                                         defaultLabel = {'Select Breed'}
-                                        validationObject = {(value.disableValid) ? undefined : this.props.node}
+                                        validationNode = {(value.disableValid) ? undefined : this.props.node}
                                         validationFactors = {[
                                             this.props.node.gender,
                                             ((this.props.node.father() !== undefined) ? this.props.node.father()!.breed : null),
@@ -155,11 +158,11 @@ export default class EditPanel extends React.Component<Props, State> {
                                 </div>
                                 <div className='ep-props-label' style={{gridArea: 'p-label'}}>Art</div>
                                 <div className='ep-props-control' style={{gridArea: 'p-set'}}>
-                                    <Select 
+                                    <EditPanelPulldown 
                                         selectionPool={this.props.node.breed.portraits}
                                         currentSelection={this.props.node.portrait}
                                         defaultLabel = {'Select Portrait'}
-                                        validationObject = {(value.disableValid) ? undefined : this.props.node}
+                                        validationNode = {(value.disableValid) ? undefined : this.props.node}
                                         validationFactors = {[
                                             this.props.node.breed,
                                             this.props.node.gender,
@@ -171,34 +174,34 @@ export default class EditPanel extends React.Component<Props, State> {
                                 </div>
                             </div>
                     <div className='ep-toggles'>
-                            <div onClick={e=>{this.setDragonState(DragonState.Dead)}} style={{cursor: 'default'}}>
-                                <input type='checkbox'
-                                    checked={this.props.node.state === DragonState.Dead}
-                                    readOnly
-                                />
-                                Kill
-                            </div>
-                            <div onClick={e=>{this.setDragonState(DragonState.Undead)}} style={{cursor: 'default'}}>
-                                <input type='checkbox'
-                                    checked={this.props.node.state === DragonState.Undead}
-                                    readOnly
-                                />
-                                Zombify
-                            </div>
-                            <div onClick={e=>{this.setDragonState(DragonState.Vampire)}} style={{cursor: 'default'}}>
-                                <input type='checkbox'
-                                    checked={this.props.node.state === DragonState.Vampire}
-                                    readOnly
-                                />
-                                Bite
-                            </div>
-                            <div onClick={e=>{this.setDragonState(DragonState.Neglected)}} style={{cursor: 'default'}}>
-                                <input type='checkbox'
-                                    checked={this.props.node.state === DragonState.Neglected}
-                                    readOnly
-                                />
-                                Neglect
-                            </div>
+                            <EditPanelCheckbox
+                                label='Kill'
+                                checked={this.props.node.state === DragonState.Dead}
+                                node={this.props.node}
+                                onClick={()=>{this.setDragonState(DragonState.Dead)}}
+                                condition={(value.disableValid)? new Condition() : Swaps.conds.get(DragonState.Dead)}
+                            />
+                            <EditPanelCheckbox
+                                label='Zombify'
+                                checked={this.props.node.state === DragonState.Undead}
+                                node={this.props.node}
+                                onClick={()=>{this.setDragonState(DragonState.Undead)}}
+                                condition={(value.disableValid)? new Condition() : Swaps.conds.get(DragonState.Undead)}
+                            />
+                            <EditPanelCheckbox
+                                label='Bite'
+                                checked={this.props.node.state === DragonState.Vampire}
+                                node={this.props.node}
+                                onClick={()=>{this.setDragonState(DragonState.Vampire)}}
+                                condition={(value.disableValid)? new Condition() : Swaps.conds.get(DragonState.Vampire)}
+                            />
+                            <EditPanelCheckbox
+                                label='Neglect'
+                                checked={this.props.node.state === DragonState.Neglected}
+                                node={this.props.node}
+                                onClick={()=>{this.setDragonState(DragonState.Neglected)}}
+                                condition={(value.disableValid)? new Condition() : Swaps.conds.get(DragonState.Neglected)}
+                            />
                         </div>
                     <div className='ep-controls'>
                             <div className='ep-cont-label'>Actions:</div>

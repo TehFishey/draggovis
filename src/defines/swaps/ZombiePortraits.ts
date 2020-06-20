@@ -5,12 +5,14 @@ import { TimeRange } from '../../library/defines/Time';
 
 import PortraitFactory, { TimeSwapDefine } from '../_utilities/PortraitFactory';
 import ConditionFactory from '../_utilities/ConditionFactory';
-import GravePortraits from './GravePortraits'
+import {deadPortraits} from './GravePortraits'
 
 let graveSwap : TimeSwapDefine = {
     range: new TimeRange('06:00:00', '23:59:00'), 
-    portraits: GravePortraits
+    portraits: deadPortraits
 }
+
+let zombieCondition = ConditionFactory.alwaysTrue('Undead Dragon');
 
 let zombiePortraits: Array<Portrait> = [
     PortraitFactory.customPortrait('zombie-western-u', "Dragon", true, ConditionFactory.checkType(DragonType.Dragon, DragonSubType.Western, "Undead Dragon"), [graveSwap]),
@@ -36,4 +38,4 @@ let zombiePortraits: Array<Portrait> = [
     PortraitFactory.customPortrait('zombie-pygmy-wyvern-u', "Pygmy Wyvern", true, ConditionFactory.checkType(DragonType.Pygmy, DragonSubType.Wyvern, "Undead Pygmy Wyvern"), [graveSwap]),
 ]
 
-export default zombiePortraits;
+export {zombiePortraits, zombieCondition};

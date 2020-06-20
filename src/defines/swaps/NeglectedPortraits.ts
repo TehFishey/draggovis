@@ -4,6 +4,7 @@ import { Gender } from '../../library/defines/Dragon';
 import PortraitFactory from '../_utilities/PortraitFactory';
 import ConditionFactory from '../_utilities/ConditionFactory';
 
+let neglectedCondition = ConditionFactory.checkLastGeneration('Neglected Dragon');
 
 let neglectedPortraits: Array<Portrait> = [
     PortraitFactory.customPortrait('neglected-u', "Standard", true, ConditionFactory.checkGender(Gender.Undefined, "Standard")),
@@ -11,4 +12,4 @@ let neglectedPortraits: Array<Portrait> = [
     PortraitFactory.customPortrait('neglected-f', "Standard ♀", true, ConditionFactory.checkGender(Gender.Female, "Standard ♀")),
 ]
 
-export default neglectedPortraits;
+export {neglectedPortraits, neglectedCondition};

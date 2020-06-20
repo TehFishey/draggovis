@@ -12,34 +12,22 @@ interface Props {}
 
 interface State {
     tree: Tree;
-    renderCanvas: boolean;
 }
 
 export default class Stage extends React.Component<Props, State> {
-
-    canvasRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: Props) {
         super(props);
 
         this.state = {
-            renderCanvas : false,
             tree: Controller.getSnapshot()
         }
-
-        this.canvasRef = React.createRef();
-        this.getCanvas = this.getCanvas.bind(this);
     }
 
-    getCanvas = () => { return this.canvasRef; }
     getData = () => { return this.state.tree; }
     setData = (tree: Tree) => { this.setState({tree: tree})}
 
     componentDidMount() {
-        if(!this.state.renderCanvas) {
-            this.setState({renderCanvas : true});
-            console.log(this.canvasRef.current);
-        }
        //let io = Controller.IOManager.generateLookups();
     }
 
@@ -59,18 +47,16 @@ export default class Stage extends React.Component<Props, State> {
                 <Sidebar
                     mouseOver={this.state.tree[0]!}
                 />
-                <div className='stage-canvas' ref={this.canvasRef}>
-                    {(this.state.renderCanvas) ? (
-                        <div className="lineage-tree">
-                            <ul id ="tree-root">
-                                <TreeElement
-                                tree={this.state.tree}
-                                node={this.state.tree[0]!}
-                                getCanvas={this.getCanvas}
-                                setData={this.setData}
-                                />
-                            </ul>
-                        </div> ) : null}
+                <div className='stage-canvas'>
+                    <div className="lineage-tree">
+                        <ul id ="tree-root">
+                            <TreeElement
+                            tree={this.state.tree}
+                            node={this.state.tree[0]!}
+                            setData={this.setData}
+                            />
+                        </ul>
+                    </div>
                 </div>
             </div>
         );

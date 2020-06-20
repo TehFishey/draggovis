@@ -17,12 +17,12 @@
     will-change: transform;
 }
 
-.tooltip-warnings {
+.tooltip-content {
     display: flex;
     flex-direction: column;
     align-content: center;
 }
 
-.tooltip-warning-item {
+.tooltip-item {
     margin: 5px;
 }

@@ -78,13 +78,12 @@ export default {
     checkType(type: DragonType, subType?: DragonSubType, label?: string) : Condition {
         let validate : nodeReference;
         let description : string;
-        
 
         if(subType != null) {
             description = `dragon type '${type}' and sub-type '${subType}'.`;
             validate = (dragon: DragonNode) => { return (dragon.breed.type === type && dragon.breed.subType === subType) };
         } else {
-            description = `requires dragon type '${type}'.`;
+            description = `dragon type '${type}'.`;
             validate = (dragon: DragonNode) => { return (dragon.breed.type === type) };
         }
 
@@ -94,6 +93,12 @@ export default {
     checkFirstGeneration(label?: string) : Condition {
         let validate = (dragon: DragonNode) => {return !dragon.hasParents()};
         let description = `first generation dragon.`
+        return new Condition(validate, description, label);
+    },
+
+    checkLastGeneration(label?: string) : Condition {
+        let validate = (dragon: DragonNode) => {return dragon.index === 0};
+        let description = `last generation dragon.`
         return new Condition(validate, description, label);
     },
 

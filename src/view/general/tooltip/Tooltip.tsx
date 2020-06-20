@@ -9,7 +9,7 @@ type windowCoordinates = {x: number, y: number}
 interface Props {
     show: boolean,
     loc: windowCoordinates,
-    content: JSX.Element,
+    content: string | Array<string>,
 }
   
 interface State {}
@@ -23,6 +23,20 @@ export default class Tooltip extends React.Component<Props,State> {
         this.componentRef = React.createRef();
     }
 
+    buildContent() : JSX.Element {
+        let out: Array<JSX.Element> = []
+
+        if(this.props.content instanceof Array) {
+            this.props.content.forEach((string)=> {
+                out.push(<div className='tooltip-item' dangerouslySetInnerHTML={{ __html: string }}></div>)
+            });
+        } else {
+            out.push(<div className='tooltip-item' dangerouslySetInnerHTML={{ __html: this.props.content }}></div>)
+        }
+
+        return(<div className='tooltip-content'>{out}</div>)
+    }
+
     render () {
         if (!this.props.show) {return null;}
         return ( 
@@ -33,7 +47,7 @@ export default class Tooltip extends React.Component<Props,State> {
                     ref={this.componentRef}
                     style={{ transform : `translate(${this.props.loc.x}px, ${this.props.loc.y}px)` }}
                 >
-                    <div className='tooltip-content'>{this.props.content}</div>
+                    {this.buildContent()}
                 </div>), overlay!)}
             </>
         );

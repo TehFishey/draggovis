@@ -42,7 +42,7 @@ export default class IOPanel extends React.Component<Props, State> {
     }
 
     exportContent() {
-        let content: string = Controller.IOManager.export();
+        let content: string = Controller.IOManager.export(Controller.lineageSnapshot);
         let contentSize: number = content.length;
         this.setState({
             content: content,

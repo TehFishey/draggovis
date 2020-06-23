@@ -158,7 +158,8 @@ export default class TreeElement extends React.Component<Props, State> {
                     content={ <EditWindow
                         tree={this.props.tree}
                         node={this.props.node}
-                        updateTree={(newTree: Tree) => this.updateTree(newTree)}/>
+                        updateTree={(newTree: Tree) => this.updateTree(newTree)}
+                        handleClose={()=>{this.displayPopover(false)}} />
                     }
                     handleClose={()=>{this.displayPopover(false)}}
                 />

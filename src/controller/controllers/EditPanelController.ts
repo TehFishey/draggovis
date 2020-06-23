@@ -72,6 +72,12 @@ export default class EditPanelController {
                     tree.setBranch(2, branch);
                     n = tree.createNode(1, Gender.Male, dragon.breed, dragon.portrait);
                     n.portrait = ControllerUtils.correctPortraitGender(n);
+                } 
+                else if(dragon.gender === Gender.Undefined) {
+                    branch[0]!.gender = Gender.Female;
+                    tree.setBranch(2, branch);
+                    n = tree.createNode(1, Gender.Male, dragon.breed, dragon.portrait);
+                    n.portrait = ControllerUtils.correctPortraitGender(n);
                 }
 
                 return tree.getBranch(0, false).reduce(

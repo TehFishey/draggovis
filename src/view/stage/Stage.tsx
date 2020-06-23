@@ -28,7 +28,7 @@ export default class Stage extends React.Component<Props, State> {
     setData = (tree: Tree) => { this.setState({tree: tree})}
 
     componentDidMount() {
-       //let io = Controller.IOManager.generateLookups();
+       //Controller.IOManager.generateLookups();
     }
 
     componentDidUpdate() {

@@ -30,7 +30,7 @@ export default class DataManager {
         this.undoStack = new Stack();
         this.redoStack = new Stack();
 
-        this.IOManager = new IOManager(this);
+        this.IOManager = new IOManager(this, 0);
         this.editWindow = new EditPanelController(this);
         this.dragDrop = new DragDropController(this);
     }

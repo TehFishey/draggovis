@@ -11,7 +11,6 @@ import DragonNode from '../../../../library/controller/DragonNode';
 import {Breeds, Swaps} from '../../../../defines/Defines';
 import Controller from '../../../../controller/Controller'
 import { DragonState } from '../../../../library/defines/Dragon';
-import Tooltip from '../../../general/tooltip/Tooltip';
 import EditPanelCheckbox from './EditPanelCheckbox';
 import Condition from '../../../../library/defines/Condition';
 
@@ -21,6 +20,7 @@ interface Props {
     tree: Tree,
     node: DragonNode,
     updateTree: Function
+    handleClose: Function
 }
   
 interface State {
@@ -47,15 +47,15 @@ export default class EditPanel extends React.Component<Props, State> {
         this.setState({name: name});
     }
 
-    updateBreed = (breedId: string) => {
-        this.props.updateTree(
-            Controller.editWindow.updateBreed(this.props.node.index, breedId)
-        );
-    }
-
     updateName = () => {
         this.props.updateTree(
             Controller.editWindow.updateName(this.props.node.index, this.state.name)
+        );
+    }
+
+    updateBreed = (breedId: string) => {
+        this.props.updateTree(
+            Controller.editWindow.updateBreed(this.props.node.index, breedId)
         );
     }
 
@@ -77,6 +77,8 @@ export default class EditPanel extends React.Component<Props, State> {
             this.createChild();
         else
             this.removeChild();
+        // Close the popover so user can re-open correct one...
+        this.props.handleClose();
     }
 
     createParents() {
@@ -92,7 +94,6 @@ export default class EditPanel extends React.Component<Props, State> {
     }
 
     createChild() {
-        console.log(`creating child for ${this.props.node.index}`);
         this.props.updateTree(
             Controller.editWindow.createChild(this.props.node.index)
         );

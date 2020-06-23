@@ -76,7 +76,7 @@ export default class EditPanelCheckbox extends React.Component<Props, State> {
             checkable : check,
             tooltipContent: (warning !== '') ? warning : this.state.tooltipContent
         })
-        if(this.props.checked && !this.state.checkable) this.onClick.call([]);
+        //if(this.props.checked && !this.state.checkable) this.onClick.call([]);
     }
 
     updateTooltipLoc() {

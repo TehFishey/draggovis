@@ -7,7 +7,7 @@ import DragonNode from '../../../../library/controller/DragonNode';
 
 const targetHeight = 24;
 
-const styles = {
+export const styles = {
   control: (base: any) => ({
     ...base,
     minHeight: 'initial',

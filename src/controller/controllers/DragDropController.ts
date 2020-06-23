@@ -3,9 +3,6 @@ import ControllerUtils from "../_utilities/Utilities"
 
 import Tree from "../../library/controller/Tree";
 import DragonNode from "../../library/controller/DragonNode";
-import { Gender } from "../../library/defines/Dragon";
-
-import { Portraits } from "../../defines/Defines";
 
 export default class DragDropController {
     readonly parent: DataManager;
@@ -14,19 +11,21 @@ export default class DragDropController {
         this.parent = parent;
     }
 
-    copyOne(dragNodeIndex: number, dropNodeIndex: number) : Tree {
+    copyOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[dragNodeIndex];
             if(dragon != null) {
                 let n = tree.copyNode(dragon, dropNodeIndex);
+                
                 n.gender = ControllerUtils.correctDragonGender(n);
                 n.portrait = ControllerUtils.correctPortraitGender(n);
+                if (validate) n.state = ControllerUtils.correctDragonState(n);
             }
             return [dropNodeIndex];
         })
     }
 
-    swapOne(dragNodeIndex: number, dropNodeIndex: number) : Tree {
+    swapOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragged = tree[dragNodeIndex];
             let dropped = tree[dropNodeIndex];
@@ -34,10 +33,12 @@ export default class DragDropController {
                 let n = tree.copyNode(dragged, dropNodeIndex);
                 n.gender = ControllerUtils.correctDragonGender(n);
                 n.portrait = ControllerUtils.correctPortraitGender(n);
+                if (validate) n.state = ControllerUtils.correctDragonState(n);
 
                 n = tree.copyNode(dropped, dragNodeIndex);
                 n.gender = ControllerUtils.correctDragonGender(n);
                 n.portrait = ControllerUtils.correctPortraitGender(n);
+                if (validate) n.state = ControllerUtils.correctDragonState(n);
 
                 return [dragNodeIndex, dropNodeIndex];
             }
@@ -45,7 +46,7 @@ export default class DragDropController {
         })
     }
 
-    copySet(dragNodeIndex: number, dropNodeIndex: number) : Tree {
+    copySet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragged = tree[dragNodeIndex];
             let dropped = tree[dropNodeIndex];
@@ -58,6 +59,7 @@ export default class DragDropController {
 
                 n.gender = ControllerUtils.correctDragonGender(n);
                 n.portrait = ControllerUtils.correctPortraitGender(n);
+                if (validate) n.state = ControllerUtils.correctDragonState(n);
 
                 return tree.getBranch(dropNodeIndex, false).reduce(
                     function(result, node) {
@@ -70,7 +72,7 @@ export default class DragDropController {
         })
     }
 
-    swapSet(dragNodeIndex: number, dropNodeIndex: number) : Tree {
+    swapSet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragged = tree[dragNodeIndex];
             let dropped = tree[dropNodeIndex];
@@ -83,11 +85,13 @@ export default class DragDropController {
                 n = tree[dropNodeIndex]!;
                 n.gender = ControllerUtils.correctDragonGender(n);
                 n.portrait = ControllerUtils.correctPortraitGender(n);
+                if (validate) n.state = ControllerUtils.correctDragonState(n);
 
                 tree.setBranch(dragNodeIndex, dropBranch);
                 n = tree[dragNodeIndex]!;
                 n.gender = ControllerUtils.correctDragonGender(n);
                 n.portrait = ControllerUtils.correctPortraitGender(n);
+                if (validate) n.state = ControllerUtils.correctDragonState(n);
 
                 let i1 = tree.getBranch(dragNodeIndex, false).reduce(
                     function(result, node) {

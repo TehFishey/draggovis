@@ -24,7 +24,7 @@ interface SettingValues {
     }
 }
 
-const {Provider, Consumer} = React.createContext<SettingValues>({
+const Settings = React.createContext<SettingValues>({
     showName : true,
     showGen : false,
     caveTime: '12:00:00',
@@ -40,7 +40,8 @@ const {Provider, Consumer} = React.createContext<SettingValues>({
         enableWarn : (enable: boolean) => {},
     }
 });
-
+const Consumer = Settings.Consumer;
+const Provider = Settings.Provider;
 
 interface Props {}
 
@@ -76,6 +77,7 @@ class SettingsControl extends React.Component<Props, SettingValues> {
 }
 
 export { 
+    Settings as Settings,
     SettingsControl as SettingsProvider, 
     Consumer as SettingsConsumer, 
     DragDrop

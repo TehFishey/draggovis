@@ -6,7 +6,7 @@ import Tooltip from '../../general/tooltip/Tooltip';
 import EditWindow from './edit-panel/EditPanel';
 import Draggable, { DropEffect } from '../../general/drag-drop/Draggable';
 import Droppable from '../../general/drag-drop/Droppable';
-import { SettingsConsumer, DragDrop } from '../../Settings';
+import { SettingsConsumer, DragDrop, Settings } from '../../Settings';
 
 import Tree from '../../../library/controller/Tree';
 import DragonNode from '../../../library/controller/DragonNode';
@@ -25,10 +25,12 @@ interface State {
     imgRect: {x: number, y: number, width: number, height: number},
     showPopover: boolean,
     showTooltip: boolean,
-    imgError: boolean;
+    imgError: boolean,
+    validate: boolean
 }
 
 export default class TreeElement extends React.Component<Props, State> {
+    static contextType = Settings;
 
     img: React.RefObject<HTMLDivElement>;
 
@@ -40,6 +42,7 @@ export default class TreeElement extends React.Component<Props, State> {
             showPopover : false,
             showTooltip : false,
             imgError : false,
+            validate: true
         }
 
         this.img = React.createRef();
@@ -51,7 +54,6 @@ export default class TreeElement extends React.Component<Props, State> {
         if(show) this.getImgRect();
         this.setState({showPopover : show});
     }
-
 
     displayTooltip(show: boolean) {
         if(this.props.node.meta.invalidData) {
@@ -115,10 +117,10 @@ export default class TreeElement extends React.Component<Props, State> {
         let dragI: number = +index;
         let dropI: number = this.props.node.index;
 
-        if(type === DragDrop.CopyOne) this.updateTree(Controller.dragDrop.copyOne(dragI, dropI));
-        else if(type === DragDrop.CopySet) this.updateTree(Controller.dragDrop.copySet(dragI, dropI));
-        else if(type === DragDrop.SwapOne) this.updateTree(Controller.dragDrop.swapOne(dragI, dropI));
-        else if(type === DragDrop.SwapSet) this.updateTree(Controller.dragDrop.swapSet(dragI, dropI));
+        if(type === DragDrop.CopyOne) this.updateTree(Controller.dragDrop.copyOne(dragI, dropI, this.state.validate));
+        else if(type === DragDrop.CopySet) this.updateTree(Controller.dragDrop.copySet(dragI, dropI, this.state.validate));
+        else if(type === DragDrop.SwapOne) this.updateTree(Controller.dragDrop.swapOne(dragI, dropI, this.state.validate));
+        else if(type === DragDrop.SwapSet) this.updateTree(Controller.dragDrop.swapSet(dragI, dropI, this.state.validate));
     }
 
     buildParentComponents() {
@@ -143,6 +145,11 @@ export default class TreeElement extends React.Component<Props, State> {
     componentDidMount() {
         this.updatePosition();
         window.addEventListener("resize", this.updatePosition);
+    }
+
+    componentDidUpdate() {
+        if (this.state.validate !== (!this.context.disableValid))
+            this.setState({validate: !this.context.disableValid});
     }
 
     componentWillUnmount() {

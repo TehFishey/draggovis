@@ -1,6 +1,6 @@
 import Condition from "../../library/defines/Condition";
 import Breed, { DragonType, DragonSubType } from "../../library/defines/Breed";
-import { Gender } from "../../library/defines/Dragon";
+import { Gender, DragonState } from "../../library/defines/Dragon";
 
 import DragonNode, {nodeReference} from "../../library/controller/DragonNode";
 import Portrait from "../../library/defines/Portrait";
@@ -37,6 +37,20 @@ export default {
      * 
      * @remarks Intended as a followup to dragon gender-swaps.
      * 
+     * @param node DragonNode to update.
+     */
+    setValidDragonProps(node: DragonNode) {
+        node.portrait = this.correctPortraitGender(node);
+        node.gender = this.correctDragonGender(node);
+        node.state = this.correctDragonState(node);
+    },
+
+    /**
+     * Finds the correct dimorphic portrait for a DragonNode, given its current
+     * portrait and gender.
+     * 
+     * @remarks Intended as a followup to dragon gender-swaps.
+     * 
      * @param node DragonNode to check.
      * @returns Correct variant of DragonNode's portrait.
      */
@@ -57,14 +71,36 @@ export default {
 
     /**
      * Finds the correct gender for a DragonNode based on its position in tree.
-     * Returns current gender from root node (which can be any gender).
+     * For root node, returns current gender, or Female if current gender is illegal.
+     * 
+     * @remarks Intended as a followup to dragon lineage translations.
      * 
      * @param node DragonNode to check.
      * @returns Correct gender for DragonNode.
      */
     correctDragonGender(node: DragonNode) : Gender {
-        let gender: Gender = (node.index === 0) ? node.gender : 
-            (node.index % 2 === 0) ? Gender.Female : Gender.Male;
-        return gender;
-    }     
+        if(node.index === 0) {
+            if (node.gender === Gender.Undefined && (node.state != DragonState.Neglected && node.state != DragonState.Vampire))
+                return Gender.Female;
+            else return node.gender
+        } else return (node.index % 2 === 0) ? Gender.Female : Gender.Male;
+    },
+    
+    /**
+     * Updates dragon's state based on its current position in tree. Clears illegal states.
+     * 
+     * @remarks Intended as a followup to dragon lineage translations.
+     * 
+     * @param node DragonNode to check
+     * @returns Legal state for DragonNode
+     */
+    correctDragonState(node: DragonNode) : DragonState {
+        if((node.state === DragonState.Neglected || node.state === DragonState.Vampire) && node.index !== 0) {
+            return DragonState.Healthy;
+        } 
+        else if (node.state === DragonState.Vampire && node.breed.type != DragonType.Dragon ) {
+            return DragonState.Healthy;
+        }
+        return node.state;
+    }
 }

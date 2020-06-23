@@ -15,7 +15,7 @@ export default class EditPanelController {
         this.parent = parent;
     }
 
-    updateName(index: number, name: string) : Tree {
+    updateName(index: number, name: string, validate: boolean=true) : Tree {
         return (
             this.parent.updateTree((tree: Tree) => {
                 let dragon = tree[index];
@@ -28,7 +28,21 @@ export default class EditPanelController {
         )
     }
 
-    updateBreed(index: number, breedId: string) : Tree {
+    updateGender(index: number, gender: Gender, validate: boolean=true) : Tree {
+        return (
+            this.parent.updateTree((tree: Tree) => {
+                let dragon = tree[index];
+                if(dragon != null && index === 0) {
+                    dragon.gender = gender;
+                    dragon.portrait = dragon.portrait = ControllerUtils.getDefaultPortrait(dragon, [...dragon.breed.portraits.values()]);
+                    return[index];
+                }
+                return[];
+            })
+        )
+    }
+
+    updateBreed(index: number, breedId: string, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {
@@ -40,7 +54,7 @@ export default class EditPanelController {
         });
     }
 
-    updatePortrait(index: number, portraitId: string) : Tree {
+    updatePortrait(index: number, portraitId: string, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {
@@ -51,7 +65,7 @@ export default class EditPanelController {
         });
     }
 
-    createChild(index: number) : Tree {
+    createChild(index: number, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
             if(index === 0 && dragon != null) {
@@ -65,19 +79,23 @@ export default class EditPanelController {
 
                 if(dragon.gender === Gender.Male) {
                     tree.setBranch(1, branch);
+                    if (validate) tree[1]!.state = ControllerUtils.correctDragonState(tree[1]!);
                     n = tree.createNode(2, Gender.Female, dragon.breed, dragon.portrait);
                     n.portrait = ControllerUtils.correctPortraitGender(n);
                 }
-                else if(dragon.gender === Gender.Female) {
+                else {
                     tree.setBranch(2, branch);
+                    if (validate) tree[2]!.state = ControllerUtils.correctDragonState(tree[2]!);
                     n = tree.createNode(1, Gender.Male, dragon.breed, dragon.portrait);
                     n.portrait = ControllerUtils.correctPortraitGender(n);
                 } 
-                else if(dragon.gender === Gender.Undefined) {
-                    branch[0]!.gender = Gender.Female;
+                if(dragon.gender === Gender.Undefined) {
                     tree.setBranch(2, branch);
+                    if (validate) tree[2]!.state = ControllerUtils.correctDragonState(tree[2]!);
+                    tree[2]!.gender = ControllerUtils.correctDragonGender(tree[2]!);
                     n = tree.createNode(1, Gender.Male, dragon.breed, dragon.portrait);
                     n.portrait = ControllerUtils.correctPortraitGender(n);
+                    
                 }
 
                 return tree.getBranch(0, false).reduce(
@@ -91,7 +109,7 @@ export default class EditPanelController {
         });
     }
 
-    removeChild(index: number) : Tree {
+    removeChild(index: number, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
             if(index !== 0 && dragon != null) {
@@ -110,7 +128,7 @@ export default class EditPanelController {
         });
     }
 
-    createParents(index: number) : Tree {
+    createParents(index: number, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {
@@ -130,7 +148,7 @@ export default class EditPanelController {
         });
     }
 
-    removeParents(index: number) : Tree {
+    removeParents(index: number, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null && dragon.hasParents()) {
@@ -145,13 +163,13 @@ export default class EditPanelController {
         });
     }
 
-    invertParents(index: number) : Tree {
+    invertParents(index: number, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null && dragon.hasParents()) {
                 let changed : Array<number> = [];
 
-                let swapParents = (t: Tree, ti: number, b: Array<DragonNode | null>, bi: number) => {
+                let swapParents = (t: Tree, ti: number) => {
                     let node = t[ti];
                     
                     if(node != null && node.hasParents()) {
@@ -176,11 +194,12 @@ export default class EditPanelController {
         });
     }
 
-    setDragonState(index: number, state: DragonState) : Tree {
+    setDragonState(index: number, state: DragonState, validate: boolean=true) : Tree {
         return this.parent.updateTree((tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {
                 dragon.state = state;
+                if(index === 0 && validate) dragon.gender = ControllerUtils.correctDragonGender(dragon)
                 return[index];
             }
             return [];

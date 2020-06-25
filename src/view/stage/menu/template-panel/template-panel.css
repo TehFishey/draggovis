@@ -1,0 +1,6 @@
+.template-panel {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 400px;
+}

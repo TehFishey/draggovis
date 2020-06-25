@@ -1,6 +1,6 @@
 import Portrait from './Portrait';
 import Condition, { CompoundCondition, Operator } from './Condition';
-import Dragon, { Gender } from './Dragon';
+import { Gender } from './Dragon';
 
 import DragonNode, { nodeReference } from '../controller/DragonNode';
 
@@ -49,13 +49,13 @@ export default class Breed {
     portraits: Map<string, Portrait>;   // Dictionary of Portraits associated with this breed, keyed by Portrait.id
     condition: Condition;               // Condition to be used for validation checks
 
-    constructor(id: string, label: string, type?: DragonType, subType?: DragonSubType, affinity?: Array<Affinity>, genders?: string, portraits?: Array<Portrait>, condition?: Condition) {
+    constructor(id: string, label: string, type=DragonType.Dragon, subType=DragonSubType.Western, affinity=[Affinity.Neutral], genders="mf-mf", portraits?: Array<Portrait>, condition?: Condition) {
         this.id = id;                                           
         this.label = label;                                     
-        this.type = type || DragonType.Dragon;
-        this.subType = subType || DragonSubType.Western;
-        this.affinity = affinity || [Affinity.Neutral]                         
-        this.genders = genders || "mf-mf";                      
+        this.type = type;
+        this.subType = subType;
+        this.affinity = affinity                     
+        this.genders = genders;                      
         this.portraits = new Map<string, Portrait>();
         if(portraits !== undefined)
             portraits.forEach((portrait: Portrait)=>this.portraits.set(portrait.id, portrait));
@@ -88,13 +88,20 @@ export default class Breed {
         let description: string;
         let validate: nodeReference;
 
-        if(genderDef[0]!=='mf') {
+
+        if((genderDef[0]!=='mf') && (genderDef[0] === genderDef[1])) {
+            let g : Gender = (genderDef[0].includes('m')) ? Gender.Male : Gender.Female;
+            validate = (node: DragonNode) => { return (node.gender === g) }
+            description = `requires ${g} gender.`
+            conditions.push(new Condition(validate,description,label));
+        }
+        else if(genderDef[0]!=='mf') {
             let g : Gender = (genderDef[0].includes('m')) ? Gender.Male : Gender.Female;
             validate = (node: DragonNode) => { return !(!node.hasParents() && node.gender !== g) }
             description = `requires ${g} gender if first generation.`
             conditions.push(new Condition(validate,description,label));
         }
-        if(genderDef[1]!=='mf') {
+        else if(genderDef[1]!=='mf') {
             let g : Gender = (genderDef[1].includes('m')) ? Gender.Male : Gender.Female;
             validate = (node: DragonNode) => { return !(node.hasParents() && node.gender !== g) }
             description = `requires ${g} gender if not first generation.`

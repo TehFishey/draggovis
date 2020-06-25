@@ -1,13 +1,14 @@
-import Condition from "../../library/defines/Condition";
-import Breed, { DragonType, DragonSubType } from "../../library/defines/Breed";
+import DragonNode from "../../library/controller/DragonNode";
+import Portrait from "../../library/defines/Portrait";
+import { DragonType } from "../../library/defines/Breed";
 import { Gender, DragonState } from "../../library/defines/Dragon";
 
-import DragonNode, {nodeReference} from "../../library/controller/DragonNode";
-import Portrait from "../../library/defines/Portrait";
 import { Portraits } from "../../defines/Defines";
 
-
-
+/**
+ * Helper functions intended for use in Controller classes. Deal with validating
+ * and updating the properties of DragonNodes given the context of their Trees.
+ */
 export default {   
     /**
      * Returns the first portrait from an array which passes validation for a DragonNode. 
@@ -29,20 +30,6 @@ export default {
         })
 
         return (validPortrait != null) ? validPortrait : portraits[0];
-    },
-
-    /**
-     * Finds the correct dimorphic portrait for a DragonNode, given its current
-     * portrait and gender.
-     * 
-     * @remarks Intended as a followup to dragon gender-swaps.
-     * 
-     * @param node DragonNode to update.
-     */
-    setValidDragonProps(node: DragonNode) {
-        node.portrait = this.correctPortraitGender(node);
-        node.gender = this.correctDragonGender(node);
-        node.state = this.correctDragonState(node);
     },
 
     /**

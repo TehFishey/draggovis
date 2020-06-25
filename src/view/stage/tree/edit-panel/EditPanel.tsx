@@ -1,8 +1,8 @@
 import React from 'react';
-import Select from 'react-select';
 import { Settings, SettingsConsumer } from '../../../Settings';
 import Image from '../../../general/image/Image'
-import EditPanelPulldown, {styles} from "./EditPanelPulldown";
+import DVSelect, { menuOption } from '../../../general/select/Select'
+import EditPanelPulldown from "./EditPanelPulldown";
 import DropDownButton from '../../../general/dropdown/DropDownButton';
 import './edit-panel.css';
 
@@ -14,11 +14,9 @@ import Controller from '../../../../controller/Controller'
 import { DragonState, Gender } from '../../../../library/defines/Dragon';
 import EditPanelCheckbox from './EditPanelCheckbox';
 import Condition from '../../../../library/defines/Condition';
-import Utilities from '../../../_utilities/Utilities';
+import MenuOptions from '../../../_utilities/MenuOptions';
 
 const breedData = Breeds.dict;
-
-type genderOption = { value : Gender, label: Gender }
 
 interface Props {
     tree: Tree,
@@ -30,7 +28,7 @@ interface Props {
 interface State {
     name: string,
     validate: boolean,
-    genderOptions: Array<genderOption>,
+    genderOptions: Array<menuOption>,
 
 }
 
@@ -43,7 +41,7 @@ export default class EditPanel extends React.Component<Props, State> {
         this.state = {
             name : this.props.node.name,
             validate: true,
-            genderOptions: Utilities.getGenderOptions(this.props.node)
+            genderOptions: MenuOptions.nodeGenderOptions(this.props.node)
         }
 
     }
@@ -141,6 +139,10 @@ export default class EditPanel extends React.Component<Props, State> {
             this.setState({validate: !this.context.disableValid});
     }
 
+    componentDidMount() {
+        this.setState({validate: !this.context.disableValid});
+    }
+
     render() {
         return (
             <div className='edit-panel'>
@@ -163,12 +165,10 @@ export default class EditPanel extends React.Component<Props, State> {
                         </div>
                         <div className='ep-props-label' style={{gridArea: 'g-label'}}>Gender</div>
                         <div className='ep-props-control' style={{gridArea: 'g-set'}}>
-                            <Select
-                                name = "react-select-menu"
+                            <DVSelect
                                 isDisabled = { (this.props.node.index === 0) ? false : true }
-                                styles= { styles }
                                 value = { {value: this.props.node.gender, label: this.props.node.gender} }
-                                options = { Utilities.getGenderOptions(this.props.node) }
+                                options = { MenuOptions.nodeGenderOptions(this.props.node) }
                                 onChange = { this.setGender }
                             />
                         </div>

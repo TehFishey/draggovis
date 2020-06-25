@@ -1,7 +1,6 @@
 import Condition from "./Condition";
 
-import DragonNode from "../controller/DragonNode";
-import { TimeRange } from "./Time";
+import TimeRange from "./TimeRange";
 
 export default class Portrait {
     id: string;
@@ -12,14 +11,14 @@ export default class Portrait {
     timeSwaps: Map<TimeRange, Array<Portrait>>;
     condition: Condition;
 
-    constructor(id: string, label: string, isDefault: boolean, condition?: Condition, timeSwaps?: Map<TimeRange, Array<Portrait>>) {
+    constructor(id: string, label: string, isDefault=true, condition=new Condition(), timeSwaps=new Map<TimeRange, Array<Portrait>>()) {
         this.id = id || "undefined-portrait";
         this.label = label || "Undefined Portrait";
         this.imagePath = "art/" + this.id + ".png";
         this.thumbPath = "thumbs/" + this.id + ".png";
-        this.isDefault = isDefault || true;
-        this.condition = condition || new Condition();
-        this.timeSwaps = timeSwaps || new Map<TimeRange, Array<Portrait>>();
+        this.isDefault = isDefault;
+        this.condition = condition;
+        this.timeSwaps = timeSwaps
     }
 
     hasTimeSwaps() : boolean {

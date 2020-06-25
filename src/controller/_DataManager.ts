@@ -9,6 +9,7 @@ import Stack from "../library/controller/Stack";
 import { Gender } from "../library/defines/Dragon";
 
 import { Portraits, Breeds, Rules } from "../defines/Defines";
+import TemplatePanelController from "./controllers/TemplatePanelController";
 
 export type protoCommand = (tree: Tree) => Array<number>;
 
@@ -19,6 +20,7 @@ export default class DataManager {
     lineageSnapshot : Tree;
     readonly IOManager : IOManager;
     readonly editWindow : EditPanelController;
+    readonly templateWindow : TemplatePanelController;
     readonly dragDrop : DragDropController;
 
     constructor() {
@@ -32,6 +34,7 @@ export default class DataManager {
 
         this.IOManager = new IOManager(this, 0);
         this.editWindow = new EditPanelController(this);
+        this.templateWindow = new TemplatePanelController(this);
         this.dragDrop = new DragDropController(this);
     }
 

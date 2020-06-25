@@ -145,6 +145,7 @@ export default class TreeElement extends React.Component<Props, State> {
     componentDidMount() {
         this.updatePosition();
         window.addEventListener("resize", this.updatePosition);
+        this.setState({validate: !this.context.disableValid});
     }
 
     componentDidUpdate() {

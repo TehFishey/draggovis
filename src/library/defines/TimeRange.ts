@@ -4,7 +4,7 @@
  * @param start 'HH:MM:SS'- format string
  * @param end HH:MM:SS'- format string
  */
-export class TimeRange {
+export default class TimeRange {
     readonly start: string;
     readonly end: string;
     readonly rollover: boolean;

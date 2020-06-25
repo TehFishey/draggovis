@@ -3,14 +3,8 @@ import './io-panel.css';
 
 import Controller from '../../../../controller/Controller';
 
-export enum IOState {
-    Import = 'import',
-    Export = 'export'
-}
-
 interface Props {
-    IOState : IOState,
-    setData : Function
+    handleClose : Function
 }
 
 interface State {
@@ -19,7 +13,8 @@ interface State {
     contentSize : number
 }
 
-export default class IOPanel extends React.Component<Props, State> {
+export default class ExportPanel extends React.Component<Props, State> {
+    fileLink : React.RefObject<HTMLAnchorElement>
 
     constructor(props: Props) {
         super(props);
@@ -29,12 +24,13 @@ export default class IOPanel extends React.Component<Props, State> {
             contentVersion : 0,
             contentSize : 0
         }
+
+        this.fileLink = React.createRef();
     }
 
     updateContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         let content: string = e.target.value;
         let contentSize: number = content.length;
-        let contentVersion: number;
         this.setState({
             content: content,
             contentSize: contentSize
@@ -50,37 +46,40 @@ export default class IOPanel extends React.Component<Props, State> {
         });
     }
 
-    importContent = () => {
-        this.props.setData(Controller.IOManager.import(this.state.content));
+    saveContent = () => {
+        if(this.fileLink.current != null && this.state.content !== '') {
+            let file = new Blob([this.state.content], {type: 'text/plain'});
+            this.fileLink.current.href = URL.createObjectURL(file);
+            this.fileLink.current.download = 'draggovis_tree.txt';
+            this.fileLink.current.click();
+        }
+    }
+
+    handleClose = () => {
+        this.props.handleClose()
     }
 
     componentDidMount() {
-        if(this.props.IOState === 'export')
-            this.exportContent();
+        this.exportContent();
     }
 
     render () {
         return (
             <div className='IO-panel'>
+                <a ref={this.fileLink} style={{display: "none"}} />
                 <div className='IO-feedback'>
                     <div>Lookup Version: {this.state.contentVersion}</div>
                     <div>Characters: {this.state.contentSize}</div>
                 </div>
+                <textarea 
+                    className='IO-field'
+                    value={this.state.content}
+                    readOnly={true}
+                />
                 <div className='IO-interface'>
-                    <textarea 
-                        className='IO-field'
-                        value={this.state.content}
-                        readOnly={(this.props.IOState === 'import') ? false : true}
-                        onChange={this.updateContent}/>
-                    <button
-                        style={(this.props.IOState === 'import') ? {} : {display : 'None'}}
-                        onClick={this.importContent}
-                    >
-                        Import
-                    </button>
+                    <button className='IO-interface-button' onClick={this.saveContent}>Save to File...</button>
                 </div>
-                
-                
+                <div className='IO-interface-button IO-close-button' onClick={this.handleClose}>Close</div>
             </div>
         );
     }

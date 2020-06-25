@@ -1,7 +1,7 @@
 import React from 'react';
 
 import DragonNode from '../../../library/controller/DragonNode';
-import ViewUtils from '../../_utilities/Utilities';
+import ViewUtils from '../../_utilities/ImageSwaps';
 import Portrait from '../../../library/defines/Portrait';
 
 interface Props {
@@ -38,7 +38,7 @@ export default class DragonImage extends React.Component<Props, State> {
             <img 
                 className = 'dragon-image'
                 src = { (!this.state.errored) ?
-                    `${ViewUtils.getImagePath(this.props.node, this.props.time, this.props.thumbnail)}` :
+                    `${ViewUtils.getImgForNode(this.props.node, this.props.time, this.props.thumbnail)}` :
                     `${Portrait.unkThumbImgPath}`
                 }
                 alt = 'dragon'

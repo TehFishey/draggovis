@@ -1,5 +1,5 @@
 import DataManager from "../_DataManager";
-import ControllerUtils from "../_utilities/Utilities";
+import ControllerUtils from "../_utilities/Janitors";
 
 import Tree from "../../library/controller/Tree";
 import DragonNode from "../../library/controller/DragonNode";

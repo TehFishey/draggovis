@@ -1,6 +1,7 @@
 import React from 'react';
 import TemplatePanel from './template-panel/TemplatePanel';
-import IOPanel, {IOState} from './io-panel/IOPanel';
+import ExportPanel from './io-panel/ExportPanel';
+import ImportPanel from './io-panel/ImportPanel';
 import Modal from '../../general/modal/Modal';
 import MenuButton from './MenuButton';
 import './menu.css';
@@ -9,6 +10,11 @@ import Controller from '../../../controller/Controller';
 import Tree from '../../../library/controller/Tree';
 
 const iconRoot=`${process.env.PUBLIC_URL}icons/`
+
+export enum IOState {
+    Import = 'import',
+    Export = 'export'
+}
 
 interface Props {
     tree: Tree,
@@ -81,18 +87,15 @@ export default class Menu extends React.Component<Props, State> {
                 <Modal 
                     show = {this.state.showIO}
                     handleClose = {this.closeIO}
-                    children = {(
-                        <IOPanel 
-                            IOState = {this.state.IOState}
-                            setData = {this.props.setTree}
-                        />
-                    )}
+                    children = { (this.state.IOState === IOState.Import) ?
+                        <ImportPanel setData = {this.props.setTree} handleClose = {this.closeIO}/> : <ExportPanel handleClose = {this.closeIO}/>
+                    }
                 />
                 <Modal 
                     show = {this.state.showTemplates}
                     handleClose = {this.closeTemplates}
                     children = {(
-                        <TemplatePanel />
+                        <TemplatePanel setData = {this.props.setTree} handleClose = {this.closeTemplates}/>
                     )}
                 />
                 <div className='menu-buttons'>

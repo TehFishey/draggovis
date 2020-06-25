@@ -1,12 +1,12 @@
 import Portrait from '../../library/defines/Portrait';
 import { DragonType, DragonSubType } from '../../library/defines/Breed';
-import { TimeRange } from '../../library/defines/Time';
-
+import TimeRange from '../../library/defines/TimeRange';
 
 import PortraitFactory, { TimeSwapDefine } from '../_utilities/PortraitFactory';
 import ConditionFactory from '../_utilities/ConditionFactory';
 import {deadPortraits} from './GravePortraits'
 
+// All zonbies are gravestones between 6am and midnight.
 let graveSwap : TimeSwapDefine = {
     range: new TimeRange('06:00:00', '23:59:00'), 
     portraits: deadPortraits

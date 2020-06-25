@@ -34,9 +34,6 @@ export default class Modal extends React.Component<Props, State> {
                 <div className='modal-overlay' onClick={this.closeModal}>
                     <div className='modal-window' onClick={this.clickWithin}>
                         <div className='modal-content'>{this.props.children}</div>
-                        <div className='modal-controls'>
-                            <button className='import-panel-button' onClick={this.closeModal}>Close</button>
-                        </div>
                     </div>
                 </div>), overlay!)}
             </>

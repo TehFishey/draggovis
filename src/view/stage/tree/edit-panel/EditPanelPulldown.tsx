@@ -1,37 +1,9 @@
 import React from 'react';
-import Select from 'react-select';
+import DVSelect, {menuOption} from '../../../general/select/Select'
 
 import Breed from '../../../../library/defines/Breed';
 import Portrait from '../../../../library/defines/Portrait';
 import DragonNode from '../../../../library/controller/DragonNode';
-
-const targetHeight = 24;
-
-export const styles = {
-  control: (base: any) => ({
-    ...base,
-    minHeight: 'initial',
-    borderColor: 'hsl(0,0%,80%)',
-    borderRadius: '2px',
-    borderWidth: '0px',
-    borderBottom: 'solid 1px #101010'
-  }),
-  valueContainer: (base: any)  => ({
-    ...base,
-    height: `${targetHeight - 1 - 1}px`,
-    padding: '0 8px',
-  }),
-  clearIndicator: (base: any)  => ({
-    ...base,
-    padding: `${(targetHeight - 20 - 1 - 1) / 2}px`,
-  }),
-  dropdownIndicator: (base: any)  => ({
-    ...base,
-    padding: `${(targetHeight - 20 - 1 - 1) / 2}px`,
-  }),
-};
-
-type menuOption = {value : string, label: string}
 
 interface Props {
     selectionPool: Map<string,Breed> | Map<string,Portrait>,
@@ -113,9 +85,7 @@ export default class EditPanelPulldown extends React.Component<Props, State> {
 
     render() {
         return (
-            <Select
-                name = "react-select-menu"
-                styles={styles}
+            <DVSelect
                 value = { this.getCurrentValue() }
                 options = { this.state.validOptions }
                 isSearchable = { true }

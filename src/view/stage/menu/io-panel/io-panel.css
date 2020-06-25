@@ -1,9 +1,58 @@
+.IO-panel {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 400px;
+}
+
 .IO-field {
-    width: 100%;
     height: 300px;
-    padding: 5px;
+    padding: 8px;
     text-align: left;
     text-justify: top;
     text-overflow: wrap;
-    background-color: beige;
+    border-width: 1px;
+    border-style: inset;
+    border-color:#101010;
+    background-color: tan;
+    box-shadow: inset 0 0 5px;
+    resize: none;
+}
+
+.IO-interface {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.IO-interface-button {
+    min-width: 120px;
+    padding: 2px;
+    margin: 3px;
+    background: hsl(0, 0%, 95%);
+    border-style: inset;
+    border-width: 2px;
+    border-color:#101010;
+    box-shadow: inset 0 0 1px;
+    text-align: center;
+    text-justify: center;
+    text-overflow: wrap;
+    font-family: "Alice","Times New Roman","Times",serif;
+    font-size: 15px
+}
+.IO-interface-button:hover {
+    background: radial-gradient(hsl(0, 0%, 85%), hsl(0, 0%, 95%));
+    box-shadow: inset 0 0 1px black, 0 0 1px;
+}
+
+.IO-close-button {
+    min-width: 50px;
+    width: 50px;
+    padding: 1px;
+    margin: 4px;
+    margin-top: 10px;
+	background: hsl(0, 0%, 95%);
+    border-style: inset;
+    border-width: 1px;
+    border-color:#101010;
 }

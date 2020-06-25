@@ -5,7 +5,7 @@ import { Gender } from '../../library/defines/Dragon';
 
 import PortraitFactory from '../_utilities/PortraitFactory';
 import ConditionFactory from '../_utilities/ConditionFactory';
-import { TimeRange } from '../../library/defines/Time';
+import TimeRange from '../../library/defines/TimeRange';
 
 class DragonBreed extends Breed {
     constructor(id: string, label: string, subType: DragonSubType, affinity: Array<Affinity>, Portraits: Array<Portrait>, condition?: Condition) {
@@ -215,14 +215,14 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("striped-dragon", "Striped Dragon", DragonSubType.Western, [Affinity.Neutral], [
         PortraitFactory.customPortrait('striped-w-f', "White ♀", true, ConditionFactory.checkGender(Gender.Female,"White ♀")),
         PortraitFactory.customPortrait('striped-w-m', "White ♂", true, ConditionFactory.checkGender(Gender.Male,"White ♂")),
-        PortraitFactory.customPortrait('striped-b-f', "Black ♀", false, ConditionFactory.checkGender(Gender.Female,"Black ♀")),
-        PortraitFactory.customPortrait('striped-b-m', "Black ♂", false, ConditionFactory.checkGender(Gender.Male,"Black ♂")),
-        PortraitFactory.customPortrait('striped-g-f', "Green ♀", false, ConditionFactory.checkGender(Gender.Female,"Green ♀")),
-        PortraitFactory.customPortrait('striped-g-m', "Green ♂", false, ConditionFactory.checkGender(Gender.Male,"Green ♂")),
-        PortraitFactory.customPortrait('striped-r-f', "Red ♀", false, ConditionFactory.checkGender(Gender.Female,"Red ♀")),
-        PortraitFactory.customPortrait('striped-r-m', "Red ♂", false, ConditionFactory.checkGender(Gender.Male,"Red ♂")),
-        PortraitFactory.customPortrait('striped-u-f', "Blue ♀", false, ConditionFactory.checkGender(Gender.Female,"Blue ♀")),
-        PortraitFactory.customPortrait('striped-u-m', "Blue ♂", false, ConditionFactory.checkGender(Gender.Male,"Blue ♂")),
+        PortraitFactory.customPortrait('striped-b-f', "Black ♀", true, ConditionFactory.checkGender(Gender.Female,"Black ♀")),
+        PortraitFactory.customPortrait('striped-b-m', "Black ♂", true, ConditionFactory.checkGender(Gender.Male,"Black ♂")),
+        PortraitFactory.customPortrait('striped-g-f', "Green ♀", true, ConditionFactory.checkGender(Gender.Female,"Green ♀")),
+        PortraitFactory.customPortrait('striped-g-m', "Green ♂", true, ConditionFactory.checkGender(Gender.Male,"Green ♂")),
+        PortraitFactory.customPortrait('striped-r-f', "Red ♀", true, ConditionFactory.checkGender(Gender.Female,"Red ♀")),
+        PortraitFactory.customPortrait('striped-r-m', "Red ♂", true, ConditionFactory.checkGender(Gender.Male,"Red ♂")),
+        PortraitFactory.customPortrait('striped-u-f', "Blue ♀", true, ConditionFactory.checkGender(Gender.Female,"Blue ♀")),
+        PortraitFactory.customPortrait('striped-u-m', "Blue ♂", true, ConditionFactory.checkGender(Gender.Male,"Blue ♂")),
     ]),
     new DragonBreed("striped-river-dragon", "Striped River Dragon", DragonSubType.Eastern, [Affinity.Water], PortraitFactory.uPortraits("striped-river")),
     new DragonBreed("sunrise-dragon", "Sunrise Dragon", DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("sunrise")),

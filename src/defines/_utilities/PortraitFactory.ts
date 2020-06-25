@@ -1,16 +1,29 @@
 import ConditionFactory from './ConditionFactory';
 
-import Condition from "../../library/defines/Condition";
-import { Gender } from "../../library/defines/Dragon";
 import Portrait from "../../library/defines/Portrait";
-import { TimeRange } from '../../library/defines/Time';
+import Condition from "../../library/defines/Condition";
+import TimeRange from '../../library/defines/TimeRange';
+import { Gender } from "../../library/defines/Dragon";
 
 export type TimeSwapDefine = {
     range: TimeRange,
     portraits: Array<Portrait>
 }
 
+/**
+ * Factory functions for quickly creating sets of Portrait objects, conforming to common patterns seen
+ * on DC. Output is intended to serve as input in Breed definitions.
+ */
 export default {
+
+    /**
+     * Helper function for defining an individual Portrait object.
+     * @param id backend uid
+     * @param label frontend label
+     * @param isDefault if Portrait is a valid default option
+     * @param condition Condition defining criterea for Portrait validation
+     * @param swaps Definitions for portrait timeswaps (if any)
+     */
     customPortrait(id: string, label: string, isDefault: boolean, condition?: Condition, swaps?: Array<TimeSwapDefine>) {
         let portrait = new Portrait(id, label, isDefault, condition);
         if(swaps != null) {
@@ -22,6 +35,10 @@ export default {
         return portrait;
     },
 
+    /**
+     * Factory function; defines Portraits array for Breeds with only one Portrait.
+     * @param id backend uid
+     */
     uPortraits(id: string) {
         let uId = id + "-u";
         let portrait = new Portrait(uId, "Standard", true);
@@ -29,6 +46,10 @@ export default {
         return [portrait];
     },
     
+    /**
+     * Factory function; defines Portraits array for Breeds with two dimorphic Portraits.
+     * @param id backend uid
+     */
     mfPortraits(id: string) {
         let mId: string = id + "-m";
         let fId: string = id + "-f";
@@ -38,6 +59,10 @@ export default {
         return [mPortrait,fPortrait];
     },
     
+    /**
+     * Factory function; defines Portraits array for Breeds with one standard Portrait and one alt Portrait.
+     * @param id backend uid
+     */
     uAltPortraits(id: string) {
         let uId = id + "-u";
         let uAltId = id + "-alt-u";
@@ -47,6 +72,11 @@ export default {
         return [portrait,altPortrait];
     },
     
+    /**
+     * Factory function; defines Portraits array for Breeds with two dimorphic Portraits and two dimorphic
+     * alt Portraits.
+     * @param id backend uid
+     */
     mfAltPortraits(id: string) {
         let mId = id + "-m";
         let fId = id + "-f";

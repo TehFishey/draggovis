@@ -13,7 +13,6 @@ export default class RuleData {
         this.arr.forEach((rule: Rule) => {this.dict.set(rule.id, rule)});
 
         console.log(`Model: Defining validation rules...`);
-        console.log(this.dict);
     }
 
     checkAll(node: DragonNode) {

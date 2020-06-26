@@ -114,7 +114,7 @@ export default class EditPanel extends React.Component<Props, State> {
         );
     }
 
-    swapParents() {
+    swapParents = () => {
         this.props.updateTree(
             Controller.editWindow.invertParents(this.props.node.index, this.state.validate)
         );
@@ -235,25 +235,24 @@ export default class EditPanel extends React.Component<Props, State> {
                             />
                         </div>
                     <div className='ep-controls'>
-                            <div className='ep-cont-label'>Actions:</div>
+                            <div className='ep-cont-label'>Relatives:</div>
                             <button 
+                                className='stage-button-small ep-cont-button'
                                 style={{gridArea: 'addp'}}
                                 onClick={this.addRemoveParents}>
                                 Add/Remove Parents
                             </button>
                             <button 
+                                className='stage-button-small ep-cont-button'
                                 style={{gridArea: 'remp'}}
                                 onClick={this.addRemoveChild}>
                                 Add/Remove Child
                             </button>
-                            <DropDownButton
-                                label='Ancestors...'
-                                data={[
-                                    {label: 'Copy', onClick: new Function()},
-                                    {label: 'Paste', onClick: new Function()},
-                                    {label: 'Invert', onClick: ()=>{this.swapParents()}}
-                                    ]}
-                                />
+                            <button 
+                                className='stage-button-small ep-cont-button'
+                                onClick={this.swapParents}>
+                                Mirror Ancestors
+                            </button>
                         </div>
                 </div>
                 )}}

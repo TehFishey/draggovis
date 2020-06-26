@@ -1,5 +1,5 @@
 .popover-overlay {
-    position: fixed; z-index: 5;
+    position: fixed; z-index: 11;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -9,7 +9,7 @@
 }
 
 .popover-modal {
-    position: fixed; z-index: 10;
+    position: fixed; z-index: 12;
     top: 0;
     left: 0;
     display: flex;

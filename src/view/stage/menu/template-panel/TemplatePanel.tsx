@@ -47,11 +47,12 @@ export default class TemplatePanel extends React.Component<Props, State> {
     }
 
     composeTemplateSelectors() : JSX.Element {
-        let selectors = new Array<JSX.Element>();
+        let largeSelectors = new Array<JSX.Element>();
+        let smallSelectors = new Array<JSX.Element>();
         this.state.currentTemplate.props.forEach(
             (tProp: TemplateProperty, index: number) => {
                 if(tProp instanceof DragProperty) {
-                    selectors.push(
+                    largeSelectors.push(
                         <TemplatePanelDragon
                             key={this.state.currentTemplate.id+tProp.id}
                             id = {tProp.id}
@@ -62,7 +63,7 @@ export default class TemplatePanel extends React.Component<Props, State> {
                     )
                 }
                 else if(tProp instanceof NumProperty) {
-                    selectors.push(
+                    smallSelectors.push(
                         <TemplatePanelNumber
                             key={this.state.currentTemplate.id+tProp.id}
                             id = {tProp.id}
@@ -73,7 +74,7 @@ export default class TemplatePanel extends React.Component<Props, State> {
                     )
                 }
                 else if(tProp instanceof GenderProperty) {
-                    selectors.push(
+                    smallSelectors.push(
                         <TemplatePanelGender
                             key={this.state.currentTemplate.id+tProp.id}
                             id = {tProp.id}
@@ -84,7 +85,11 @@ export default class TemplatePanel extends React.Component<Props, State> {
                 }
             }
         );
-        return(<div>{selectors}</div>)
+        return(
+            <div className='tp-properties'>
+                <div className='tpi-box-large'>{smallSelectors}</div>
+                {largeSelectors}
+            </div>)
     }
 
     selectTemplate = (selectedOption: any) => {
@@ -108,16 +113,25 @@ export default class TemplatePanel extends React.Component<Props, State> {
     render () {
         return (
             <div className='template-panel'>
-                <div>
-                    Select Template:
+                <div className='tp-header'>Lineage Generator</div>
+                <div className='tp-select-template'>
+                    <label>Template:</label>
                     <DVSelect
                         value = { this.state.currentOption }
                         options = { menuOptions }
                         onChange = { this.selectTemplate }
                     />
                 </div>
+                <div className='tp-description'>
+                    <div className='tp-desc-text'>
+                        {this.state.currentTemplate.description}
+                    </div>
+                    <img className='tp-desc-image' src={`${process.env.PUBLIC_URL}previews/tpreview-${this.state.currentTemplate.id}.png`} alt='preview image'/>
+                </div>
+                
+                <div className='tp-properties-label'>Template Properties:</div>
                 {this.composeTemplateSelectors()}
-                <button onClick={ this.generateTemplate }>Generate</button>
+                <button className='stage-button-large' onClick={ this.generateTemplate }>Generate</button>
             </div>
         );
     }

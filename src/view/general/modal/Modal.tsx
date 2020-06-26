@@ -2,7 +2,7 @@ import React from 'react';
 import {createPortal} from "react-dom";
 import './modal.css';
 
-const overlay = document.getElementById("overlay");
+const overlay = document.getElementById("overlay-A");
 
 interface Props {
     show: boolean,

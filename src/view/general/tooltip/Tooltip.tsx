@@ -2,7 +2,7 @@ import React from 'react';
 import {createPortal} from "react-dom";
 import './tooltip.css';
 
-const overlay = document.getElementById("overlay");
+const overlay = document.getElementById("overlay-B");
 
 type windowCoordinates = {x: number, y: number}
 

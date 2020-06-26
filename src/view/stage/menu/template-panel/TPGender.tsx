@@ -42,7 +42,7 @@ export default class TemplatePanelGender extends React.Component<Props, State> {
 
     render () {
         return (
-            <div className='tpi-box tpi-gender'>
+            <div className='tpi-box-small'>
                 <div className='tpi-label'>{this.props.label}:</div>
                 <div className='tpi-gender'>
                     <DVSelect

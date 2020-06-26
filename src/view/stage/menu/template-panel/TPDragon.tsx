@@ -114,10 +114,10 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
 
     render () {
         return (
-            <div className='tpi-box tpi-dragon'>
+            <div className='tpi-box-large'>
                 <div className='tpi-label'>{this.props.label}</div>
                 <div className='tpi-dragon-breed'>
-                    Select Breed:<br/>
+                    Breed:<br/>
                     <DVSelect
                         value = { this.state.selectedBreedOption }
                         options = { this.state.breedOptions }
@@ -125,7 +125,7 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
                     />
                 </div>
                 <div className='tpi-dragon-portrait'>
-                    Select Portrait:<br/>
+                    Portrait:<br/>
                     <DVSelect
                         value = { this.state.selectedPortraitOption }
                         options = { this.state.portraitOptions }

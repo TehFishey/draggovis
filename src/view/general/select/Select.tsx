@@ -3,6 +3,7 @@ import Select from 'react-select'
 
 export type menuOption = {value : string, label: string}
 
+const overlay = document.getElementById("overlay-B");
 const targetHeight = 24;
 
 export const styles = {
@@ -30,6 +31,7 @@ export const styles = {
 };
 
 interface Props {
+    className? : string;
     value : menuOption,
     options : Array<menuOption>,
     isSearchable?: boolean,
@@ -51,6 +53,9 @@ export default class DVSelect extends React.Component<Props, State> {
         return (
             <Select
                 name = "react-select-menu"
+                maxMenuHeight = {220}
+                menuPortalTarget = {overlay}
+                className = {'react-select-menu '+this.props.className}
                 styles={ styles }
                 value = { this.props.value }
                 options = { this.props.options }

@@ -81,7 +81,7 @@
 
 }
 .ep-controls button {
-	
+	width: 200px;
 }
 .ep-cont-label {
 	grid-area: label;

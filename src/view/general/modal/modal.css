@@ -1,5 +1,5 @@
 .modal-overlay {
-    position: fixed; z-index: 5;
+    position: fixed; z-index: 11;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -13,7 +13,7 @@
 }
 
 .modal-window {
-    position: fixed; z-index: 10;
+    position: fixed; z-index: 12;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

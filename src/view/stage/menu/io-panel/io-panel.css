@@ -25,34 +25,6 @@
     flex-direction: row;
 }
 
-.IO-interface-button {
-    min-width: 120px;
-    padding: 2px;
-    margin: 3px;
-    background: hsl(0, 0%, 95%);
-    border-style: inset;
-    border-width: 2px;
-    border-color:#101010;
-    box-shadow: inset 0 0 1px;
-    text-align: center;
-    text-justify: center;
-    text-overflow: wrap;
-    font-family: "Alice","Times New Roman","Times",serif;
-    font-size: 15px
-}
-.IO-interface-button:hover {
-    background: radial-gradient(hsl(0, 0%, 85%), hsl(0, 0%, 95%));
-    box-shadow: inset 0 0 1px black, 0 0 1px;
-}
-
 .IO-close-button {
-    min-width: 50px;
-    width: 50px;
-    padding: 1px;
-    margin: 4px;
     margin-top: 10px;
-	background: hsl(0, 0%, 95%);
-    border-style: inset;
-    border-width: 1px;
-    border-color:#101010;
 }

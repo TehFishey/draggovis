@@ -54,7 +54,7 @@ export default class TemplatePanelNumber extends React.Component<Props, State> {
 
     render () {
         return (
-            <div className='tpi-box tpi-number'>
+            <div className='tpi-box-small'>
                 <div className='tpi-label'>{this.props.label}</div>
                 <div className='tpi-number-select'>
                     <DVSelect

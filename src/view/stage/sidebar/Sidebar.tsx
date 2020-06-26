@@ -2,11 +2,10 @@ import React from 'react';
 import Image from '../../general/image/Image'
 import { SettingsConsumer, DragDrop } from '../../Settings';
 import './sidebar.css';
-
-import DragonNode from '../../../library/controller/DragonNode'
+import Tree from '../../../library/controller/Tree';
 
 interface Props {
-    mouseOver : DragonNode;
+    tree : Tree;
 }
 
 interface State {
@@ -56,12 +55,20 @@ export default class Sidebar extends React.Component<Props, State> {
                     {value => { return (
                     <div className='sidebar-content'>
                         <div className='sidebar-image'>
-                            <Image node={this.props.mouseOver} time={value.caveTime}/>
+                            <Image node={(this.props.tree[value.mouseOverIndex] != null) ? this.props.tree[value.mouseOverIndex]! : this.props.tree[0]!} time={value.caveTime}/>
                             </div>
                         <div className='sidebar-feedback'></div>
                         <div className='sidebar-settings'>
                             <div className='sb-setting-label'>Display</div>
                             <div className='sb-setting'>
+                                <div>
+                                    Cave Time: 
+                                    {this.createTimeSelect(
+                                        value.caveTime,
+                                        (e: React.ChangeEvent<HTMLSelectElement>)=>{
+                                            value.update.caveTime(e.target.value)}
+                                    )}
+                                </div>
                                 <div onClick={e=>{value.update.showName(!value.showName)}} style={{cursor: 'default'}}>
                                     <input type='checkbox'
                                         checked={value.showName}
@@ -75,14 +82,6 @@ export default class Sidebar extends React.Component<Props, State> {
                                         readOnly
                                     />
                                     Show Generations
-                                </div>
-                                <div>
-                                    Cave Time: 
-                                    {this.createTimeSelect(
-                                        value.caveTime,
-                                        (e: React.ChangeEvent<HTMLSelectElement>)=>{
-                                            value.update.caveTime(e.target.value)}
-                                    )}
                                 </div>
                             </div>
                             <div className='sb-setting-label'>Drag - Drop</div>
@@ -103,14 +102,14 @@ export default class Sidebar extends React.Component<Props, State> {
                                             checked={value.disableValid}
                                             readOnly
                                         />
-                                        Ignore Validation
+                                        Override Validation
                                     </div>
                                     <div onClick={e=>{value.update.enableWarn(!value.enableWarn)}} style={{cursor: 'default'}}>
                                         <input type='checkbox'
-                                            checked={value.enableWarn}
+                                            checked={!value.enableWarn}
                                             readOnly
                                         />
-                                        Highlight Warnings
+                                        Override Warnings
                                     </div>
                                 </div>
                         </div>

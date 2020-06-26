@@ -3,7 +3,6 @@ import { Settings, SettingsConsumer } from '../../../Settings';
 import Image from '../../../general/image/Image'
 import DVSelect, { menuOption } from '../../../general/select/Select'
 import EditPanelPulldown from "./EditPanelPulldown";
-import DropDownButton from '../../../general/dropdown/DropDownButton';
 import './edit-panel.css';
 
 import Tree from '../../../../library/controller/Tree';
@@ -11,7 +10,7 @@ import DragonNode from '../../../../library/controller/DragonNode';
 
 import {Breeds, Swaps} from '../../../../defines/Defines';
 import Controller from '../../../../controller/Controller'
-import { DragonState, Gender } from '../../../../library/defines/Dragon';
+import { DragonState } from '../../../../library/defines/Dragon';
 import EditPanelCheckbox from './EditPanelCheckbox';
 import Condition from '../../../../library/defines/Condition';
 import MenuOptions from '../../../_utilities/MenuOptions';
@@ -19,7 +18,6 @@ import MenuOptions from '../../../_utilities/MenuOptions';
 const breedData = Breeds.dict;
 
 interface Props {
-    tree: Tree,
     node: DragonNode,
     updateTree: Function
     handleClose: Function

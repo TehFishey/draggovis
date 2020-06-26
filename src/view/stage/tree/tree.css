@@ -1,8 +1,6 @@
 .lineage-tree {
 	margin:auto;
 	display:table;
-	padding:1px;
-	padding-top:20px;
 	border-collapse:collapse;
 	border-spacing:0
 }
@@ -101,7 +99,8 @@
 	word-wrap:break-word;
 	position:relative;
 	width:120px;
+	height: 19px;
 	top: -4px;
 	line-height: 19px;
-	font: 14px/19.6px "fq","Times New Roman","Times",serif;
+	font-size: 14px;
 }

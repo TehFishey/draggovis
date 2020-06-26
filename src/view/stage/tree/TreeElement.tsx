@@ -8,15 +8,14 @@ import Draggable, { DropEffect } from '../../general/drag-drop/Draggable';
 import Droppable from '../../general/drag-drop/Droppable';
 import { SettingsConsumer, DragDrop, Settings } from '../../Settings';
 
-import Tree from '../../../library/controller/Tree';
 import DragonNode from '../../../library/controller/DragonNode';
 
 import Controller from '../../../controller/Controller';
+import Tree from '../../../library/controller/Tree';
 
 type windowCoordinates = {x: number, y: number}
 
 interface Props {
-    tree: Tree,
     node: DragonNode,
     setData: Function,
 }
@@ -127,12 +126,10 @@ export default class TreeElement extends React.Component<Props, State> {
         if(this.props.node.hasParents()) {
             let parents = [
                 (<TreeElement
-                    tree={this.props.tree}
                     node={this.props.node.father()!}
                     setData={(treeData: Array<DragonNode>) => {this.props.setData(treeData)}}
                 />),
                 (<TreeElement
-                    tree={this.props.tree}
                     node={this.props.node.mother()!}
                     setData={(treeData: Array<DragonNode>) => {this.props.setData(treeData)}}
                 />)
@@ -164,7 +161,6 @@ export default class TreeElement extends React.Component<Props, State> {
                     show={this.state.showPopover}
                     loc={this.calcPopoverLoc()}
                     content={ <EditWindow
-                        tree={this.props.tree}
                         node={this.props.node}
                         updateTree={(newTree: Tree) => this.updateTree(newTree)}
                         handleClose={()=>{this.displayPopover(false)}} />
@@ -183,6 +179,7 @@ export default class TreeElement extends React.Component<Props, State> {
                             <div className={(this.props.node.meta.invalidData && value.enableWarn) ? 'tree-unit-display-button highlight-warning' : 'tree-unit-display-button'}
                                 onClick={e=>{this.displayPopover(true)}}
                                 ref={this.img}
+                                onMouseOver={e=>{value.update.mouseOverIndex(this.props.node.index)}}
                                 onMouseEnter={e=>{this.displayTooltip(value.enableWarn)}}
                                 onMouseLeave={e=>{this.displayTooltip(false)}}
                                 onError={(e)=>{this.setState({imgError : true})}}
@@ -190,7 +187,11 @@ export default class TreeElement extends React.Component<Props, State> {
                                 <Image node={this.props.node} time={value.caveTime} thumbnail={true}/>
                             </div>
                         </Draggable>
-                        <label className='tree-unit-display-label'>{(this.props.node.name !== "") ? this.props.node.name : "(code)"}</label>
+                        <label className='tree-unit-display-label'>
+                            {(value.showName) ?
+                                    (this.props.node.name !== "") ? this.props.node.name : "(code)" :
+                                    null}
+                        </label>
                     </Droppable>
                 )}}
                 </SettingsConsumer>

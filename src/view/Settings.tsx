@@ -1,4 +1,5 @@
 import React from 'react';
+import DragonNode from '../library/controller/DragonNode';
 
 enum DragDrop {
     CopyOne = 'copyOne',
@@ -14,6 +15,7 @@ interface SettingValues {
     dragDrop : DragDrop
     disableValid : boolean
     enableWarn : boolean
+    mouseOverIndex : number
     update: {
         showName: (show: boolean) => void,
         showGen : (show: boolean) => void,
@@ -21,16 +23,18 @@ interface SettingValues {
         dragDrop : (type: DragDrop) => void,
         disableValid : (disable: boolean) => void,
         enableWarn : (enable: boolean) => void,
+        mouseOverIndex: (node: number) => void
     }
 }
 
 const Settings = React.createContext<SettingValues>({
     showName : true,
-    showGen : false,
+    showGen : true,
     caveTime: '12:00:00',
     dragDrop : DragDrop.CopyOne,
     disableValid : false,
     enableWarn : true,
+    mouseOverIndex : 0,
     update: {
         showName: (show: boolean) => {},
         showGen : (show: boolean) => {},
@@ -38,6 +42,7 @@ const Settings = React.createContext<SettingValues>({
         dragDrop : (type: DragDrop) => {},
         disableValid : (disable: boolean) => {},
         enableWarn : (enable: boolean) => {},
+        mouseOverIndex: (node: number) => {}
     }
 });
 const Consumer = Settings.Consumer;
@@ -56,6 +61,7 @@ class SettingsControl extends React.Component<Props, SettingValues> {
             dragDrop : DragDrop.CopyOne,
             disableValid : false,
             enableWarn : true,
+            mouseOverIndex : 0,
             update: {
                 showName: (show: boolean) => {this.setState({showName: show})},
                 showGen : (show: boolean) => {this.setState({showGen: show})},
@@ -63,6 +69,7 @@ class SettingsControl extends React.Component<Props, SettingValues> {
                 dragDrop : (type: DragDrop) => {this.setState({dragDrop: type})},
                 disableValid : (disable: boolean) => {this.setState({disableValid: disable})},
                 enableWarn : (enable: boolean) => {this.setState({enableWarn: enable})},
+                mouseOverIndex : (index: number) => {this.setState({mouseOverIndex : index})}
             }
         };
     }

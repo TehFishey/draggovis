@@ -20,7 +20,7 @@ let lineageTemplates : Array<Template> = [
             let out = new Tree();
             out[0] = out.createNode(0,Gender.Female,dragon.breed,dragon.portrait,dragon.state);
             out[0].portrait = Janitors.correctPortraitGender(out[0]);
-            for(let i = 1; i <= gens; i++) {
+            for(let i = 1; i < gens; i++) {
                 let nodes: Array<DragonNode> = Tree.getNodesByGen(out, i);
                 nodes.forEach((node)=> {
                     let n: DragonNode;
@@ -42,7 +42,7 @@ let lineageTemplates : Array<Template> = [
         (gens: number, mDragon: Dragon, fDragon: Dragon) => {
             let out = new Tree();
             out[0] = createCorrectedNode(out,0,Gender.Female,mDragon.breed,mDragon.portrait,mDragon.state);
-            for(let i = 1; i <= gens; i++) {
+            for(let i = 1; i < gens; i++) {
                 let nodes: Array<DragonNode> = Tree.getNodesByGen(out, i);
                 nodes.forEach((node)=> {
                     createCorrectedNode(out,node.getFatherIndex(),Gender.Male,mDragon.breed,mDragon.portrait,mDragon.state);

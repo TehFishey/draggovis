@@ -10,7 +10,6 @@ function App() {
             <SettingsProvider>
                 <Stage />
             </SettingsProvider>
-            <div className="app-footer"></div>
         </div>
     );
 }

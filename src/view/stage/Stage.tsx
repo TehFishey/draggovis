@@ -7,6 +7,8 @@ import './stage.css';
 
 import Tree from '../../library/controller/Tree';
 import Controller from '../../controller/Controller'
+import GenerationCounter from './gen-counter/gen-counter';
+import { SettingsConsumer } from '../Settings';
 
 interface Props {}
 
@@ -45,13 +47,13 @@ export default class Stage extends React.Component<Props, State> {
                     setTree={this.setData}
                 />
                 <Sidebar
-                    mouseOver={this.state.tree[0]!}
+                    tree={this.state.tree}
                 />
                 <div className='stage-canvas'>
+                    <GenerationCounter gens={this.state.tree.genLength()}/>
                     <div className="lineage-tree">
                         <ul id ="tree-root">
                             <TreeElement
-                            tree={this.state.tree}
                             node={this.state.tree[0]!}
                             setData={this.setData}
                             />

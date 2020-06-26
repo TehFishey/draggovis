@@ -12,7 +12,9 @@ interface Props {
     content: string | Array<string>,
 }
   
-interface State {}
+interface State {
+    pos: windowCoordinates,
+}
 
 export default class Tooltip extends React.Component<Props,State> {
     
@@ -20,6 +22,14 @@ export default class Tooltip extends React.Component<Props,State> {
 
     constructor(props: Props) {
         super(props);
+
+        this.state = {
+            pos : {
+                x : 0,
+                y : 0
+            }
+        }
+
         this.componentRef = React.createRef();
     }
 
@@ -37,6 +47,35 @@ export default class Tooltip extends React.Component<Props,State> {
         return(<div className='tooltip-content'>{out}</div>)
     }
 
+    adjustPosition() {
+        let newX = this.props.loc.x;
+        let newY = this.props.loc.y;
+
+        if(window.innerWidth < newX + this.componentRef.current!.clientWidth)
+            newX -= (newX + this.componentRef.current!.clientWidth) - window.innerWidth;
+        if(window.innerHeight < newY + this.componentRef.current!.clientHeight)
+            newY -= (newY + this.componentRef.current!.clientHeight) - window.innerHeight;
+
+        if(this.state.pos.x !== newX || this.state.pos.y !== newY) {
+            this.setState({
+                pos : {
+                    x : newX,
+                    y : newY
+                }
+            });
+        }
+    }
+
+    componentDidMount() {
+        if(this.props.show)
+            this.adjustPosition();
+    }
+
+    componentDidUpdate() {
+        if(this.props.show)
+            this.adjustPosition();
+    }
+
     render () {
         if (!this.props.show) {return null;}
         return ( 
@@ -45,7 +84,7 @@ export default class Tooltip extends React.Component<Props,State> {
                 <div 
                     className='tooltip'
                     ref={this.componentRef}
-                    style={{ transform : `translate(${this.props.loc.x}px, ${this.props.loc.y}px)` }}
+                    style={{ transform : `translate(${this.state.pos.x}px, ${this.state.pos.y}px)` }}
                 >
                     {this.buildContent()}
                 </div>), overlay!)}

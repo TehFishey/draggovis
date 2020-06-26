@@ -136,6 +136,15 @@ export default class Tree extends Array<DragonNode | null> {
         Tree.iterate(this, index, branch, 0, nodeFromBranch);
     }
 
+    genLength() : number {
+        for(let i = 1; i >= 1; i++) {
+            if(this.length <= Tree.generation(i)) {
+                return i
+            }
+        }
+        return 0;
+    }
+
     /**
      * Gets the total length of a Tree array up to (and inclusive of) the specified generation.
      * 
@@ -148,7 +157,7 @@ export default class Tree extends Array<DragonNode | null> {
 
         // DC Generations expand as a geometric sequence with common factor 2.
         // (eg. each generation is 2^gen larger than the previous)
-        else return gS(1,2,gen-1);
+        else return gS(1,2,gen);
 
         /**
          * Finds the nth element of geometric sequence Σ(ar^n).

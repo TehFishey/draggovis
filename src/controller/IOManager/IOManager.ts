@@ -279,6 +279,7 @@ export default class IOManager {
      */
     private compressString(treeStr: string) : string {
         let data: Array<string> = treeStr.split('|').slice(2,treeStr.length);
+        let newData: Array<string> = [];
         let out: string = '';
         let encodeNum: number = 0;
         let encodeDict: string = '';
@@ -286,6 +287,10 @@ export default class IOManager {
             [key: string]: number
         }
 
+        /**
+         * First compression layer:
+         * Create a dynamic dictionary lookup for repeating node-strings, and replace the strings in the array.
+         */
         let count: Accumulator = data.reduce(
             (acc: Accumulator, node: string) => (
                 { ...acc,[node.slice(0,5)]: (acc[node.slice(0,5)] || 0) + 1}
@@ -303,16 +308,41 @@ export default class IOManager {
                         data[i] = `$${encodeChar}${data[i].slice(5,data[i].length)}`;
             }
         });
+
+        /**
+         * Second compression layer:
+         * Combine identical sequential nodes into a single node with 'count' and 'value' properties.
+         */
+        let ri: number = 0;
+        let repeats: number = 1;
+        for (let i = 0; i < data.length; i++) {
+            if(i > ri || i === 0) {
+                if(i+1 <= data.length && data[i] === data[i+1]) {
+                    for(ri = i; ri < data.length; ri++) {
+                        if(data[ri] === data[ri+1]) 
+                            repeats += 1;
+                        else break;
+                    }
+                    newData.push(`${repeats.toString(36)}:${data[i]}`)
+                    repeats = 1;
+                }
+                else newData.push(data[i]);
+            } 
+        }
         
         out += treeStr.split('|').slice(0,2).join('|');
         out += `|${encodeDict}`
 
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < newData.length; i++) {
+            out += `|${newData[i]}`;
+        }
+
+        /*for (let i = 0; i < data.length; i++) {
             out += '|';
             if(data[i] != null) {
                 out += data[i]
             }
-        }
+        }*/
 
         return out;
     }
@@ -323,23 +353,41 @@ export default class IOManager {
      */
     private decompressString(treeStr: string) : string {
         let data: Array<string> = treeStr.split('|').slice(2,treeStr.length);
+        let newData: Array<string> = [];
         let out: string = '';
         let encodeStr: string = data.shift()!;
         let encodeDict: Map<string, string> = new Map<string, string>();
         
-        for (let i = 0, chars = encodeStr.length; i < chars; i += 6)
+        for(let i = 0, chars = encodeStr.length; i < chars; i += 6)
             encodeDict.set(encodeStr[i], encodeStr.substring(i+1, i+6));
         
-        out += treeStr.split('|').slice(0,2).join('|');            
+        /**
+         * Second compression layer
+         */
         for (let i = 0; i < data.length; i++) {
+            if(data[i].includes(':')) {
+                let count: number = parseInt(data[i].split(':')[0], 36);
+                let node: string = data[i].split(':')[1];
+                for (let n = 0; n < count; n++) {
+                    newData.push(node);
+                }
+            }
+            else(newData.push(data[i]));
+        }
+
+        /**
+         * First compression layer
+         */
+        out += treeStr.split('|').slice(0,2).join('|');            
+        for (let i = 0; i < newData.length; i++) {
             out += '|';
-            if(data[i] != null) {
-                if(data[i][0] === '$') {
-                    let replace = encodeDict.get(data[i][1]);
-                    let name = (data[i].length > 2) ? data[i].slice(2, data[i].length) : '';
+            if(newData[i] != null) {
+                if(newData[i][0] === '$') {
+                    let replace = encodeDict.get(newData[i][1]);
+                    let name = (newData[i].length > 2) ? newData[i].slice(2, newData[i].length) : '';
                     out += `${replace}${name}`
                 }
-                else out += data[i]
+                else out += newData[i]
             }
         }
         console.log(out);

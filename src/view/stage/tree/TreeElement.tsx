@@ -17,7 +17,7 @@ type windowCoordinates = {x: number, y: number}
 
 interface Props {
     node: DragonNode,
-    setData: (data: executionOutput) => void,
+    setData: (data: Promise<executionOutput>) => void,
 }
 
 interface State {
@@ -158,7 +158,7 @@ export default class TreeElement extends React.Component<Props, State> {
                     loc={this.calcPopoverLoc()}
                     content={ <EditWindow
                         node={this.props.node}
-                        setData={(data: executionOutput) => this.props.setData(data)}
+                        setData={this.props.setData}
                         handleClose={()=>{this.displayPopover(false)}} />
                     }
                     handleClose={()=>{this.displayPopover(false)}}

@@ -19,7 +19,7 @@ export enum IOState {
 
 interface Props {
     tree: Tree,
-    setData: (data: executionOutput) => void,
+    setData: (response: Promise<executionOutput>) => void,
 }
 
 interface State {
@@ -60,11 +60,11 @@ export default class Menu extends React.Component<Props, State> {
     }
 
     undo = () => {
-        this.props.setData({data : Model.undo()});
+        this.props.setData(Model.undo());
     }
 
     redo = () => {
-        this.props.setData({data : Model.redo()});
+        this.props.setData( Model.redo());
     }
 
     openTemplates = () => {
@@ -80,7 +80,7 @@ export default class Menu extends React.Component<Props, State> {
     }
 
     resetTree = () => {
-        this.props.setData({data : Model.reset()})
+        this.props.setData( Model.reset())
     }
 
     render () {

@@ -32,14 +32,16 @@ export default class Stage extends React.Component<Props, State> {
     }
 
     getData = () => { return this.state.tree; }
-    setData = (data: executionOutput) => { 
-        if(data.error != null) {
-            this.setState({
-                error : true,
-                errorMessage : data.error
-            })
-        }
-        else this.setState({tree: data.data})
+    setData = (response: Promise<executionOutput>) => { 
+        response.then((data: executionOutput) => {
+            if(data.error != null) {
+                this.setState({
+                    error : true,
+                    errorMessage : data.error
+                })
+            }
+            else this.setState({tree: data.data})
+        })
     }
 
     componentDidMount() {

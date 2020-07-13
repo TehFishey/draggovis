@@ -19,7 +19,7 @@ const breedData = Breeds.dict;
 
 interface Props {
     node: DragonNode,
-    setData: (data: executionOutput) => void,
+    setData: (data: Promise<executionOutput>) => void,
     handleClose: Function
 }
   

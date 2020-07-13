@@ -9,7 +9,7 @@ export default class Controller {
         this.parent = parent;
     }
 
-    protected executeStrategy(strategy : executionStrategy) : executionOutput {
+    protected executeStrategy(strategy : executionStrategy) : Promise<executionOutput> {
         return this.parent.updateTree(strategy);
     }
 }

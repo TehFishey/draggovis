@@ -8,7 +8,7 @@ export default class TemplatePanelController extends Controller {
         super('TemplatePanel', parent);
     }
 
-    implementTemplate(templateTree: Tree, validate: boolean=true) : executionOutput {
+    implementTemplate(templateTree: Tree, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             tree.replaceTree(templateTree);
             return undefined;

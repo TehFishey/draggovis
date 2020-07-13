@@ -10,7 +10,7 @@ export default class DragDropController extends Controller {
         super('DragDrop', parent);  
     }
 
-    copyOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : executionOutput {
+    copyOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[dragNodeIndex];
             if(dragon != null) {
@@ -26,7 +26,7 @@ export default class DragDropController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    swapOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : executionOutput {
+    swapOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragged = tree[dragNodeIndex];
             let dropped = tree[dropNodeIndex];
@@ -49,7 +49,7 @@ export default class DragDropController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    copySet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : executionOutput {
+    copySet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragged = tree[dragNodeIndex];
             let dropped = tree[dropNodeIndex];
@@ -77,7 +77,7 @@ export default class DragDropController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    swapSet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : executionOutput {
+    swapSet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragged = tree[dragNodeIndex];
             let dropped = tree[dropNodeIndex];

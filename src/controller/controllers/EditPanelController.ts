@@ -14,7 +14,7 @@ export default class EditPanelController extends Controller {
         super('EditPanel', parent);
     }
 
-    updateName(index: number, name: string, validate: boolean=true) : executionOutput {
+    updateName(index: number, name: string, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {
@@ -27,7 +27,7 @@ export default class EditPanelController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    updateGender(index: number, gender: Gender, validate: boolean=true) : executionOutput {
+    updateGender(index: number, gender: Gender, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null && index === 0) {
@@ -41,7 +41,7 @@ export default class EditPanelController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    updateBreed(index: number, breedId: string, validate: boolean=true) : executionOutput {
+    updateBreed(index: number, breedId: string, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {
@@ -55,7 +55,7 @@ export default class EditPanelController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    updatePortrait(index: number, portraitId: string, validate: boolean=true) : executionOutput {
+    updatePortrait(index: number, portraitId: string, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {
@@ -68,7 +68,7 @@ export default class EditPanelController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    createChild(index: number, validate: boolean=true) : executionOutput {
+    createChild(index: number, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(index === 0 && dragon != null) {
@@ -114,7 +114,7 @@ export default class EditPanelController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    removeChild(index: number, validate: boolean=true) : executionOutput {
+    removeChild(index: number, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(index !== 0 && dragon != null) {
@@ -135,7 +135,7 @@ export default class EditPanelController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    createParents(index: number, validate: boolean=true) : executionOutput {
+    createParents(index: number, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {
@@ -157,7 +157,7 @@ export default class EditPanelController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    removeParents(index: number, validate: boolean=true) : executionOutput {
+    removeParents(index: number, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null && dragon.hasParents()) {
@@ -174,7 +174,7 @@ export default class EditPanelController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    invertParents(index: number, validate: boolean=true) : executionOutput {
+    invertParents(index: number, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null && dragon.hasParents()) {
@@ -207,7 +207,7 @@ export default class EditPanelController extends Controller {
         return this.executeStrategy(strategy);
     }
 
-    setDragonState(index: number, state: DragonState, validate: boolean=true) : executionOutput {
+    setDragonState(index: number, state: DragonState, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {

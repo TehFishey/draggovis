@@ -5,7 +5,7 @@ import Model from '../../../../controller/Model';
 import { executionOutput } from '../../../../controller/DataManager';
 
 interface Props {
-    setData : (data: executionOutput) => void
+    setData : (response: Promise<executionOutput>) => void
     handleClose : Function
 }
 

@@ -25,8 +25,12 @@ export default class Tree extends Array<DragonNode | null> {
      * @param state DragonState of dragon. Defaults to Healthy.
      */
     createNode(index: number, gender: Gender, breed: Breed, portrait:Portrait, state?:DragonState) : DragonNode {
-        this[index] = new DragonNode(this, index, gender, breed, portrait, state);
-        return this[index]!;
+        if(index >= Tree.generation(12)) 
+            throw new Error(`Lineage size cannot exceed 12 generations.`)
+        else {
+            this[index] = new DragonNode(this, index, gender, breed, portrait, state);
+            return this[index]!;
+        }
     }
 
     /**

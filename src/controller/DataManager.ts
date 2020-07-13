@@ -42,7 +42,7 @@ export default class DataManager {
         this.dragDrop = new DragDropController(this);
     }
 
-    updateTree(callback: executionStrategy) : executionOutput {
+    async updateTree(callback: executionStrategy) : Promise<executionOutput> {
         let changed : Array<number> | undefined;
         let error : string;
         
@@ -111,32 +111,32 @@ export default class DataManager {
         return this.lineageSnapshot;
     }
 
-    undo() : Tree {
+    async undo() : Promise<executionOutput> {
         let tree = this.undoStack.pull();
         if(tree != null) {
             this.redoStack.put(this.lineageSnapshot);
             this.lineageTree.replaceTree(tree);
             this.lineageSnapshot = tree;
         }
-        return this.lineageSnapshot;
+        return {data : this.lineageSnapshot};
     }
 
-    redo() : Tree {
+    async redo() : Promise<executionOutput> {
         let tree = this.redoStack.pull();
         if(tree != null) {
             this.undoStack.put(this.lineageSnapshot);
             this.lineageTree.replaceTree(tree);
             this.lineageSnapshot = tree;
         }
-        return this.lineageSnapshot;
+        return {data :this.lineageSnapshot};
     }
 
-    reset() : Tree {;
+    async reset() : Promise<executionOutput> {
         let newTree = new Tree();
         newTree.createNode(0,Gender.Female,Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!);
         this.lineageTree.replaceTree(newTree);
-        
+
         this.lineageSnapshot = this.lineageTree.copyTree();
-        return this.getSnapshot()
+        return {data : this.getSnapshot()};
     }
 }

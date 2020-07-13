@@ -1,10 +1,11 @@
 import React from 'react';
 import './io-panel.css';
 
-import Controller from '../../../../controller/Controller';
+import Model from '../../../../controller/Model';
+import { executionOutput } from '../../../../controller/DataManager';
 
 interface Props {
-    setData : Function
+    setData : (data: executionOutput) => void
     handleClose : Function
 }
 
@@ -39,7 +40,7 @@ export default class ImportPanel extends React.Component<Props, State> {
     }
 
     importContent = () => {
-        this.props.setData(Controller.IOManager.import(this.state.content));
+        this.props.setData(Model.importWindow.import(this.state.content));
         this.props.handleClose();
     }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import DragonNode from '../library/controller/DragonNode';
 
 enum DragDrop {
     CopyOne = 'copyOne',
@@ -56,7 +55,7 @@ class SettingsControl extends React.Component<Props, SettingValues> {
   
         this.state = {
             showName : true,
-            showGen : false,
+            showGen : true,
             caveTime: '12:00:00',
             dragDrop : DragDrop.CopyOne,
             disableValid : false,

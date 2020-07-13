@@ -5,21 +5,21 @@ import DVSelect, { menuOption } from '../../../general/select/Select'
 import EditPanelPulldown from "./EditPanelPulldown";
 import './edit-panel.css';
 
-import Tree from '../../../../library/controller/Tree';
 import DragonNode from '../../../../library/controller/DragonNode';
 
 import {Breeds, Swaps} from '../../../../defines/Defines';
-import Controller from '../../../../controller/Controller'
+import Model from '../../../../controller/Model'
 import { DragonState } from '../../../../library/defines/Dragon';
 import EditPanelCheckbox from './EditPanelCheckbox';
 import Condition from '../../../../library/defines/Condition';
 import MenuOptions from '../../../_utilities/MenuOptions';
+import { executionOutput } from '../../../../controller/DataManager';
 
 const breedData = Breeds.dict;
 
 interface Props {
     node: DragonNode,
-    updateTree: Function
+    setData: (data: executionOutput) => void,
     handleClose: Function
 }
   
@@ -55,20 +55,20 @@ export default class EditPanel extends React.Component<Props, State> {
     }
 
     updateName = () => {
-        this.props.updateTree(
-            Controller.editWindow.updateName(this.props.node.index, this.state.name, this.state.validate)
+        this.props.setData(
+            Model.editWindow.updateName(this.props.node.index, this.state.name, this.state.validate)
         );
     }
 
     updateBreed = (breedId: string) => {
-        this.props.updateTree(
-            Controller.editWindow.updateBreed(this.props.node.index, breedId, this.state.validate)
+        this.props.setData(
+            Model.editWindow.updateBreed(this.props.node.index, breedId, this.state.validate)
         );
     }
 
     updatePortrait = (portraitId: string) => {
-        this.props.updateTree(
-            Controller.editWindow.updatePortrait(this.props.node.index, portraitId, this.state.validate)
+        this.props.setData(
+            Model.editWindow.updatePortrait(this.props.node.index, portraitId, this.state.validate)
         );
     }
 
@@ -89,46 +89,46 @@ export default class EditPanel extends React.Component<Props, State> {
     }
 
     createParents() {
-        this.props.updateTree(
-            Controller.editWindow.createParents(this.props.node.index, this.state.validate)
+        this.props.setData(
+            Model.editWindow.createParents(this.props.node.index, this.state.validate)
         );
     }
 
     removeParents() {
-        this.props.updateTree(
-            Controller.editWindow.removeParents(this.props.node.index, this.state.validate)
+        this.props.setData(
+            Model.editWindow.removeParents(this.props.node.index, this.state.validate)
         );
     }
 
     createChild() {
-        this.props.updateTree(
-            Controller.editWindow.createChild(this.props.node.index, this.state.validate)
+        this.props.setData(
+            Model.editWindow.createChild(this.props.node.index, this.state.validate)
         );
     }
 
     removeChild() {
-        this.props.updateTree(
-            Controller.editWindow.removeChild(this.props.node.index, this.state.validate)
+        this.props.setData(
+            Model.editWindow.removeChild(this.props.node.index, this.state.validate)
         );
     }
 
     swapParents = () => {
-        this.props.updateTree(
-            Controller.editWindow.invertParents(this.props.node.index, this.state.validate)
+        this.props.setData(
+            Model.editWindow.invertParents(this.props.node.index, this.state.validate)
         );
     }
 
     setDragonState(state: DragonState) {
         let s: DragonState = (this.props.node.state === state) ? DragonState.Healthy : state;
-        this.props.updateTree(
-            Controller.editWindow.setDragonState(this.props.node.index, s, this.state.validate)
+        this.props.setData(
+            Model.editWindow.setDragonState(this.props.node.index, s, this.state.validate)
         );
     }
 
     setGender = (selectedOption: any) => {
         let gender = selectedOption.value;
-        this.props.updateTree(
-            Controller.editWindow.updateGender(this.props.node.index, gender, this.state.validate)
+        this.props.setData(
+            Model.editWindow.updateGender(this.props.node.index, gender, this.state.validate)
         );
     }
 

@@ -1,53 +1,56 @@
-import DataManager from "../_DataManager";
-import ControllerUtils from "../_utilities/Janitors"
+import DataManager, { executionStrategy, executionOutput } from "../DataManager";
+import Janitors from "../_utilities/Janitors"
 
 import Tree from "../../library/controller/Tree";
 import DragonNode from "../../library/controller/DragonNode";
+import Controller from "./Controller";
 
-export default class DragDropController {
-    readonly parent: DataManager;
-
+export default class DragDropController extends Controller {
     constructor(parent: DataManager) {
-        this.parent = parent;
+        super('DragDrop', parent);  
     }
 
-    copyOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Tree {
-        return this.parent.updateTree((tree: Tree) => {
+    copyOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : executionOutput {
+        let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[dragNodeIndex];
             if(dragon != null) {
                 let n = tree.copyNode(dragon, dropNodeIndex);
                 
-                n.gender = ControllerUtils.correctDragonGender(n);
-                n.portrait = ControllerUtils.correctPortraitGender(n);
-                if (validate) n.state = ControllerUtils.correctDragonState(n);
+                n.gender = Janitors.correctDragonGender(n);
+                n.portrait = Janitors.correctPortraitGender(n);
+                if (validate) n.state = Janitors.correctDragonState(n);
             }
             return [dropNodeIndex];
-        })
+        }
+
+        return this.executeStrategy(strategy);
     }
 
-    swapOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Tree {
-        return this.parent.updateTree((tree: Tree) => {
+    swapOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : executionOutput {
+        let strategy : executionStrategy = (tree: Tree) => {
             let dragged = tree[dragNodeIndex];
             let dropped = tree[dropNodeIndex];
             if(dragged != null && dropped != null){
                 let n = tree.copyNode(dragged, dropNodeIndex);
-                n.gender = ControllerUtils.correctDragonGender(n);
-                n.portrait = ControllerUtils.correctPortraitGender(n);
-                if (validate) n.state = ControllerUtils.correctDragonState(n);
+                n.gender = Janitors.correctDragonGender(n);
+                n.portrait = Janitors.correctPortraitGender(n);
+                if (validate) n.state = Janitors.correctDragonState(n);
 
                 n = tree.copyNode(dropped, dragNodeIndex);
-                n.gender = ControllerUtils.correctDragonGender(n);
-                n.portrait = ControllerUtils.correctPortraitGender(n);
-                if (validate) n.state = ControllerUtils.correctDragonState(n);
+                n.gender = Janitors.correctDragonGender(n);
+                n.portrait = Janitors.correctPortraitGender(n);
+                if (validate) n.state = Janitors.correctDragonState(n);
 
                 return [dragNodeIndex, dropNodeIndex];
             }
             return [];
-        })
+        }
+
+        return this.executeStrategy(strategy);
     }
 
-    copySet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Tree {
-        return this.parent.updateTree((tree: Tree) => {
+    copySet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : executionOutput {
+        let strategy : executionStrategy = (tree: Tree) => {
             let dragged = tree[dragNodeIndex];
             let dropped = tree[dropNodeIndex];
             if(dragged != null && dropped != null){
@@ -57,9 +60,9 @@ export default class DragDropController {
                 tree.setBranch(dropNodeIndex, branch);
                 n = tree[dropNodeIndex]!
 
-                n.gender = ControllerUtils.correctDragonGender(n);
-                n.portrait = ControllerUtils.correctPortraitGender(n);
-                if (validate) n.state = ControllerUtils.correctDragonState(n);
+                n.gender = Janitors.correctDragonGender(n);
+                n.portrait = Janitors.correctPortraitGender(n);
+                if (validate) n.state = Janitors.correctDragonState(n);
 
                 return tree.getBranch(dropNodeIndex, false).reduce(
                     function(result, node) {
@@ -69,11 +72,13 @@ export default class DragDropController {
                 );
             }
             return [];
-        })
+        }
+
+        return this.executeStrategy(strategy);
     }
 
-    swapSet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Tree {
-        return this.parent.updateTree((tree: Tree) => {
+    swapSet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : executionOutput {
+        let strategy : executionStrategy = (tree: Tree) => {
             let dragged = tree[dragNodeIndex];
             let dropped = tree[dropNodeIndex];
             if(dragged != null && dropped != null){
@@ -83,15 +88,15 @@ export default class DragDropController {
 
                 tree.setBranch(dropNodeIndex, dragBranch);
                 n = tree[dropNodeIndex]!;
-                n.gender = ControllerUtils.correctDragonGender(n);
-                n.portrait = ControllerUtils.correctPortraitGender(n);
-                if (validate) n.state = ControllerUtils.correctDragonState(n);
+                n.gender = Janitors.correctDragonGender(n);
+                n.portrait = Janitors.correctPortraitGender(n);
+                if (validate) n.state = Janitors.correctDragonState(n);
 
                 tree.setBranch(dragNodeIndex, dropBranch);
                 n = tree[dragNodeIndex]!;
-                n.gender = ControllerUtils.correctDragonGender(n);
-                n.portrait = ControllerUtils.correctPortraitGender(n);
-                if (validate) n.state = ControllerUtils.correctDragonState(n);
+                n.gender = Janitors.correctDragonGender(n);
+                n.portrait = Janitors.correctPortraitGender(n);
+                if (validate) n.state = Janitors.correctDragonState(n);
 
                 let i1 = tree.getBranch(dragNodeIndex, false).reduce(
                     function(result, node) {
@@ -110,6 +115,8 @@ export default class DragDropController {
                 return i1.concat(i2);
             }
             return [];
-        })
+        }
+
+        return this.executeStrategy(strategy);
     }
 }

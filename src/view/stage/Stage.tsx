@@ -6,14 +6,17 @@ import './tree/tree.css';
 import './stage.css';
 
 import Tree from '../../library/controller/Tree';
-import Controller from '../../controller/Controller'
+import Model from '../../controller/Model'
 import GenerationCounter from './gen-counter/gen-counter';
-import { SettingsConsumer } from '../Settings';
+import { executionOutput } from '../../controller/DataManager';
+import Modal from '../general/modal/Modal';
 
 interface Props {}
 
 interface State {
     tree: Tree;
+    error : boolean;
+    errorMessage : string;
 }
 
 export default class Stage extends React.Component<Props, State> {
@@ -22,12 +25,22 @@ export default class Stage extends React.Component<Props, State> {
         super(props);
 
         this.state = {
-            tree: Controller.getSnapshot()
+            tree: Model.getSnapshot(),
+            error : false,
+            errorMessage : ''
         }
     }
 
     getData = () => { return this.state.tree; }
-    setData = (tree: Tree) => { this.setState({tree: tree})}
+    setData = (data: executionOutput) => { 
+        if(data.error != null) {
+            this.setState({
+                error : true,
+                errorMessage : data.error
+            })
+        }
+        else this.setState({tree: data.data})
+    }
 
     componentDidMount() {
        //Controller.IOManager.generateLookups();
@@ -42,9 +55,17 @@ export default class Stage extends React.Component<Props, State> {
     render () {
         return (
             <div className='app-stage'>
+                <Modal
+                    show={this.state.error}
+                    handleClose={()=>{this.setState({error : false})}}
+                >
+                    <h2>Error!</h2>
+                    <div>{this.state.errorMessage}</div>
+                    <button onClick={()=>{this.setState({error : false})}}>Close</button>
+                </Modal>
                 <Menu
                     tree={this.state.tree}
-                    setTree={this.setData}
+                    setData={this.setData}
                 />
                 <Sidebar
                     tree={this.state.tree}

@@ -10,8 +10,10 @@ import { Gender } from "../library/defines/Dragon";
 
 import { Portraits, Breeds, Rules } from "../defines/Defines";
 import TemplatePanelController from "./controllers/TemplatePanelController";
+import ImportPanelController from "./controllers/ImportPanelController";
 
-export type protoCommand = (tree: Tree) => Array<number>;
+export type executionStrategy = (tree: Tree) => Array<number> | undefined;
+export type executionOutput = { error? : string, data : Tree}
 
 export default class DataManager {
     private readonly lineageTree : Tree;
@@ -21,6 +23,7 @@ export default class DataManager {
     readonly IOManager : IOManager;
     readonly editWindow : EditPanelController;
     readonly templateWindow : TemplatePanelController;
+    readonly importWindow : ImportPanelController;
     readonly dragDrop : DragDropController;
 
     constructor() {
@@ -35,27 +38,29 @@ export default class DataManager {
         this.IOManager = new IOManager(this, 0);
         this.editWindow = new EditPanelController(this);
         this.templateWindow = new TemplatePanelController(this);
+        this.importWindow = new ImportPanelController(this);
         this.dragDrop = new DragDropController(this);
     }
 
-    updateTree(callback: protoCommand) : Tree {
+    updateTree(callback: executionStrategy) : executionOutput {
+        let changed : Array<number> | undefined;
+        let error : string;
+        
         this.undoStack.put(this.lineageSnapshot);
-        let changed = callback.apply(this, [this.lineageTree]);
+        
+        try { 
+            changed = callback.apply(this, [this.lineageTree]); 
+            this.updateWarnings(this.lineageTree);
+            this.validateChanges(this.lineageTree, changed);
 
-        this.updateWarnings(this.lineageTree);
-        this.validateChanges(this.lineageTree, changed);
-
-        this.lineageSnapshot = this.lineageTree.copyTree();
-        return this.getSnapshot();
-    }
-
-    setTree(tree: Tree) {
-        this.undoStack.put(this.lineageSnapshot);
-        this.lineageTree.replaceTree(tree);
-        this.validateChanges(this.lineageTree);
-
-        this.lineageSnapshot = this.lineageTree.copyTree();
-        return this.getSnapshot();
+            this.lineageSnapshot = this.lineageTree.copyTree();
+            return {data : this.getSnapshot()};
+        }
+        catch(err) { 
+            error = err.message; 
+            this.lineageTree.replaceTree(this.lineageSnapshot);
+            return {error : error, data : this.getSnapshot()};
+        }
     }
 
     private validateChanges(tree: Tree, changed?: Array<number>) {
@@ -124,5 +129,14 @@ export default class DataManager {
             this.lineageSnapshot = tree;
         }
         return this.lineageSnapshot;
+    }
+
+    reset() : Tree {;
+        let newTree = new Tree();
+        newTree.createNode(0,Gender.Female,Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!);
+        this.lineageTree.replaceTree(newTree);
+        
+        this.lineageSnapshot = this.lineageTree.copyTree();
+        return this.getSnapshot()
     }
 }

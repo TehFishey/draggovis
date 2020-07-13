@@ -10,14 +10,14 @@ import { SettingsConsumer, DragDrop, Settings } from '../../Settings';
 
 import DragonNode from '../../../library/controller/DragonNode';
 
-import Controller from '../../../controller/Controller';
-import Tree from '../../../library/controller/Tree';
+import Model from '../../../controller/Model';
+import { executionOutput } from '../../../controller/DataManager';
 
 type windowCoordinates = {x: number, y: number}
 
 interface Props {
     node: DragonNode,
-    setData: Function,
+    setData: (data: executionOutput) => void,
 }
 
 interface State {
@@ -108,18 +108,14 @@ export default class TreeElement extends React.Component<Props, State> {
         return coords;
     }
 
-    updateTree(newData: Tree) {
-        this.props.setData(newData);
-    }
-
     executeDrop(type : DragDrop, index : string) {
         let dragI: number = +index;
         let dropI: number = this.props.node.index;
 
-        if(type === DragDrop.CopyOne) this.updateTree(Controller.dragDrop.copyOne(dragI, dropI, this.state.validate));
-        else if(type === DragDrop.CopySet) this.updateTree(Controller.dragDrop.copySet(dragI, dropI, this.state.validate));
-        else if(type === DragDrop.SwapOne) this.updateTree(Controller.dragDrop.swapOne(dragI, dropI, this.state.validate));
-        else if(type === DragDrop.SwapSet) this.updateTree(Controller.dragDrop.swapSet(dragI, dropI, this.state.validate));
+        if(type === DragDrop.CopyOne) this.props.setData(Model.dragDrop.copyOne(dragI, dropI, this.state.validate));
+        else if(type === DragDrop.CopySet) this.props.setData(Model.dragDrop.copySet(dragI, dropI, this.state.validate));
+        else if(type === DragDrop.SwapOne) this.props.setData(Model.dragDrop.swapOne(dragI, dropI, this.state.validate));
+        else if(type === DragDrop.SwapSet) this.props.setData(Model.dragDrop.swapSet(dragI, dropI, this.state.validate));
     }
 
     buildParentComponents() {
@@ -127,11 +123,11 @@ export default class TreeElement extends React.Component<Props, State> {
             let parents = [
                 (<TreeElement
                     node={this.props.node.father()!}
-                    setData={(treeData: Array<DragonNode>) => {this.props.setData(treeData)}}
+                    setData={(data) => {this.props.setData(data)}}
                 />),
                 (<TreeElement
                     node={this.props.node.mother()!}
-                    setData={(treeData: Array<DragonNode>) => {this.props.setData(treeData)}}
+                    setData={(data) => {this.props.setData(data)}}
                 />)
             ];
             return (<ul className='tree-unit-parents'>{parents}</ul>);
@@ -162,7 +158,7 @@ export default class TreeElement extends React.Component<Props, State> {
                     loc={this.calcPopoverLoc()}
                     content={ <EditWindow
                         node={this.props.node}
-                        updateTree={(newTree: Tree) => this.updateTree(newTree)}
+                        setData={(data: executionOutput) => this.props.setData(data)}
                         handleClose={()=>{this.displayPopover(false)}} />
                     }
                     handleClose={()=>{this.displayPopover(false)}}

@@ -11,11 +11,12 @@ import { TemplateProperty, DragProperty, NumProperty, GenderProperty } from '../
 
 import { Templates } from '../../../../defines/Defines';
 import MenuOptions from '../../../_utilities/MenuOptions';
-import Controller from '../../../../controller/Controller';
+import Model from '../../../../controller/Model';
 import { Settings } from '../../../Settings';
+import { executionOutput } from '../../../../controller/DataManager';
 
 interface Props {
-    setData : Function,
+    setData : (data: executionOutput) => void,
     handleClose : Function
 }
 
@@ -49,7 +50,7 @@ export default class TemplatePanel extends React.Component<Props, State> {
         this.setState({currentArgs : newArgs})
     }
 
-    composeTemplateSelectors() : JSX.Element {
+    buildTemplateInterface() : JSX.Element {
         let largeSelectors = new Array<JSX.Element>();
         let smallSelectors = new Array<JSX.Element>();
         this.state.currentTemplate.props.forEach(
@@ -106,7 +107,7 @@ export default class TemplatePanel extends React.Component<Props, State> {
 
     generateTemplate = () => {
         this.props.setData(
-            Controller.templateWindow.implementTemplate(
+            Model.templateWindow.implementTemplate(
                 this.state.currentTemplate.execute(...this.state.currentArgs)
             )
         );
@@ -134,7 +135,7 @@ export default class TemplatePanel extends React.Component<Props, State> {
                 </div>
                 
                 <div className='tp-properties-label'>Template Properties:</div>
-                {this.composeTemplateSelectors()}
+                {this.buildTemplateInterface()}
                 <button className='stage-button-large' onClick={ this.generateTemplate }>Generate</button>
             </div>
         );

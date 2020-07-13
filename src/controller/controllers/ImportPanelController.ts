@@ -3,14 +3,15 @@ import DataManager, { executionStrategy, executionOutput } from "../DataManager"
 import Tree from "../../library/controller/Tree";
 import Controller from "./Controller";
 
-export default class TemplatePanelController extends Controller {
+export default class ImportPanelController extends Controller {
     constructor(parent: DataManager) {
-        super('TemplatePanel', parent);
+        super('ImportPanel', parent);
     }
 
-    implementTemplate(templateTree: Tree, validate: boolean=true) : executionOutput {
+    import(ioString: string) : executionOutput {
         let strategy : executionStrategy = (tree: Tree) => {
-            tree.replaceTree(templateTree);
+            let newTree: Tree = this.parent.IOManager.import(ioString);
+            tree.replaceTree(newTree);
             return undefined;
         };
 

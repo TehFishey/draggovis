@@ -1,7 +1,7 @@
 import React from 'react';
 import './io-panel.css';
 
-import Controller from '../../../../controller/Controller';
+import Model from '../../../../controller/Model';
 
 interface Props {
     handleClose : Function
@@ -38,7 +38,7 @@ export default class ExportPanel extends React.Component<Props, State> {
     }
 
     exportContent() {
-        let content: string = Controller.IOManager.export(Controller.lineageSnapshot);
+        let content: string = Model.IOManager.export(Model.lineageSnapshot);
         let contentSize: number = content.length;
         this.setState({
             content: content,

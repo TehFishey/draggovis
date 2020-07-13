@@ -1,5 +1,5 @@
 import _invert from 'lodash/invert';
-import DataManager from "../_DataManager";
+import DataManager from "../DataManager";
 
 import Tree from "../../library/controller/Tree";
 import Breed from "../../library/defines/Breed"
@@ -129,8 +129,7 @@ export default class IOManager {
         let sLookup: Map<string, string>;
 
         let out: Tree;
-
-        try {
+        if(imp.includes('|')) {
             imp = this.decompressString(imp);
             data = imp.split('|');
             version = data.shift()!;
@@ -146,13 +145,8 @@ export default class IOManager {
             else throw new Error(`Importer: Lookup Error! Cannot find ioKey with version number: '${version}'`);
 
             out = this.string2tree(data, bLookup, pLookup, gLookup, sLookup);
-            return this.parent.setTree(out!);
-        }
-        catch(e) {
-            console.log(e);
-            out = this.parent.lineageSnapshot;
             return out;
-        }
+        } else throw new Error(`Importer: Parse Error! Import string is malformed or unreadable.`)  
     }
 
     /**

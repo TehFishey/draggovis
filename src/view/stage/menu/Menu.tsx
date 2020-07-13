@@ -6,8 +6,9 @@ import Modal from '../../general/modal/Modal';
 import MenuButton from './MenuButton';
 import './menu.css';
 
-import Controller from '../../../controller/Controller';
+import Model from '../../../controller/Model';
 import Tree from '../../../library/controller/Tree';
+import { executionOutput } from '../../../controller/DataManager';
 
 const iconRoot=`${process.env.PUBLIC_URL}icons/`
 
@@ -18,7 +19,7 @@ export enum IOState {
 
 interface Props {
     tree: Tree,
-    setTree: Function,
+    setData: (data: executionOutput) => void,
 }
 
 interface State {
@@ -59,11 +60,11 @@ export default class Menu extends React.Component<Props, State> {
     }
 
     undo = () => {
-        this.props.setTree(Controller.undo());
+        this.props.setData({data : Model.undo()});
     }
 
     redo = () => {
-        this.props.setTree(Controller.redo());
+        this.props.setData({data : Model.redo()});
     }
 
     openTemplates = () => {
@@ -79,6 +80,7 @@ export default class Menu extends React.Component<Props, State> {
     }
 
     resetTree = () => {
+        this.props.setData({data : Model.reset()})
     }
 
     render () {
@@ -88,14 +90,14 @@ export default class Menu extends React.Component<Props, State> {
                     show = {this.state.showIO}
                     handleClose = {this.closeIO}
                     children = { (this.state.IOState === IOState.Import) ?
-                        <ImportPanel setData = {this.props.setTree} handleClose = {this.closeIO}/> : <ExportPanel handleClose = {this.closeIO}/>
+                        <ImportPanel setData = {this.props.setData} handleClose = {this.closeIO}/> : <ExportPanel handleClose = {this.closeIO}/>
                     }
                 />
                 <Modal 
                     show = {this.state.showTemplates}
                     handleClose = {this.closeTemplates}
                     children = {(
-                        <TemplatePanel setData = {this.props.setTree} handleClose = {this.closeTemplates}/>
+                        <TemplatePanel setData = {this.props.setData} handleClose = {this.closeTemplates}/>
                     )}
                 />
                 <div className='menu-buttons'>
@@ -122,12 +124,12 @@ export default class Menu extends React.Component<Props, State> {
                     />
                     <div className='menu-spacer'/>
                     <MenuButton
-                        label={'New'}
+                        label={'Create'}
                         imgSrc={`${iconRoot}/templates.png`}
                         onClick={this.openTemplates}
                     />
                     <MenuButton
-                        label={'Close'}
+                        label={'Reset'}
                         imgSrc={`${iconRoot}/reset.png`}
                         onClick={this.resetTree}
                     />

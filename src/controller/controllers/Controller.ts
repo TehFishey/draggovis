@@ -1,6 +1,6 @@
 import DataManager, { executionStrategy, executionOutput } from "../DataManager";
 
-export default class Controller {
+export default abstract class Controller {
     readonly id : string;
     readonly parent : DataManager;
 

@@ -77,7 +77,7 @@ export default class Breed {
             if(node.hasParents()) return (node.mother()?.breed.id === id || node.father()?.breed.id === id)
             else return true;
         }
-        let description = `requires a parent with breed '${label}' if not first generation.`;
+        let description = `a parent with breed '${label}' if not first generation.`;
         
         return new Condition(validate, description, label);
     }

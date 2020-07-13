@@ -14,10 +14,4 @@ export default class RuleData {
 
         console.log(`Model: Defining validation rules...`);
     }
-
-    checkAll(node: DragonNode) {
-        this.arr.forEach((rule: Rule)=>{
-            rule.execute(node);
-        });
-    }
 };

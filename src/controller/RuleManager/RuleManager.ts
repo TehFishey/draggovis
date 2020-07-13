@@ -1,7 +1,8 @@
 import DragonNode from "../../library/controller/DragonNode";
-import { Rules } from "../../defines/Defines";
 import Rule from "../../library/controller/Rule";
 import Tree from "../../library/controller/Tree";
+
+import { Rules } from "../../defines/Defines";
 
 export default class RuleManager {
 

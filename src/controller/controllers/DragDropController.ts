@@ -86,33 +86,36 @@ export default class DragDropController extends Controller {
                 let dropBranch = tree.getBranch(dropNodeIndex, true);
                 let n : DragonNode;
 
-                tree.setBranch(dropNodeIndex, dragBranch);
-                n = tree[dropNodeIndex]!;
-                n.gender = Janitors.correctDragonGender(n);
-                n.portrait = Janitors.correctPortraitGender(n);
-                if (validate) n.state = Janitors.correctDragonState(n);
+                if(!dragBranch.includes(dropped) && !dropBranch.includes(dragged)) {
+                    tree.setBranch(dropNodeIndex, dragBranch);
+                    n = tree[dropNodeIndex]!;
+                    n.gender = Janitors.correctDragonGender(n);
+                    n.portrait = Janitors.correctPortraitGender(n);
+                    if (validate) n.state = Janitors.correctDragonState(n);
 
-                tree.setBranch(dragNodeIndex, dropBranch);
-                n = tree[dragNodeIndex]!;
-                n.gender = Janitors.correctDragonGender(n);
-                n.portrait = Janitors.correctPortraitGender(n);
-                if (validate) n.state = Janitors.correctDragonState(n);
+                    tree.setBranch(dragNodeIndex, dropBranch);
+                    n = tree[dragNodeIndex]!;
+                    n.gender = Janitors.correctDragonGender(n);
+                    n.portrait = Janitors.correctPortraitGender(n);
+                    if (validate) n.state = Janitors.correctDragonState(n);
 
-                let i1 = tree.getBranch(dragNodeIndex, false).reduce(
-                    function(result, node) {
-                        if(node!=null) result.push(node.index);
-                        return result;
-                    }, Array<number>()
-                );
+                    let i1 = tree.getBranch(dragNodeIndex, false).reduce(
+                        function(result, node) {
+                            if(node!=null) result.push(node.index);
+                            return result;
+                        }, Array<number>()
+                    );
 
-                let i2 = tree.getBranch(dropNodeIndex, false).reduce(
-                    function(result, node) {
-                        if(node!=null) result.push(node.index);
-                        return result;
-                    }, Array<number>()
-                );
+                    let i2 = tree.getBranch(dropNodeIndex, false).reduce(
+                        function(result, node) {
+                            if(node!=null) result.push(node.index);
+                            return result;
+                        }, Array<number>()
+                    );
 
-                return i1.concat(i2);
+                    return i1.concat(i2);
+                }
+                else throw new Error(`Cannot swap ancestor and decendant lineages!`)
             }
             return [];
         }

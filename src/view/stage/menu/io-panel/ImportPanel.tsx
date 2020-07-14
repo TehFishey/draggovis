@@ -88,10 +88,10 @@ export default class ImportPanel extends React.Component<Props, State> {
                     onChange={this.updateContent}
                 />
                 <div className='IO-interface'>
-                <button className='stage-button-large' onClick={this.importContent}>Submit</button>
-                <button className='stage-button-large' onClick={this.selectFile}>Load from File...</button>
+                    <button className='stage-button-large' onClick={this.importContent}>Submit</button>
+                    <button className='stage-button-large' onClick={this.selectFile}>Load from File...</button>
                 </div>
-                <div className='stage-button-small IO-close-button' onClick={this.handleClose}>Close</div>
+                <button className='stage-button-small IO-close-button' onClick={this.handleClose}>Close</button>
             </div>
         );
     }

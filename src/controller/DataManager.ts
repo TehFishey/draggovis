@@ -29,9 +29,7 @@ export default class DataManager {
     readonly dragDrop : DragDropController;
 
     constructor() {
-        this.lineageTree = new Tree();
-        this.lineageTree.createNode(0,Gender.Female,Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!);
-        //for(let i = 0; i <4094; i++) { this.lineageTree.createNode(i, (i%2===0) ? Gender.Male : Gender.Female, Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!); }
+        this.lineageTree = DataManager.getDefaultTree();
         this.lineageSnapshot = this.lineageTree.copyTree();
 
         this.undoStack = new Stack();
@@ -66,17 +64,6 @@ export default class DataManager {
         }
     }
 
-    getSnapshot() : Tree {
-        console.log(`Controller: Pushing new tree data.`)
-        console.log(`current:`);
-        console.log(this.lineageTree);
-        console.log(`clone:`);
-        console.log(this.lineageSnapshot);
-
-        this.redoStack.clear();
-        return this.lineageSnapshot;
-    }
-
     async undo() : Promise<executionOutput> {
         let tree = this.undoStack.pull();
         if(tree != null) {
@@ -98,11 +85,27 @@ export default class DataManager {
     }
 
     async reset() : Promise<executionOutput> {
-        let newTree = new Tree();
-        newTree.createNode(0,Gender.Female,Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!);
+        let newTree = DataManager.getDefaultTree();
         this.lineageTree.replaceTree(newTree);
 
         this.lineageSnapshot = this.lineageTree.copyTree();
         return {data : this.getSnapshot()};
+    }
+
+    getSnapshot() : Tree {
+        console.log(`Controller: Pushing new tree data.`)
+        console.log(`current:`);
+        console.log(this.lineageTree);
+        console.log(`clone:`);
+        console.log(this.lineageSnapshot);
+
+        this.redoStack.clear();
+        return this.lineageSnapshot;
+    }
+
+    private static getDefaultTree() : Tree {
+        let out = new Tree();
+        out.createNode(0,Gender.Female,Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!);
+        return out;
     }
 }

@@ -14,6 +14,7 @@ import EditPanelCheckbox from './EditPanelCheckbox';
 import Condition from '../../../../library/defines/Condition';
 import MenuOptions from '../../../_utilities/MenuOptions';
 import { executionOutput } from '../../../../controller/DataManager';
+import TextField from '../../../general/text-field/TextField';
 
 const breedData = Breeds.dict;
 
@@ -50,13 +51,14 @@ export default class EditPanel extends React.Component<Props, State> {
 
     typeName = (e: React.ChangeEvent<HTMLInputElement>) => {
         let name: string = e.target.value;
-        if(name.length>22) name = name.slice(0,22);
+        if(name.length>32) name = name.slice(0,32);
+        name = name.replace(/[^a-zA-Z0-9 \-\+\']/g, '');
         this.setState({name: name});
     }
 
-    updateName = () => {
+    updateName = (name : string) => {
         this.props.setData(
-            Model.editWindow.updateName(this.props.node.index, this.state.name, this.state.validate)
+            Model.editWindow.updateName(this.props.node.index, name, this.state.validate)
         );
     }
 
@@ -154,11 +156,12 @@ export default class EditPanel extends React.Component<Props, State> {
                     <div className='ep-properties'>
                         <div className='ep-props-label' style={{gridArea: 'n-label'}}>Name</div>
                         <div className='ep-props-control' style={{gridArea: 'n-set'}}>
-                            <input
-                                type="text"
-                                value={this.state.name}
-                                onChange={this.typeName}
-                                onBlur={this.updateName}
+                            <TextField
+                                label={'Name'}
+                                value={this.props.node.name}
+                                onUpdate={this.updateName}
+                                maxLength={32}
+                                invalidChars={/[^a-zA-Z0-9 \-\+\']/g}
                             />
                         </div>
                         <div className='ep-props-label' style={{gridArea: 'g-label'}}>Gender</div>

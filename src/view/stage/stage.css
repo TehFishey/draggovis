@@ -50,6 +50,10 @@
   background: radial-gradient(hsl(0, 0%, 85%), hsl(0, 0%, 95%));
   box-shadow: inset 0 0 1px black, 0 0 1px;
 }
+.stage-button-large:active {
+  background: radial-gradient(hsl(0, 0%, 70%), hsl(0, 0%, 60%));
+  box-shadow: inset 0 0 2px black, 0 0 2px;
+}
 
 .stage-button-small {
   min-width: 50px;
@@ -70,4 +74,8 @@
 .stage-button-small:hover {
   background: radial-gradient(hsl(0, 0%, 85%), hsl(0, 0%, 95%));
   box-shadow: inset 0 0 1px black, 0 0 1px;
+}
+.stage-button-small:active {
+  background: radial-gradient(hsl(0, 0%, 70%), hsl(0, 0%, 60%));
+  box-shadow: inset 0 0 2px black, 0 0 2px;
 }

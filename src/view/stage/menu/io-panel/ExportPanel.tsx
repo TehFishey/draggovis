@@ -79,7 +79,7 @@ export default class ExportPanel extends React.Component<Props, State> {
                 <div className='IO-interface'>
                     <button className='stage-button-large' onClick={this.saveContent}>Save to File...</button>
                 </div>
-                <div className='stage-button-small IO-close-button' onClick={this.handleClose}>Close</div>
+                <button className='stage-button-small IO-close-button' onClick={this.handleClose}>Close</button>
             </div>
         );
     }

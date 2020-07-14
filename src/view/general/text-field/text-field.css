@@ -1,0 +1,17 @@
+.text-field {
+    border-bottom: 1px solid #101010
+}
+
+.active {
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    margin: -1px;
+}
+
+.text-field input {
+    border-width: 0px;
+    font-family: "Alice", "Times New Roman", "Times", serif;
+    font-size: 16px;
+    margin-left: 8px;
+}

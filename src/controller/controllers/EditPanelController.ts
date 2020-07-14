@@ -18,6 +18,8 @@ export default class EditPanelController extends Controller {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {
+                if(name.length > 32) name = name.slice(0,32);
+                name = name.replace(/[^a-zA-Z0-9 \-\+\']/g, '');
                 dragon.name = name;
                 return[index];
             }

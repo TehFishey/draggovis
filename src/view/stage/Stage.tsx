@@ -7,9 +7,10 @@ import './stage.css';
 
 import Tree from '../../library/controller/Tree';
 import Model from '../../controller/Model'
-import GenerationCounter from './gen-counter/gen-counter';
+import GenMarkers from './gens/GenMarkers';
 import { executionOutput } from '../../controller/DataManager';
 import Modal from '../general/modal/Modal';
+import ErrorModal from './error-window/ErrorWindow';
 
 interface Props {}
 
@@ -57,14 +58,11 @@ export default class Stage extends React.Component<Props, State> {
     render () {
         return (
             <div className='app-stage'>
-                <Modal
+                <ErrorModal 
                     show={this.state.error}
+                    message={this.state.errorMessage}
                     handleClose={()=>{this.setState({error : false})}}
-                >
-                    <h2>Error!</h2>
-                    <div>{this.state.errorMessage}</div>
-                    <button onClick={()=>{this.setState({error : false})}}>Close</button>
-                </Modal>
+                />
                 <Menu
                     tree={this.state.tree}
                     setData={this.setData}
@@ -73,7 +71,7 @@ export default class Stage extends React.Component<Props, State> {
                     tree={this.state.tree}
                 />
                 <div className='stage-canvas'>
-                    <GenerationCounter gens={this.state.tree.genLength()}/>
+                    <GenMarkers gens={this.state.tree.genLength()}/>
                     <div className="lineage-tree">
                         <ul id ="tree-root">
                             <TreeElement

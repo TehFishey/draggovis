@@ -107,6 +107,7 @@ export default class IOManager {
             return out;
         }
         catch(e){
+            // Exporter does not pass through DataManager's updateTree function; errors must be handled separately.
             console.log(e);
             out = ''
             return out;
@@ -196,7 +197,7 @@ export default class IOManager {
                         throw new Error(`Exporter: Lookup Error! Cannot find state index for state: '${node.state}'`);
 
                     n = node.name;
-                    str += `${b.padStart(2,'-')}${p.padStart(2,'-')}${s}${n}`
+                    str += `${b.padStart(2,'_')}${p.padStart(2,'_')}${s}${n}`
                 }
                 out += str 
             }
@@ -230,8 +231,8 @@ export default class IOManager {
             for (let i = 0; i < data.length; i++) {
                 if(data[i] !== '') {
                     let node: Array<string> = [
-                        data[i].slice(0,2).replace('-',''), // Breed code
-                        data[i].slice(2,4).replace('-',''), // Portrait code
+                        data[i].slice(0,2).replace('_',''), // Breed code
+                        data[i].slice(2,4).replace('_',''), // Portrait code
                         data[i].slice(4,5),                 // State code
                         data[i].slice(5,data[i].length)     // Name
                     ];
@@ -311,7 +312,7 @@ export default class IOManager {
 
         /**
          * Second compression layer:
-         * Combine identical sequential nodes into a single node with 'count' and 'value' properties.
+         * Combine identical sequential nodes into a single node with format {count}:{identity}.
          */
         let ri: number = 0;
         let repeats: number = 1;
@@ -336,14 +337,6 @@ export default class IOManager {
         for (let i = 0; i < newData.length; i++) {
             out += `|${newData[i]}`;
         }
-
-        /*for (let i = 0; i < data.length; i++) {
-            out += '|';
-            if(data[i] != null) {
-                out += data[i]
-            }
-        }*/
-
         return out;
     }
 
@@ -363,6 +356,7 @@ export default class IOManager {
         
         /**
          * Second compression layer
+         * Undo second compression layer by parsing condensed nodes back into sequences of identical nodes.
          */
         for (let i = 0; i < data.length; i++) {
             if(data[i].includes(':')) {
@@ -377,6 +371,7 @@ export default class IOManager {
 
         /**
          * First compression layer
+         * Undo first compression layer by reading node dictionary and replacing nodes with matching tags.
          */
         out += treeStr.split('|').slice(0,2).join('|');            
         for (let i = 0; i < newData.length; i++) {
@@ -390,7 +385,8 @@ export default class IOManager {
                 else out += newData[i]
             }
         }
-        console.log(out);
+
+        //console.log(out);
         return out
     }
 

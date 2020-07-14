@@ -11,8 +11,6 @@ interface Props {
 
 interface State {
     content : string
-    contentVersion : number
-    contentSize : number
 }
 
 export default class ImportPanel extends React.Component<Props, State> {
@@ -23,8 +21,6 @@ export default class ImportPanel extends React.Component<Props, State> {
 
         this.state = {
             content : '',
-            contentVersion : 0,
-            contentSize : 0
         }
 
         this.fileInput = React.createRef();
@@ -32,10 +28,8 @@ export default class ImportPanel extends React.Component<Props, State> {
 
     updateContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         let content: string = e.target.value;
-        let contentSize: number = content.length;
         this.setState({
             content: content,
-            contentSize: contentSize
         });
     }
 
@@ -70,6 +64,11 @@ export default class ImportPanel extends React.Component<Props, State> {
     render () {
         return (
             <div className='IO-panel'>
+                <div className='modal-title'>Import Lineage</div>
+                <div className='modal-body'>
+                    <p>To load a lineage, paste a valid lineage code into the text box below, or load a text file using the 'Load File' button.</p>
+                    <p>Note: If your code doesn't load, try removing any spaces or returns that you may have accidently added (such as a space or return at the end of the code)</p>
+                </div>
                 <input 
                     type="file" 
                     ref={this.fileInput} 
@@ -77,10 +76,6 @@ export default class ImportPanel extends React.Component<Props, State> {
                     accept=".txt"
                     onChange={this.loadFile}    
                 />
-                <div className='IO-feedback'>
-                    <div>Lookup Version: {this.state.contentVersion}</div>
-                    <div>Characters: {this.state.contentSize}</div>
-                </div>
                 <textarea 
                     className='IO-field'
                     value={this.state.content}
@@ -89,9 +84,8 @@ export default class ImportPanel extends React.Component<Props, State> {
                 />
                 <div className='IO-interface'>
                     <button className='stage-button-large' onClick={this.importContent}>Submit</button>
-                    <button className='stage-button-large' onClick={this.selectFile}>Load from File...</button>
+                    <button className='stage-button-large' onClick={this.selectFile}>Load File</button>
                 </div>
-                <button className='stage-button-small IO-close-button' onClick={this.handleClose}>Close</button>
             </div>
         );
     }

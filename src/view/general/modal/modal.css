@@ -39,19 +39,17 @@
     flex-basis: auto;
 }
 
-.modal-controls {
-    align-content: center;
-    border-top: 1px solid #ccc;
-    background: #eee;
-    padding: 0.5rem 1rem;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: auto;
+.modal-title {
+    font-size: 28px;
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
 }
-.modal-controls button {
-    width: 90px;
+.modal-body {
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 5px;
 }
 
 .hide-modal{

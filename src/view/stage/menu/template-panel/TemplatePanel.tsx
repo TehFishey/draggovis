@@ -118,7 +118,7 @@ export default class TemplatePanel extends React.Component<Props, State> {
     render () {
         return (
             <div className='template-panel'>
-                <div className='tp-header'>Lineage Generator</div>
+                <div className='modal-title'>Lineage Generator</div>
                 <div className='tp-select-template'>
                     <label>Template:</label>
                     <DVSelect

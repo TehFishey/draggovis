@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from '../../general/modal/Modal';
-import './error-window.css';
 
 interface Props {
     show: boolean,
@@ -28,8 +27,8 @@ export default class ErrorModal extends React.Component<Props, State> {
                 show={this.props.show}
                 handleClose={this.handleClose}
             >
-                <div className='error-window-title'>Error</div>
-                <div className='error-window-message'>{this.props.message}</div>
+                <div className='modal-title'>Error</div>
+                <div className='modal-body'>{this.props.message}</div>
                 <button className='stage-button-small' onClick={this.handleClose}>Close</button>
             </Modal>
         );

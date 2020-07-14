@@ -66,10 +66,13 @@ export default class ExportPanel extends React.Component<Props, State> {
     render () {
         return (
             <div className='IO-panel'>
-                <a ref={this.fileLink} style={{display: "none"}} />
+                <div className='modal-title'>Export Lineage</div>
+                <div className='modal-body'>
+                    <p>To save your lineage, select the lineage code below (ctrl+a) and copy it to a safe location. You may save the code to a text file using the "Save File" button.</p>
+                    <p>Note: Lineage codes are case and whitespace sensitive. Be sure not to add any additional spaces or line breaks to your code by accident!</p>
+                </div>
                 <div className='IO-feedback'>
-                    <div>Lookup Version: {this.state.contentVersion}</div>
-                    <div>Characters: {this.state.contentSize}</div>
+                    <div>IO Key Version: {this.state.contentVersion}</div>
                 </div>
                 <textarea 
                     className='IO-field'
@@ -77,9 +80,9 @@ export default class ExportPanel extends React.Component<Props, State> {
                     readOnly={true}
                 />
                 <div className='IO-interface'>
-                    <button className='stage-button-large' onClick={this.saveContent}>Save to File...</button>
+                    <button className='stage-button-large' onClick={this.saveContent}>Save File</button>
                 </div>
-                <button className='stage-button-small IO-close-button' onClick={this.handleClose}>Close</button>
+                <a ref={this.fileLink} style={{display: "none"}} />
             </div>
         );
     }

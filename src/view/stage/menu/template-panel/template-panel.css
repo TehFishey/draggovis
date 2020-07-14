@@ -2,14 +2,9 @@
     display: flex;
     flex-direction: column;
     width: 700px;
-    height: 500px;
+    height: 520px;
     overflow-x: hidden;
     font-size: 18px;
-}
-
-.tp-header {
-    font-style: bold;
-    font-size: 28px
 }
 
 .tp-select-template {
@@ -32,6 +27,7 @@
 .tp-description {
     display: flex;
     flex-direction: row;
+    font-size: 17px;
 }
 
 .tp-desc-text {

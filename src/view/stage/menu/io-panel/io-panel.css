@@ -5,6 +5,11 @@
     height: 400px;
 }
 
+.modal-body p{
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
 .IO-field {
     height: 300px;
     padding: 8px;

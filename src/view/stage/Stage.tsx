@@ -6,10 +6,12 @@ import './tree/tree.css';
 import './stage.css';
 
 import Tree from '../../library/controller/Tree';
-import Model from '../../controller/Model'
+import Model from '../../model/Model'
 import GenMarkers from './gens/GenMarkers';
-import { executionOutput } from '../../controller/DataManager';
+import { executionOutput } from '../../model/Model';
 import ErrorModal from './error-window/ErrorWindow';
+import { DataProvider } from '../context/DataManager';
+import Controller from '../../controller/Controller';
 
 interface Props {}
 
@@ -20,15 +22,20 @@ interface State {
 }
 
 export default class Stage extends React.Component<Props, State> {
+    readonly PrimaryModel : Model;
+    readonly PrimaryController : Controller;
 
     constructor(props: Props) {
         super(props);
 
         this.state = {
-            tree: Model.getSnapshot(),
+            tree: Model.getDefaultTree(),
             error : false,
             errorMessage : ''
         }
+
+        this.PrimaryModel = new Model();
+        this.PrimaryController = new Controller(this.PrimaryModel);
     }
 
     getData = () => { return this.state.tree; }
@@ -62,24 +69,26 @@ export default class Stage extends React.Component<Props, State> {
                     message={this.state.errorMessage}
                     handleClose={()=>{this.setState({error : false})}}
                 />
-                <Menu
-                    tree={this.state.tree}
-                    setData={this.setData}
-                />
-                <Sidebar
-                    tree={this.state.tree}
-                />
-                <div className='stage-canvas'>
-                    <GenMarkers gens={this.state.tree.genLength()}/>
-                    <div className="lineage-tree">
-                        <ul id ="tree-root">
-                            <TreeElement
-                            node={this.state.tree[0]!}
-                            setData={this.setData}
-                            />
-                        </ul>
+                <DataProvider model={this.PrimaryModel} controller={this.PrimaryController}>
+                    <Menu
+                        tree={this.state.tree}
+                        setData={this.setData}
+                    />
+                    <Sidebar
+                        tree={this.state.tree}
+                    />
+                    <div className='stage-canvas'>
+                        <GenMarkers gens={this.state.tree.genLength()}/>
+                        <div className="lineage-tree">
+                            <ul id ="tree-root">
+                                <TreeElement
+                                node={this.state.tree[0]!}
+                                setData={this.setData}
+                                />
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                </DataProvider>
             </div>
         );
     }

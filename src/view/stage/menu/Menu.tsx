@@ -6,9 +6,10 @@ import Modal from '../../general/modal/Modal';
 import MenuButton from './MenuButton';
 import './menu.css';
 
-import Model from '../../../controller/Model';
+import Model from '../../../model/Model';
 import Tree from '../../../library/controller/Tree';
-import { executionOutput } from '../../../controller/DataManager';
+import { executionOutput } from '../../../model/Model';
+import { DataManager } from '../../context/DataManager';
 
 const iconRoot=`./icons/`
 
@@ -29,6 +30,8 @@ interface State {
 }
 
 export default class Menu extends React.Component<Props, State> {
+    static contextType = DataManager;
+    private model? : Model | null;
 
     constructor(props: Props) {
         super(props);
@@ -60,11 +63,13 @@ export default class Menu extends React.Component<Props, State> {
     }
 
     undo = () => {
-        this.props.setData(Model.undo());
+        if(this.model != null)
+            this.props.setData(this.model.undo());
     }
 
     redo = () => {
-        this.props.setData( Model.redo());
+        if(this.model != null)
+            this.props.setData(this.model.redo());
     }
 
     openTemplates = () => {
@@ -80,7 +85,12 @@ export default class Menu extends React.Component<Props, State> {
     }
 
     resetTree = () => {
-        this.props.setData( Model.reset())
+        if(this.model != null)
+            this.props.setData(this.model.reset())
+    }
+
+    componentDidMount() {
+        this.model = this.context.model;
     }
 
     render () {

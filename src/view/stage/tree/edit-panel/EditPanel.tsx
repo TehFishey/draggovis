@@ -8,13 +8,15 @@ import './edit-panel.css';
 import DragonNode from '../../../../library/controller/DragonNode';
 
 import {Breeds, Swaps} from '../../../../defines/Defines';
-import Model from '../../../../controller/Model'
 import { DragonState } from '../../../../library/defines/Dragon';
 import EditPanelCheckbox from './EditPanelCheckbox';
 import Condition from '../../../../library/defines/Condition';
 import MenuOptions from '../../../_utilities/MenuOptions';
-import { executionOutput } from '../../../../controller/DataManager';
+import { executionOutput } from '../../../../model/Model';
 import TextField from '../../../general/text-field/TextField';
+import { DataManager } from '../../../context/DataManager';
+
+import EditPanelOperator from '../../../../controller/operators/EditPanelOperator';
 
 const breedData = Breeds.dict;
 
@@ -31,6 +33,8 @@ interface State {
 }
 
 export default class EditPanel extends React.Component<Props, State> {
+    static contextType = DataManager;
+    private operator? : EditPanelOperator | null;
 
     constructor(props: Props){
         super(props);
@@ -39,7 +43,6 @@ export default class EditPanel extends React.Component<Props, State> {
             name : this.props.node.name,
             genderOptions: MenuOptions.nodeGenderOptions(this.props.node)
         }
-
     }
 
     getNameLabel() : string {
@@ -47,21 +50,24 @@ export default class EditPanel extends React.Component<Props, State> {
     }
 
     handleNameUpdate = (name : string, validate? : boolean) => {
-        this.props.setData(
-            Model.editWindow.updateName(this.props.node.index, name, validate)
-        );
+        if(this.operator != null)
+            this.props.setData(
+                this.operator.updateName(this.props.node.index, name, validate)
+            );
     }
 
     handleBreedUpdate = (breedId: string, validate? : boolean) => {
-        this.props.setData(
-            Model.editWindow.updateBreed(this.props.node.index, breedId, validate)
-        );
+        if(this.operator != null)
+            this.props.setData(
+                this.operator.updateBreed(this.props.node.index, breedId, validate)
+            );
     }
 
     handlePortraitUpdate = (portraitId: string, validate : boolean) => {
-        this.props.setData(
-            Model.editWindow.updatePortrait(this.props.node.index, portraitId, validate)
-        );
+        if(this.operator != null)
+            this.props.setData(
+                this.operator.updatePortrait(this.props.node.index, portraitId, validate)
+            );
     }
 
     handleParentsUpdate = (validate? : boolean) => {
@@ -81,47 +87,60 @@ export default class EditPanel extends React.Component<Props, State> {
     }
 
     handleParentsMirror = (validate? : boolean) => {
-        this.props.setData(
-            Model.editWindow.invertParents(this.props.node.index, validate)
-        );
+        if(this.operator != null)
+            this.props.setData(
+                this.operator.invertParents(this.props.node.index, validate)
+            );
     }
 
     createParents(validate? : boolean) {
-        this.props.setData(
-            Model.editWindow.createParents(this.props.node.index, validate)
-        );
+        if(this.operator != null)
+            this.props.setData(
+                this.operator.createParents(this.props.node.index, validate)
+            );
     }
 
     removeParents(validate? : boolean) {
-        this.props.setData(
-            Model.editWindow.removeParents(this.props.node.index, validate)
-        );
+        if(this.operator != null)
+            this.props.setData(
+                this.operator.removeParents(this.props.node.index, validate)
+            );
     }
 
     createChild(validate? : boolean) {
-        this.props.setData(
-            Model.editWindow.createChild(this.props.node.index, validate)
-        );
+        if(this.operator != null)
+            this.props.setData(
+                this.operator.createChild(this.props.node.index, validate)
+            );
     }
 
     removeChild(validate? : boolean) {
-        this.props.setData(
-            Model.editWindow.removeChild(this.props.node.index, validate)
-        );
+        if(this.operator != null)
+            this.props.setData(
+                this.operator.removeChild(this.props.node.index, validate)
+            );
     }
 
     setDragonState(state: DragonState, validate? : boolean) {
-        let s: DragonState = (this.props.node.state === state) ? DragonState.Healthy : state;
-        this.props.setData(
-            Model.editWindow.setDragonState(this.props.node.index, s, validate)
-        );
+        if(this.operator != null) {
+            let s: DragonState = (this.props.node.state === state) ? DragonState.Healthy : state;
+            this.props.setData(
+                this.operator.setDragonState(this.props.node.index, s, validate)
+            );
+        }
     }
 
     setGender = (selectedOption: any, validate? : boolean) => {
-        let gender = selectedOption.value;
-        this.props.setData(
-            Model.editWindow.updateGender(this.props.node.index, gender, validate)
-        );
+        if(this.operator != null) {
+            let gender = selectedOption.value;
+            this.props.setData(
+                this.operator.updateGender(this.props.node.index, gender, validate)
+            );
+        }
+    }
+
+    componentDidMount() {
+        this.operator = this.context.controller.editPanel;
     }
 
     render() {

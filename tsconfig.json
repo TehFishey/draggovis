@@ -21,6 +21,6 @@
     "jsx": "react"
   },
   "include": [
-    "src", "src/controller/_utilities/Janitors/.ts"
+    "src", "src/model/_utilities/Janitors/.ts"
   ]
 }

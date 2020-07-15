@@ -1,8 +1,9 @@
 import React from 'react';
 import './io-panel.css';
 
-import Model from '../../../../controller/Model';
-import { executionOutput } from '../../../../controller/DataManager';
+import { executionOutput } from '../../../../model/Model';
+import ImportPanelOperator from '../../../../controller/operators/ImportPanelOperator';
+import { DataManager } from '../../../context/DataManager';
 
 interface Props {
     setData : (response: Promise<executionOutput>) => void
@@ -14,6 +15,9 @@ interface State {
 }
 
 export default class ImportPanel extends React.Component<Props, State> {
+    static contextType = DataManager;
+    private operator? : ImportPanelOperator | null;
+    
     fileInput : React.RefObject<HTMLInputElement>
 
     constructor(props: Props) {
@@ -34,8 +38,10 @@ export default class ImportPanel extends React.Component<Props, State> {
     }
 
     importContent = () => {
-        this.props.setData(Model.importWindow.import(this.state.content));
-        this.props.handleClose();
+        if(this.operator != null) {
+            this.props.setData(this.operator.import(this.state.content));
+            this.props.handleClose();
+        }
     }
 
     selectFile = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -59,6 +65,10 @@ export default class ImportPanel extends React.Component<Props, State> {
 
     handleClose = () => {
         this.props.handleClose()
+    }
+
+    componentDidMount() {
+        this.operator = this.context.controller.importPanel;
     }
 
     render () {

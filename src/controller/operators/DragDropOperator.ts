@@ -1,12 +1,12 @@
-import DataManager, { executionStrategy, executionOutput } from "../DataManager";
+import Model, { executionStrategy, executionOutput } from "../../model/Model";
 import Janitors from "../_utilities/Janitors"
 
 import Tree from "../../library/controller/Tree";
 import DragonNode from "../../library/controller/DragonNode";
-import Controller from "./Controller";
+import Operator from "./_Operator";
 
-export default class DragDropController extends Controller {
-    constructor(parent: DataManager) {
+export default class DragDropOperator extends Operator {
+    constructor(parent: Model) {
         super('DragDrop', parent);  
     }
 

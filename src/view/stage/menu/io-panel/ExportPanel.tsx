@@ -1,7 +1,8 @@
 import React from 'react';
 import './io-panel.css';
 
-import Model from '../../../../controller/Model';
+import Model from '../../../../model/Model';
+import { DataManager } from '../../../context/DataManager';
 
 interface Props {
     handleClose : Function
@@ -14,6 +15,9 @@ interface State {
 }
 
 export default class ExportPanel extends React.Component<Props, State> {
+    static contextType = DataManager;
+    private model? : Model | null;
+
     fileLink : React.RefObject<HTMLAnchorElement>
 
     constructor(props: Props) {
@@ -38,7 +42,7 @@ export default class ExportPanel extends React.Component<Props, State> {
     }
 
     exportContent() {
-        let content: string = Model.IOManager.export(Model.lineageSnapshot);
+        let content: string = this.model!.IOManager.export();
         let contentSize: number = content.length;
         this.setState({
             content: content,
@@ -60,6 +64,7 @@ export default class ExportPanel extends React.Component<Props, State> {
     }
 
     componentDidMount() {
+        this.model = this.context.model;
         this.exportContent();
     }
 

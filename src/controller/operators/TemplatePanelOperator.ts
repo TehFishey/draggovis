@@ -1,11 +1,11 @@
-import DataManager, { executionStrategy, executionOutput } from "../DataManager";
+import Model, { executionStrategy, executionOutput } from "../../model/Model";
 
 import Tree from "../../library/controller/Tree";
-import Controller from "./Controller";
+import Operator from "./_Operator";
 
-export default class TemplatePanelController extends Controller {
-    constructor(parent: DataManager) {
-        super('TemplatePanel', parent);
+export default class TemplatePanelOperator extends Operator {
+    constructor(target: Model) {
+        super('TemplatePanel', target);
     }
 
     implementTemplate(templateTree: Tree, validate: boolean=true) : Promise<executionOutput> {

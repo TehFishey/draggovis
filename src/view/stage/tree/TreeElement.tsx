@@ -10,8 +10,9 @@ import { SettingsConsumer, DragDrop } from '../../context/Settings';
 
 import DragonNode from '../../../library/controller/DragonNode';
 
-import Model from '../../../controller/Model';
-import { executionOutput } from '../../../controller/DataManager';
+import { executionOutput } from '../../../model/Model';
+import { DataManager, DataConsumer } from '../../context/DataManager';
+import Controller from '../../../controller/Controller';
 
 type windowCoordinates = {x: number, y: number}
 
@@ -28,7 +29,9 @@ interface State {
 }
 
 export default class TreeElement extends React.Component<Props, State> {
-
+    static contextType = DataManager;
+    private controller? : Controller | null;
+    
     img: React.RefObject<HTMLDivElement>;
 
     constructor(props: Props) {
@@ -42,7 +45,6 @@ export default class TreeElement extends React.Component<Props, State> {
         }
 
         this.img = React.createRef();
-
         this.updatePosition = this.updatePosition.bind(this);
     }
 
@@ -109,10 +111,13 @@ export default class TreeElement extends React.Component<Props, State> {
         let dragI: number = +index;
         let dropI: number = this.props.node.index;
 
-        if(type === DragDrop.CopyOne) this.props.setData(Model.dragDrop.copyOne(dragI, dropI, validate));
-        else if(type === DragDrop.CopySet) this.props.setData(Model.dragDrop.copySet(dragI, dropI, validate));
-        else if(type === DragDrop.SwapOne) this.props.setData(Model.dragDrop.swapOne(dragI, dropI, validate));
-        else if(type === DragDrop.SwapSet) this.props.setData(Model.dragDrop.swapSet(dragI, dropI, validate));
+        if(this.controller != null) {
+            if(type === DragDrop.CopyOne) this.props.setData(this.controller.dragDrop.copyOne(dragI, dropI, validate));
+            else if(type === DragDrop.CopySet) this.props.setData(this.controller.dragDrop.copySet(dragI, dropI, validate));
+            else if(type === DragDrop.SwapOne) this.props.setData(this.controller.dragDrop.swapOne(dragI, dropI, validate));
+            else if(type === DragDrop.SwapSet) this.props.setData(this.controller.dragDrop.swapSet(dragI, dropI, validate));
+        }
+        
     }
 
     buildParentComponents() {
@@ -133,6 +138,7 @@ export default class TreeElement extends React.Component<Props, State> {
     }
 
     componentDidMount() {
+        this.controller = this.context.controller;
         this.updatePosition();
         window.addEventListener("resize", this.updatePosition);
     }
@@ -160,22 +166,26 @@ export default class TreeElement extends React.Component<Props, State> {
                     content={this.getTooltipContent()}
                 />
                 <SettingsConsumer>
-                {value => { return (
-                    <Droppable className={'tree-unit-display'} onDrop={(index : string)=>{this.executeDrop(value.dragDrop, index, !value.disableValid)}} dropEffect={DropEffect.Copy}>
+                {settings => { return (
+                    <Droppable className={'tree-unit-display'} onDrop={(index : string)=>{this.executeDrop(settings.dragDrop, index, !settings.disableValid)}} dropEffect={DropEffect.Copy}>
                         <Draggable dragData={this.props.node.index.toString()} dropEffect={DropEffect.Copy}>
-                            <div className={(this.props.node.meta.invalidData && value.enableWarn) ? 'tree-unit-display-button highlight-warning' : 'tree-unit-display-button'}
-                                onClick={e=>{this.displayPopover(true)}}
-                                ref={this.img}
-                                onMouseOver={e=>{value.update.mouseOverIndex(this.props.node.index)}}
-                                onMouseEnter={e=>{this.displayTooltip(value.enableWarn)}}
-                                onMouseLeave={e=>{this.displayTooltip(false)}}
-                                onError={(e)=>{this.setState({imgError : true})}}
-                            >
-                                <Image node={this.props.node} time={value.caveTime} thumbnail={true}/>
-                            </div>
+                            <DataConsumer>
+                            {data => { return(
+                                <div className={(this.props.node.meta.invalidData && settings.enableWarn) ? 'tree-unit-display-button highlight-warning' : 'tree-unit-display-button'}
+                                    onClick={e=>{this.displayPopover(true)}}
+                                    ref={this.img}
+                                    onMouseOver={e=>{data!.update.mouseOverIndex(this.props.node.index)}}
+                                    onMouseEnter={e=>{this.displayTooltip(settings.enableWarn)}}
+                                    onMouseLeave={e=>{this.displayTooltip(false)}}
+                                    onError={(e)=>{this.setState({imgError : true})}}
+                                >
+                                    <Image node={this.props.node} time={settings.caveTime} thumbnail={true}/>
+                                </div>
+                            )}}
+                            </DataConsumer>
                         </Draggable>
                         <label className='tree-unit-display-label'>
-                            {(value.showName) ?
+                            {(settings.showName) ?
                                     (this.props.node.name !== "") ? this.props.node.name : "(code)" :
                                     null}
                         </label>

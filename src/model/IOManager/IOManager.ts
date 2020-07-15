@@ -1,5 +1,5 @@
 import _invert from 'lodash/invert';
-import DataManager from "../DataManager";
+import Model from "../Model";
 
 import Tree from "../../library/controller/Tree";
 import Breed from "../../library/defines/Breed"
@@ -22,11 +22,11 @@ interface IOKey {
 const lookupVersion = 0;
 
 export default class IOManager {
-    readonly parent: DataManager;
+    readonly parent: Model;
     readonly ioKeys: Map<string, IOKey>;
     readonly version: string;
 
-    constructor(parent: DataManager, version: number) {
+    constructor(parent: Model, version: number) {
         this.parent = parent;
         this.version = version.toString(36);
         this.ioKeys = new Map<string, IOKey>();
@@ -81,7 +81,8 @@ export default class IOManager {
     /**
      * Converts a Tree into a compressed, serialized string.
      */
-    export(tree: Tree) : string {
+    export() : string {
+        let tree = this.parent.getSnapshot();
         let version: string = this.version;
         let ioKey: IOKey; 
         let bLookup: Map<string, string>;
@@ -107,7 +108,7 @@ export default class IOManager {
             return out;
         }
         catch(e){
-            // Exporter does not pass through DataManager's updateTree function; errors must be handled separately.
+            // Exporter does not pass through Model's updateTree function; errors must be handled separately.
             console.log(e);
             out = ''
             return out;

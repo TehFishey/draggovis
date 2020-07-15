@@ -3,6 +3,7 @@ import Image from '../../general/image/Image'
 import { SettingsConsumer, DragDrop } from '../../context/Settings';
 import './sidebar.css';
 import Tree from '../../../library/controller/Tree';
+import { DataConsumer } from '../../context/DataManager';
 
 interface Props {
     tree : Tree;
@@ -52,11 +53,19 @@ export default class Sidebar extends React.Component<Props, State> {
         return (
             <div className='stage-sidebar'>
                 <SettingsConsumer>
-                    {value => { return (
+                    {settings => { return (
                     <div className='sidebar-content'>
-                        <div className='sidebar-image'>
-                            <Image node={(this.props.tree[value.mouseOverIndex] != null) ? this.props.tree[value.mouseOverIndex]! : this.props.tree[0]!} time={value.caveTime}/>
-                            </div>
+                        <DataConsumer> 
+                            {data => { return (
+                            <div className='sidebar-image'>
+                                <Image 
+                                    node={(this.props.tree[data!.mouseOverIndex] != null) ? 
+                                        this.props.tree[data!.mouseOverIndex]! : 
+                                        this.props.tree[0]!} 
+                                    time={settings.caveTime}/>
+                            </div>    
+                            )}}
+                        </DataConsumer>
                         <div className='sidebar-feedback'></div>
                         <div className='sidebar-settings'>
                             <div className='sb-setting-label'>Display</div>
@@ -64,21 +73,21 @@ export default class Sidebar extends React.Component<Props, State> {
                                 <div>
                                     Cave Time: 
                                     {this.createTimeSelect(
-                                        value.caveTime,
+                                        settings.caveTime,
                                         (e: React.ChangeEvent<HTMLSelectElement>)=>{
-                                            value.update.caveTime(e.target.value)}
+                                            settings.update.caveTime(e.target.value)}
                                     )}
                                 </div>
-                                <div onClick={e=>{value.update.showName(!value.showName)}} style={{cursor: 'default'}}>
+                                <div onClick={e=>{settings.update.showName(!settings.showName)}} style={{cursor: 'default'}}>
                                     <input type='checkbox'
-                                        checked={value.showName}
+                                        checked={settings.showName}
                                         readOnly
                                     />
                                     Show Names
                                 </div>
-                                <div onClick={e=>{value.update.showGen(!value.showGen)}} style={{cursor: 'default'}}>
+                                <div onClick={e=>{settings.update.showGen(!settings.showGen)}} style={{cursor: 'default'}}>
                                     <input type='checkbox'
-                                        checked={value.showGen}
+                                        checked={settings.showGen}
                                         readOnly
                                     />
                                     Show Generations
@@ -87,8 +96,8 @@ export default class Sidebar extends React.Component<Props, State> {
                             <div className='sb-setting-label'>Drag - Drop</div>
                             <div className='sb-setting'>
                                 <select 
-                                    value={value.dragDrop}
-                                    onChange={e=>{value.update.dragDrop(e.target.value as DragDrop)}}>
+                                    value={settings.dragDrop}
+                                    onChange={e=>{settings.update.dragDrop(e.target.value as DragDrop)}}>
                                     <option value={DragDrop.CopyOne}>Copy Dragon</option>
                                     <option value={DragDrop.CopySet}>Copy Lineage</option>
                                     <option value={DragDrop.SwapOne}>Swap Dragon</option>
@@ -97,16 +106,16 @@ export default class Sidebar extends React.Component<Props, State> {
                             </div>
                             <div className='sb-setting-label'>Validation</div>
                             <div className='sb-setting'>
-                                    <div onClick={e=>{value.update.disableValid(!value.disableValid)}} style={{cursor: 'default'}}>
+                                    <div onClick={e=>{settings.update.disableValid(!settings.disableValid)}} style={{cursor: 'default'}}>
                                         <input type='checkbox'
-                                            checked={value.disableValid}
+                                            checked={settings.disableValid}
                                             readOnly
                                         />
                                         Override Validation
                                     </div>
-                                    <div onClick={e=>{value.update.enableWarn(!value.enableWarn)}} style={{cursor: 'default'}}>
+                                    <div onClick={e=>{settings.update.enableWarn(!settings.enableWarn)}} style={{cursor: 'default'}}>
                                         <input type='checkbox'
-                                            checked={!value.enableWarn}
+                                            checked={!settings.enableWarn}
                                             readOnly
                                         />
                                         Override Warnings

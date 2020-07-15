@@ -11,8 +11,10 @@ import { TemplateProperty, DragProperty, NumProperty, GenderProperty } from '../
 
 import { Templates } from '../../../../defines/Defines';
 import MenuOptions from '../../../_utilities/MenuOptions';
-import Model from '../../../../controller/Model';
-import { executionOutput } from '../../../../controller/DataManager';
+import { executionOutput } from '../../../../model/Model';
+
+import { DataManager } from '../../../context/DataManager';
+import TemplatePanelOperator from '../../../../controller/operators/TemplatePanelOperator';
 
 interface Props {
     setData : (response: Promise<executionOutput>) => void,
@@ -28,7 +30,9 @@ interface State {
 const menuOptions = MenuOptions.templateOptions();
 
 export default class TemplatePanel extends React.Component<Props, State> {
-    
+    static contextType = DataManager;
+    private operator? : TemplatePanelOperator | null;
+
     constructor(props: Props) {
         super(props);
 
@@ -101,13 +105,19 @@ export default class TemplatePanel extends React.Component<Props, State> {
     }
 
     generateTemplate = () => {
-        this.props.setData(
-            Model.templateWindow.implementTemplate(
-                this.state.currentTemplate.execute(...this.state.currentArgs)
-            )
-        );
-        //this.context.update.mouseOverIndex(0);
-        this.props.handleClose();
+        if(this.operator != null) {
+            this.props.setData(
+                this.operator.implementTemplate(
+                    this.state.currentTemplate.execute(...this.state.currentArgs)
+                )
+            );
+            this.context.update.mouseOverIndex(0);
+            this.props.handleClose();
+        }
+    }
+
+    componentDidMount() {
+        this.operator = this.context.controller.templatePanel;
     }
 
     render () {

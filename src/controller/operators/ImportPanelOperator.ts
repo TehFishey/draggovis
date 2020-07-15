@@ -1,10 +1,10 @@
-import DataManager, { executionStrategy, executionOutput } from "../DataManager";
+import Model, { executionStrategy, executionOutput } from "../../model/Model";
 
 import Tree from "../../library/controller/Tree";
-import Controller from "./Controller";
+import Operator from "./_Operator";
 
-export default class ImportPanelController extends Controller {
-    constructor(parent: DataManager) {
+export default class ImportPanelOperator extends Operator {
+    constructor(parent: Model) {
         super('ImportPanel', parent);
     }
 

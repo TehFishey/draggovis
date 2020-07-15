@@ -4,7 +4,7 @@ import { Swaps } from "../../defines/Defines";
 import Portrait from "../../library/defines/Portrait";
 import TimeRange from "../../library/defines/TimeRange";
 import DragonNode from "../../library/controller/DragonNode";
-import { DragonState, Gender } from "../../library/defines/Dragon";
+import { DragonState } from "../../library/defines/Dragon";
 
 /**
  * Helper functions intended for use by React components. Deal with selecting

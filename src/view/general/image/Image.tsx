@@ -39,7 +39,7 @@ export default class DragonImage extends React.Component<Props, State> {
                 className = 'dragon-image'
                 src = { (!this.state.errored) ?
                     `${ViewUtils.getImgForNode(this.props.node, this.props.time, this.props.thumbnail)}` :
-                    `${Portrait.unkThumbImgPath}`
+                    `${(this.props.thumbnail) ? Portrait.unkThumbImgPath : Portrait.unkLargeImgPath}`
                 }
                 alt = 'dragon'
                 style = {{objectFit : `none`, display: `block`}}

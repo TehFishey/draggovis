@@ -48,8 +48,8 @@ export default class IOManager {
     generateLookups() {
         let portraitLookup: Lookup = {};
         let breedLookup: Lookup = {};
-        let genderLookup: Lookup = IOManager.createGenderLookup('0');
-        let stateLookup: Lookup = IOManager.createStateLookup('0');
+        let genderLookup: Lookup = IOManager.createGenderLookup(lookupVersion.toString());
+        let stateLookup: Lookup = IOManager.createStateLookup(lookupVersion.toString());
 
         Portraits.arr.forEach((portrait: Portrait, index: number) => {
             let n = index.toString(36);
@@ -100,7 +100,7 @@ export default class IOManager {
                 gLookup = new Map(Object.entries(_invert(ioKey.genderLookup as Object)));
                 sLookup = new Map(Object.entries(_invert(ioKey.stateLookup as Object)));
             }
-            else throw (`Exporter: Lookup Error! Cannot find ioKey with version number: ${version}`);   
+            else throw new Error(`Exporter: Lookup Error! Cannot find ioKey with version number: ${version}`);   
 
             out = this.tree2string(tree, version, bLookup, pLookup, gLookup, sLookup);
             out = this.compressString(out);
@@ -299,7 +299,7 @@ export default class IOManager {
         )
 
         Object.keys(count).forEach((node: string) => {
-            if(node != '' && count[node] > 1 && encodeNum < 36) {
+            if(node !== '' && count[node] > 1 && encodeNum < 36) {
                 let encodeChar = `${encodeNum.toString(36)}`;
                 encodeNum++;
                 encodeDict += `${encodeChar}${node}`

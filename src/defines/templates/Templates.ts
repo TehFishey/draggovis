@@ -23,7 +23,6 @@ let lineageTemplates : Array<Template> = [
             for(let i = 1; i < gens; i++) {
                 let nodes: Array<DragonNode> = Tree.getNodesByGen(out, i);
                 nodes.forEach((node)=> {
-                    let n: DragonNode;
                     createCorrectedNode(out,node.getFatherIndex(),Gender.Male,dragon.breed,dragon.portrait,dragon.state);
                     createCorrectedNode(out,node.getMotherIndex(),Gender.Female,dragon.breed,dragon.portrait,dragon.state);
                 });

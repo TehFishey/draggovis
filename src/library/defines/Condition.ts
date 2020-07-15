@@ -60,14 +60,14 @@ export class CompoundCondition extends Condition {
             result = true;
             this.conditions.forEach((c: Condition)=>{
                 [r,o] = c.validateVerbose(node, true);
-                (r)? result=result : result=false ;
+                result = (r) ? result : false ;
                 subOuts.push(o);
             });
         } else {    //Case 'OR'
             result = false;
             this.conditions.forEach((c: Condition)=>{
                 [r,o] = c.validateVerbose(node, true);
-                (r)? result=true : result=result ;
+                result = (r)? true : result ;
                 subOuts.push(o);
             });
         }

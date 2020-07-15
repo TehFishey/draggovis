@@ -24,9 +24,10 @@ export default {
                 validBreedIds.push(breedId);
             
             else if (!this.isGenLocked(breedId) && (
-                gender === Gender.Male && this.canBeMale(Breeds.dict.get(breedId)!) ||
-                gender === Gender.Female && this.canBeFemale(Breeds.dict.get(breedId)!) ||
-                (gender === undefined) && (this.canBeMale(Breeds.dict.get(breedId)!)) && (this.canBeFemale(Breeds.dict.get(breedId)!))))
+                    (gender === Gender.Male && this.canBeMale(Breeds.dict.get(breedId)!)) ||
+                    (gender === Gender.Female && this.canBeFemale(Breeds.dict.get(breedId)!)) ||
+                    ((gender === undefined) && (this.canBeMale(Breeds.dict.get(breedId)!)) && (this.canBeFemale(Breeds.dict.get(breedId)!))))
+                )
                 validBreedIds.push(breedId);
         });
 
@@ -41,9 +42,10 @@ export default {
             if(!validate) validPortraitIds.push(portraitId);
 
             else if (this.isDefault(pool.get(portraitId)!) && (
-                gender === Gender.Male && this.canBeMale(pool.get(portraitId)!) ||
-                gender === Gender.Female && this.canBeFemale(pool.get(portraitId)!) ||
-                gender === undefined))
+                    (gender === Gender.Male && this.canBeMale(pool.get(portraitId)!)) ||
+                    (gender === Gender.Female && this.canBeFemale(pool.get(portraitId)!)) ||
+                    (gender === undefined))
+                )
                 validPortraitIds.push(portraitId);
         });
 

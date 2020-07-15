@@ -3,12 +3,10 @@ import EditPanelController from "./controllers/EditPanelController"
 import DragDropController from "./controllers/DragDropController"
 
 import Tree from "../library/controller/Tree";
-import DragonNode from "../library/controller/DragonNode";
-import Rule from "../library/controller/Rule";
 import Stack from "../library/controller/Stack";
 import { Gender } from "../library/defines/Dragon";
 
-import { Portraits, Breeds, Rules } from "../defines/Defines";
+import { Portraits, Breeds } from "../defines/Defines";
 import TemplatePanelController from "./controllers/TemplatePanelController";
 import ImportPanelController from "./controllers/ImportPanelController";
 import RuleManager from "./RuleManager/RuleManager";

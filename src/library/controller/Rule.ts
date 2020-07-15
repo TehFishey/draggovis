@@ -1,4 +1,4 @@
-import DragonNode, {nodeReference} from "./DragonNode";
+import DragonNode from "./DragonNode";
 
 type ruleCheck = (node: DragonNode) => boolean;
 type ruleTargets = (node: DragonNode) => Array<DragonNode>;

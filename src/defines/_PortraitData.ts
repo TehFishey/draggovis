@@ -26,7 +26,7 @@ export default class PortraitData {
 
     private static getPortraitPairs(dict: Map<string, Portrait>) : Map<string, PortraitPair> {
         let pairs: Map<string, PortraitPair> = new Map<string, PortraitPair>();
-        let portraitIds: Array<string> = [... dict.keys()];
+        let portraitIds: Array<string> = [...dict.keys()];
 
         portraitIds.forEach((id: string) => {
             if(id.endsWith("-m")) {
@@ -46,7 +46,7 @@ export default class PortraitData {
     }
 
     private static getFallbackLabel(dict: Map<string, Portrait>, male: Portrait, female: Portrait) : string {
-        let dpIds: Array<string> = [... dict.keys()].filter((id: string) => {
+        let dpIds: Array<string> = [...dict.keys()].filter((id: string) => {
             return (id.split('-')[0] === male.id.split('-')[0]);
         });
         let pairCount: number = 0;
@@ -60,7 +60,7 @@ export default class PortraitData {
             }
         });
 
-        if(out != '') return out;
+        if(out !== '') return out;
         else throw new Error(`Defines: Failed to create fallback label for portrait pair: ${male.id}, ${female.id}`);
     }
 };

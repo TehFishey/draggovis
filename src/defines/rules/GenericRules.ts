@@ -1,4 +1,4 @@
-import DragonNode, { nodeReference } from "../../library/controller/DragonNode";
+import DragonNode from "../../library/controller/DragonNode";
 import Rule from "../../library/controller/Rule";
 
 let GenericRules : Array<Rule> = [

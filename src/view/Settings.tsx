@@ -83,7 +83,7 @@ class SettingsControl extends React.Component<Props, SettingValues> {
 }
 
 export { 
-    Settings as Settings,
+    Settings,
     SettingsControl as SettingsProvider, 
     Consumer as SettingsConsumer, 
     DragDrop

@@ -10,7 +10,7 @@ import Model from '../../../controller/Model';
 import Tree from '../../../library/controller/Tree';
 import { executionOutput } from '../../../controller/DataManager';
 
-const iconRoot=`${process.env.PUBLIC_URL}icons/`
+const iconRoot=`./icons/`
 
 export enum IOState {
     Import = 'import',

@@ -1,6 +1,5 @@
 import genericRules from "./rules/GenericRules"
 import Rule from "../library/controller/Rule";
-import DragonNode from "../library/controller/DragonNode";
 
 export default class RuleData {
     readonly dict: Map<string, Rule>;

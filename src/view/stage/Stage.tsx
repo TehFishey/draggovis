@@ -9,7 +9,6 @@ import Tree from '../../library/controller/Tree';
 import Model from '../../controller/Model'
 import GenMarkers from './gens/GenMarkers';
 import { executionOutput } from '../../controller/DataManager';
-import Modal from '../general/modal/Modal';
 import ErrorModal from './error-window/ErrorWindow';
 
 interface Props {}

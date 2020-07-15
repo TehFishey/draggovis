@@ -49,13 +49,6 @@ export default class EditPanel extends React.Component<Props, State> {
         return (this.props.node.name !== "") ? this.props.node.name : "Unnamed Dragon";
     }
 
-    typeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let name: string = e.target.value;
-        if(name.length>32) name = name.slice(0,32);
-        name = name.replace(/[^a-zA-Z0-9 \-\+\']/g, '');
-        this.setState({name: name});
-    }
-
     updateName = (name : string) => {
         this.props.setData(
             Model.editWindow.updateName(this.props.node.index, name, this.state.validate)
@@ -161,7 +154,7 @@ export default class EditPanel extends React.Component<Props, State> {
                                 value={this.props.node.name}
                                 onUpdate={this.updateName}
                                 maxLength={32}
-                                invalidChars={/[^a-zA-Z0-9 \-\+\']/g}
+                                invalidChars={/[^a-zA-Z0-9 \-+']/g}
                             />
                         </div>
                         <div className='ep-props-label' style={{gridArea: 'g-label'}}>Gender</div>

@@ -131,7 +131,7 @@ export default class TemplatePanel extends React.Component<Props, State> {
                     <div className='tp-desc-text'>
                         {this.state.currentTemplate.description}
                     </div>
-                    <img className='tp-desc-image' src={`${process.env.PUBLIC_URL}previews/tpreview-${this.state.currentTemplate.id}.png`} alt='preview image'/>
+                    <img className='tp-desc-image' src={`./previews/tpreview-${this.state.currentTemplate.id}.png`} alt='template preview'/>
                 </div>
                 
                 <div className='tp-properties-label'>Template Properties:</div>

@@ -98,7 +98,7 @@ export default class EditPanelCheckbox extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if(this.props.node != prevProps.node)
+        if(this.props.node !== prevProps.node)
             this.checkCondition()
     }
     

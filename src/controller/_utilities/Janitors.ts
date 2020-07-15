@@ -67,7 +67,7 @@ export default {
      */
     correctDragonGender(node: DragonNode) : Gender {
         if(node.index === 0) {
-            if (node.gender === Gender.Undefined && (node.state != DragonState.Neglected && node.state != DragonState.Vampire))
+            if (node.gender === Gender.Undefined && (node.state !== DragonState.Neglected && node.state !== DragonState.Vampire))
                 return Gender.Female;
             else return node.gender
         } else return (node.index % 2 === 0) ? Gender.Female : Gender.Male;
@@ -85,7 +85,7 @@ export default {
         if((node.state === DragonState.Neglected || node.state === DragonState.Vampire) && node.index !== 0) {
             return DragonState.Healthy;
         } 
-        else if (node.state === DragonState.Vampire && node.breed.type != DragonType.Dragon ) {
+        else if (node.state === DragonState.Vampire && node.breed.type !== DragonType.Dragon ) {
             return DragonState.Healthy;
         }
         return node.state;

@@ -25,20 +25,19 @@ export default class Portrait {
         return this.timeSwaps.size > 0
     }
 
-    static imgRoot = `${process.env.PUBLIC_URL}portraits/`
+    static imgRoot = `./portraits/`
     static unkLargeImgPath = `${Portrait.imgRoot}/unknown_large.png`;
     static unkThumbImgPath = `${Portrait.imgRoot}/unknown_small.png`;
 
     private static getLargeImg(portrait : Portrait | null) : string {
-        let path: string;
-        if(portrait != null) {
-            return path = Portrait.imgRoot+portrait.imagePath;}
+        if(portrait != null) 
+            return Portrait.imgRoot+portrait.imagePath;
         return Portrait.unkLargeImgPath;
     }
 
     private static getThumbImg(portrait : Portrait | null) : string {
-        let path: string;
-        if(portrait != null) return path = Portrait.imgRoot+portrait.thumbPath;
+        if(portrait != null) 
+            return Portrait.imgRoot+portrait.thumbPath;
         return Portrait.unkThumbImgPath;
     }
 

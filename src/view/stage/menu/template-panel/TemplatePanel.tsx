@@ -12,7 +12,6 @@ import { TemplateProperty, DragProperty, NumProperty, GenderProperty } from '../
 import { Templates } from '../../../../defines/Defines';
 import MenuOptions from '../../../_utilities/MenuOptions';
 import Model from '../../../../controller/Model';
-import { Settings } from '../../../Settings';
 import { executionOutput } from '../../../../controller/DataManager';
 
 interface Props {
@@ -24,14 +23,11 @@ interface State {
     currentOption : menuOption,
     currentTemplate : Template,
     currentArgs : Array<any>,
-    validate : boolean
 }
 
 const menuOptions = MenuOptions.templateOptions();
 
 export default class TemplatePanel extends React.Component<Props, State> {
-
-    static contextType = Settings;
     
     constructor(props: Props) {
         super(props);
@@ -40,7 +36,6 @@ export default class TemplatePanel extends React.Component<Props, State> {
             currentOption : menuOptions[0],
             currentTemplate : Templates.arr[0],
             currentArgs : Templates.arr[0].props.map((prop)=>{return prop.default;}),
-            validate : true
         }
     }
 
@@ -111,7 +106,7 @@ export default class TemplatePanel extends React.Component<Props, State> {
                 this.state.currentTemplate.execute(...this.state.currentArgs)
             )
         );
-        this.context.update.mouseOverIndex(0);
+        //this.context.update.mouseOverIndex(0);
         this.props.handleClose();
     }
 

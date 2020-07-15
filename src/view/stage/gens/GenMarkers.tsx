@@ -1,7 +1,7 @@
 import React from 'react';
 import './gen-counter.css';
 
-import { SettingsConsumer } from '../../Settings';
+import { SettingsConsumer } from '../../context/Settings';
 
 
 interface Props {

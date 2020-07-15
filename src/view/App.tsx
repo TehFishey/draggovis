@@ -1,5 +1,5 @@
 import React from 'react';
-import {SettingsProvider} from './Settings';
+import {SettingsProvider} from './context/Settings';
 import Stage from './stage/Stage';
 import './app.css';
 

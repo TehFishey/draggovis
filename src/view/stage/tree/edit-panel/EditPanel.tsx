@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings, SettingsConsumer } from '../../../Settings';
+import { SettingsConsumer } from '../../../context/Settings';
 import Image from '../../../general/image/Image'
 import DVSelect, { menuOption } from '../../../general/select/Select'
 import EditPanelPulldown from "./EditPanelPulldown";
@@ -26,20 +26,17 @@ interface Props {
   
 interface State {
     name: string,
-    validate: boolean,
     genderOptions: Array<menuOption>,
 
 }
 
 export default class EditPanel extends React.Component<Props, State> {
-    static contextType = Settings;
 
     constructor(props: Props){
         super(props);
   
         this.state = {
             name : this.props.node.name,
-            validate: true,
             genderOptions: MenuOptions.nodeGenderOptions(this.props.node)
         }
 
@@ -49,91 +46,82 @@ export default class EditPanel extends React.Component<Props, State> {
         return (this.props.node.name !== "") ? this.props.node.name : "Unnamed Dragon";
     }
 
-    updateName = (name : string) => {
+    handleNameUpdate = (name : string, validate? : boolean) => {
         this.props.setData(
-            Model.editWindow.updateName(this.props.node.index, name, this.state.validate)
+            Model.editWindow.updateName(this.props.node.index, name, validate)
         );
     }
 
-    updateBreed = (breedId: string) => {
+    handleBreedUpdate = (breedId: string, validate? : boolean) => {
         this.props.setData(
-            Model.editWindow.updateBreed(this.props.node.index, breedId, this.state.validate)
+            Model.editWindow.updateBreed(this.props.node.index, breedId, validate)
         );
     }
 
-    updatePortrait = (portraitId: string) => {
+    handlePortraitUpdate = (portraitId: string, validate : boolean) => {
         this.props.setData(
-            Model.editWindow.updatePortrait(this.props.node.index, portraitId, this.state.validate)
+            Model.editWindow.updatePortrait(this.props.node.index, portraitId, validate)
         );
     }
 
-    addRemoveParents = () => {
+    handleParentsUpdate = (validate? : boolean) => {
         if(this.props.node.hasParents())
-            this.removeParents();
+            this.removeParents(validate);
         else
-            this.createParents();
+            this.createParents(validate);
     }
 
-    addRemoveChild = () => {
+    handleChildUpdate = (validate? : boolean) => {
         if(this.props.node.index === 0)
-            this.createChild();
+            this.createChild(validate);
         else
-            this.removeChild();
+            this.removeChild(validate);
         // Close the popover so user can re-open correct one...
         this.props.handleClose();
     }
 
-    createParents() {
+    handleParentsMirror = (validate? : boolean) => {
         this.props.setData(
-            Model.editWindow.createParents(this.props.node.index, this.state.validate)
+            Model.editWindow.invertParents(this.props.node.index, validate)
         );
     }
 
-    removeParents() {
+    createParents(validate? : boolean) {
         this.props.setData(
-            Model.editWindow.removeParents(this.props.node.index, this.state.validate)
+            Model.editWindow.createParents(this.props.node.index, validate)
         );
     }
 
-    createChild() {
+    removeParents(validate? : boolean) {
         this.props.setData(
-            Model.editWindow.createChild(this.props.node.index, this.state.validate)
+            Model.editWindow.removeParents(this.props.node.index, validate)
         );
     }
 
-    removeChild() {
+    createChild(validate? : boolean) {
         this.props.setData(
-            Model.editWindow.removeChild(this.props.node.index, this.state.validate)
+            Model.editWindow.createChild(this.props.node.index, validate)
         );
     }
 
-    swapParents = () => {
+    removeChild(validate? : boolean) {
         this.props.setData(
-            Model.editWindow.invertParents(this.props.node.index, this.state.validate)
+            Model.editWindow.removeChild(this.props.node.index, validate)
         );
     }
 
-    setDragonState(state: DragonState) {
+    setDragonState(state: DragonState, validate? : boolean) {
         let s: DragonState = (this.props.node.state === state) ? DragonState.Healthy : state;
         this.props.setData(
-            Model.editWindow.setDragonState(this.props.node.index, s, this.state.validate)
+            Model.editWindow.setDragonState(this.props.node.index, s, validate)
         );
     }
 
-    setGender = (selectedOption: any) => {
+    setGender = (selectedOption: any, validate? : boolean) => {
         let gender = selectedOption.value;
         this.props.setData(
-            Model.editWindow.updateGender(this.props.node.index, gender, this.state.validate)
+            Model.editWindow.updateGender(this.props.node.index, gender, validate)
         );
-    }
-
-    componentDidUpdate() {
-        if (this.state.validate !== (!this.context.disableValid))
-            this.setState({validate: !this.context.disableValid});
-    }
-
-    componentDidMount() {
-        this.setState({validate: !this.context.disableValid});
     }
 
     render() {
@@ -152,7 +140,7 @@ export default class EditPanel extends React.Component<Props, State> {
                             <TextField
                                 label={'Name'}
                                 value={this.props.node.name}
-                                onUpdate={this.updateName}
+                                onUpdate={this.handleNameUpdate}
                                 maxLength={32}
                                 invalidChars={/[^a-zA-Z0-9 \-+']/g}
                             />
@@ -178,7 +166,7 @@ export default class EditPanel extends React.Component<Props, State> {
                                     ((this.props.node.father() !== undefined) ? this.props.node.father()!.breed : null),
                                     ((this.props.node.mother() !== undefined) ? this.props.node.mother()!.breed : null)
                                 ]}
-                                onChange={this.updateBreed}
+                                onChange={this.handleBreedUpdate}
                             />
                         </div>
                         <div className='ep-props-label' style={{gridArea: 'p-label'}}>Art</div>
@@ -194,7 +182,7 @@ export default class EditPanel extends React.Component<Props, State> {
                                     ((this.props.node.father() !== undefined) ? this.props.node.father()!.portrait : null),
                                     ((this.props.node.mother() !== undefined) ? this.props.node.mother()!.portrait : null)
                                 ]}
-                                onChange={this.updatePortrait}
+                                onChange={this.handlePortraitUpdate}
                             />
                         </div>
                     </div>
@@ -203,28 +191,28 @@ export default class EditPanel extends React.Component<Props, State> {
                                 label='Kill'
                                 checked={this.props.node.state === DragonState.Dead}
                                 node={this.props.node}
-                                onClick={()=>{this.setDragonState(DragonState.Dead)}}
+                                onClick={()=>{this.setDragonState(DragonState.Dead,!value.disableValid)}}
                                 condition={(value.disableValid || this.props.node.state === DragonState.Dead)? new Condition() : Swaps.conds.get(DragonState.Dead)}
                             />
                             <EditPanelCheckbox
                                 label='Zombify'
                                 checked={this.props.node.state === DragonState.Undead}
                                 node={this.props.node}
-                                onClick={()=>{this.setDragonState(DragonState.Undead)}}
+                                onClick={()=>{this.setDragonState(DragonState.Undead,!value.disableValid)}}
                                 condition={(value.disableValid || this.props.node.state === DragonState.Undead)? new Condition() : Swaps.conds.get(DragonState.Undead)}
                             />
                             <EditPanelCheckbox
                                 label='Bite'
                                 checked={this.props.node.state === DragonState.Vampire}
                                 node={this.props.node}
-                                onClick={()=>{this.setDragonState(DragonState.Vampire)}}
+                                onClick={()=>{this.setDragonState(DragonState.Vampire,!value.disableValid)}}
                                 condition={(value.disableValid || this.props.node.state === DragonState.Vampire)? new Condition() : Swaps.conds.get(DragonState.Vampire)}
                             />
                             <EditPanelCheckbox
                                 label='Neglect'
                                 checked={this.props.node.state === DragonState.Neglected}
                                 node={this.props.node}
-                                onClick={()=>{this.setDragonState(DragonState.Neglected)}}
+                                onClick={()=>{this.setDragonState(DragonState.Neglected,!value.disableValid)}}
                                 condition={(value.disableValid || this.props.node.state === DragonState.Neglected)? new Condition() : Swaps.conds.get(DragonState.Neglected)}
                             />
                         </div>
@@ -233,18 +221,18 @@ export default class EditPanel extends React.Component<Props, State> {
                             <button 
                                 className='stage-button-small ep-cont-button'
                                 style={{gridArea: 'addp'}}
-                                onClick={this.addRemoveParents}>
+                                onClick={() => {this.handleParentsUpdate(!value.disableValid)}}>
                                 Add/Remove Parents
                             </button>
                             <button 
                                 className='stage-button-small ep-cont-button'
                                 style={{gridArea: 'remp'}}
-                                onClick={this.addRemoveChild}>
+                                onClick={() => {this.handleChildUpdate(!value.disableValid)}}>
                                 Add/Remove Child
                             </button>
                             <button 
                                 className='stage-button-small ep-cont-button'
-                                onClick={this.swapParents}>
+                                onClick={() => {this.handleParentsMirror(!value.disableValid)}}>
                                 Mirror Ancestors
                             </button>
                         </div>

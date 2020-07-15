@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from '../../general/image/Image'
-import { SettingsConsumer, DragDrop } from '../../Settings';
+import { SettingsConsumer, DragDrop } from '../../context/Settings';
 import './sidebar.css';
 import Tree from '../../../library/controller/Tree';
 

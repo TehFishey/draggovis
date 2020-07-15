@@ -6,7 +6,7 @@ import Dragon, { DragonState, Gender } from '../../../../library/defines/Dragon'
 
 import Validation from '../../../_utilities/TemplateValidation';
 import { Breeds, Portraits } from '../../../../defines/Defines';
-import { Settings } from '../../../Settings';
+import { Settings } from '../../../context/Settings';
 
 interface Props {
     id: string,

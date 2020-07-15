@@ -6,7 +6,7 @@ import Tooltip from '../../general/tooltip/Tooltip';
 import EditWindow from './edit-panel/EditPanel';
 import Draggable, { DropEffect } from '../../general/drag-drop/Draggable';
 import Droppable from '../../general/drag-drop/Droppable';
-import { SettingsConsumer, DragDrop, Settings } from '../../Settings';
+import { SettingsConsumer, DragDrop } from '../../context/Settings';
 
 import DragonNode from '../../../library/controller/DragonNode';
 
@@ -25,11 +25,9 @@ interface State {
     showPopover: boolean,
     showTooltip: boolean,
     imgError: boolean,
-    validate: boolean
 }
 
 export default class TreeElement extends React.Component<Props, State> {
-    static contextType = Settings;
 
     img: React.RefObject<HTMLDivElement>;
 
@@ -41,7 +39,6 @@ export default class TreeElement extends React.Component<Props, State> {
             showPopover : false,
             showTooltip : false,
             imgError : false,
-            validate: true
         }
 
         this.img = React.createRef();
@@ -108,14 +105,14 @@ export default class TreeElement extends React.Component<Props, State> {
         return coords;
     }
 
-    executeDrop(type : DragDrop, index : string) {
+    executeDrop(type : DragDrop, index : string, validate? : boolean) {
         let dragI: number = +index;
         let dropI: number = this.props.node.index;
 
-        if(type === DragDrop.CopyOne) this.props.setData(Model.dragDrop.copyOne(dragI, dropI, this.state.validate));
-        else if(type === DragDrop.CopySet) this.props.setData(Model.dragDrop.copySet(dragI, dropI, this.state.validate));
-        else if(type === DragDrop.SwapOne) this.props.setData(Model.dragDrop.swapOne(dragI, dropI, this.state.validate));
-        else if(type === DragDrop.SwapSet) this.props.setData(Model.dragDrop.swapSet(dragI, dropI, this.state.validate));
+        if(type === DragDrop.CopyOne) this.props.setData(Model.dragDrop.copyOne(dragI, dropI, validate));
+        else if(type === DragDrop.CopySet) this.props.setData(Model.dragDrop.copySet(dragI, dropI, validate));
+        else if(type === DragDrop.SwapOne) this.props.setData(Model.dragDrop.swapOne(dragI, dropI, validate));
+        else if(type === DragDrop.SwapSet) this.props.setData(Model.dragDrop.swapSet(dragI, dropI, validate));
     }
 
     buildParentComponents() {
@@ -138,12 +135,6 @@ export default class TreeElement extends React.Component<Props, State> {
     componentDidMount() {
         this.updatePosition();
         window.addEventListener("resize", this.updatePosition);
-        this.setState({validate: !this.context.disableValid});
-    }
-
-    componentDidUpdate() {
-        if (this.state.validate !== (!this.context.disableValid))
-            this.setState({validate: !this.context.disableValid});
     }
 
     componentWillUnmount() {
@@ -170,7 +161,7 @@ export default class TreeElement extends React.Component<Props, State> {
                 />
                 <SettingsConsumer>
                 {value => { return (
-                    <Droppable className={'tree-unit-display'} onDrop={(index : string)=>{this.executeDrop(value.dragDrop, index)}} dropEffect={DropEffect.Copy}>
+                    <Droppable className={'tree-unit-display'} onDrop={(index : string)=>{this.executeDrop(value.dragDrop, index, !value.disableValid)}} dropEffect={DropEffect.Copy}>
                         <Draggable dragData={this.props.node.index.toString()} dropEffect={DropEffect.Copy}>
                             <div className={(this.props.node.meta.invalidData && value.enableWarn) ? 'tree-unit-display-button highlight-warning' : 'tree-unit-display-button'}
                                 onClick={e=>{this.displayPopover(true)}}

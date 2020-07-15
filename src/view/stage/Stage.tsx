@@ -5,9 +5,9 @@ import Sidebar from './sidebar/Sidebar';
 import './tree/tree.css';
 import './stage.css';
 
-import Tree from '../../library/controller/Tree';
+import Tree from '../../library/model/Tree';
 import Model from '../../model/Model'
-import GenMarkers from './gens/GenMarkers';
+import GenCounter from './gens/GenCounter';
 import { executionOutput } from '../../model/Model';
 import ErrorModal from './error-window/ErrorWindow';
 import { DataProvider } from '../context/DataManager';
@@ -78,7 +78,7 @@ export default class Stage extends React.Component<Props, State> {
                         tree={this.state.tree}
                     />
                     <div className='stage-canvas'>
-                        <GenMarkers gens={this.state.tree.genLength()}/>
+                        <GenCounter gens={this.state.tree.genLength()}/>
                         <div className="lineage-tree">
                             <ul id ="tree-root">
                                 <TreeElement

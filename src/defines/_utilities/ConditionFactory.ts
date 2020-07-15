@@ -3,7 +3,7 @@ import Breed, { DragonType, DragonSubType } from "../../library/defines/Breed";
 import Portrait from "../../library/defines/Portrait";
 import { Gender } from "../../library/defines/Dragon";
 
-import DragonNode, {nodeReference} from "../../library/controller/DragonNode";
+import DragonNode, {nodeReference} from "../../library/model/DragonNode";
 
 // Portrait- or Breed- like object (containing data necessary for validation)
 type pseudoObject = {id: String, label: String}

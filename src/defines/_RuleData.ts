@@ -1,5 +1,5 @@
 import genericRules from "./rules/GenericRules"
-import Rule from "../library/controller/Rule";
+import Rule from "../library/model/Rule";
 
 export default class RuleData {
     readonly dict: Map<string, Rule>;

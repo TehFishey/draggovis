@@ -1,7 +1,7 @@
 import Model, { executionStrategy, executionOutput } from "../../model/Model";
 
-import Tree from "../../library/controller/Tree";
-import Operator from "./_Operator";
+import Tree from "../../library/model/Tree";
+import Operator from "../../library/controller/Operator";
 
 export default class ImportPanelOperator extends Operator {
     constructor(parent: Model) {

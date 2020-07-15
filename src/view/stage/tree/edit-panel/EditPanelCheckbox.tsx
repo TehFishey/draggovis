@@ -1,6 +1,6 @@
 import React from 'react';
 import Condition, { CompoundCondition } from '../../../../library/defines/Condition';
-import DragonNode from '../../../../library/controller/DragonNode';
+import DragonNode from '../../../../library/model/DragonNode';
 import Tooltip from '../../../general/tooltip/Tooltip';
 
 type windowCoordinates = {x: number, y: number}

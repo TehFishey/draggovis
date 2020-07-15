@@ -2,7 +2,7 @@ import React from 'react';
 import Image from '../../general/image/Image'
 import { SettingsConsumer, DragDrop } from '../../context/Settings';
 import './sidebar.css';
-import Tree from '../../../library/controller/Tree';
+import Tree from '../../../library/model/Tree';
 import { DataConsumer } from '../../context/DataManager';
 
 interface Props {

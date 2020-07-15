@@ -1,4 +1,4 @@
-import Tree from "../controller/Tree";
+import Tree from "../model/Tree";
 
 import {TemplateProperty} from './TemplateProperty';
 

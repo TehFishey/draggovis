@@ -3,7 +3,7 @@ import DVSelect, {menuOption} from '../../../general/select/Select'
 
 import Breed from '../../../../library/defines/Breed';
 import Portrait from '../../../../library/defines/Portrait';
-import DragonNode from '../../../../library/controller/DragonNode';
+import DragonNode from '../../../../library/model/DragonNode';
 
 interface Props {
     selectionPool: Map<string,Breed> | Map<string,Portrait>,

@@ -5,7 +5,7 @@ import DVSelect, { menuOption } from '../../../general/select/Select'
 import EditPanelPulldown from "./EditPanelPulldown";
 import './edit-panel.css';
 
-import DragonNode from '../../../../library/controller/DragonNode';
+import DragonNode from '../../../../library/model/DragonNode';
 
 import {Breeds, Swaps} from '../../../../defines/Defines';
 import { DragonState } from '../../../../library/defines/Dragon';

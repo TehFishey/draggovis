@@ -8,7 +8,7 @@ import Draggable, { DropEffect } from '../../general/drag-drop/Draggable';
 import Droppable from '../../general/drag-drop/Droppable';
 import { SettingsConsumer, DragDrop } from '../../context/Settings';
 
-import DragonNode from '../../../library/controller/DragonNode';
+import DragonNode from '../../../library/model/DragonNode';
 
 import { executionOutput } from '../../../model/Model';
 import { DataManager, DataConsumer } from '../../context/DataManager';

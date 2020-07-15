@@ -1,5 +1,5 @@
-import DragonNode from "../../library/controller/DragonNode";
-import Rule from "../../library/controller/Rule";
+import DragonNode from "../../library/model/DragonNode";
+import Rule from "../../library/model/Rule";
 
 let GenericRules : Array<Rule> = [
     new Rule("g-invbreed",

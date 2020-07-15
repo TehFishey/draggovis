@@ -2,7 +2,7 @@ import Portrait from './Portrait';
 import Condition, { CompoundCondition, Operator } from './Condition';
 import { Gender } from './Dragon';
 
-import DragonNode, { nodeReference } from '../controller/DragonNode';
+import DragonNode, { nodeReference } from '../model/DragonNode';
 
 export enum DragonType {
     Dragon = 'Dragon',

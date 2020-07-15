@@ -1,24 +1,29 @@
-import DragonNode from "../../library/controller/DragonNode";
-import Rule from "../../library/controller/Rule";
-import Tree from "../../library/controller/Tree";
+import DragonNode from "../../library/model/DragonNode";
+import Rule from "../../library/model/Rule";
+import Tree from "../../library/model/Tree";
 
 import { Rules } from "../../defines/Defines";
 
 export default class RuleManager {
+    readonly tree : Tree;
 
-    validateNodes(tree: Tree, nodeIds? : Array<number>) {
+    constructor(tree: Tree) {
+        this.tree = tree;
+    }
+
+    validateNodes(nodeIds? : Array<number>) {
         let nodes : Array<DragonNode> = (nodeIds != null) ? 
             nodeIds.map((index : number) => {
-                if(tree[index] != null) 
-                    return tree[index]!;
+                if(this.tree[index] != null) 
+                    return this.tree[index]!;
                 else 
                     throw new Error(`RuleManager: node index '${index}' was marked for validation, but node no longer exists!`);
             }) :
-            tree.filter((node : DragonNode | null) => {return node != null}) as Array<DragonNode>;
+            this.tree.filter((node : DragonNode | null) => {return node != null}) as Array<DragonNode>;
         let targetData : Array<Set<string>> = this.getRuleTargets(nodes);
 
         targetData.forEach((ruleIds : Set<string>, index : number) => {
-            let node : DragonNode = tree[index]!;
+            let node : DragonNode = this.tree[index]!;
 
             ruleIds.forEach((id : string) => {
                 let rule : Rule = Rules.dict.get(id)!;
@@ -27,12 +32,12 @@ export default class RuleManager {
         });
     };
 
-    updateWarnings(tree: Tree) {
-        if(tree.warnings.length !== 0) {
-            tree.warnings.forEach((ruleIds : Set<string> | null, index) => {
+    updateWarnings() {
+        if(this.tree.warnings.length !== 0) {
+            this.tree.warnings.forEach((ruleIds : Set<string> | null, index) => {
                 if(ruleIds != null) {
-                    if(tree[index] != null) {
-                        let node: DragonNode = tree[index]!;
+                    if(this.tree[index] != null) {
+                        let node: DragonNode = this.tree[index]!;
                         ruleIds.forEach((id : string) => {
                             let rule = Rules.dict.get(id)!;
                             this.executeRule(rule, node);

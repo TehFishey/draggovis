@@ -1,4 +1,4 @@
-import DragonNode from "../../library/controller/DragonNode";
+import DragonNode from "../../library/model/DragonNode";
 import Portrait from "../../library/defines/Portrait";
 import { DragonType } from "../../library/defines/Breed";
 import { Gender, DragonState } from "../../library/defines/Dragon";

@@ -1,7 +1,7 @@
 import Condition from '../../library/defines/Condition';
 import Portrait from '../../library/defines/Portrait';
 import Breed, { DragonType, DragonSubType, Affinity } from '../../library/defines/Breed';
-import DragonNode from '../../library/controller/DragonNode'
+import DragonNode from '../../library/model/DragonNode'
 
 import PortraitFactory from '../_utilities/PortraitFactory';
 import ConditionFactory from '../_utilities/ConditionFactory';

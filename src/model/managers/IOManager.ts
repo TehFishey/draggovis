@@ -1,15 +1,14 @@
 import _invert from 'lodash/invert';
-import Model from "../Model";
 
-import Tree from "../../library/controller/Tree";
+import Tree from "../../library/model/Tree";
 import Breed from "../../library/defines/Breed"
 import Portrait from "../../library/defines/Portrait"
 import { Gender, DragonState } from "../../library/defines/Dragon";
 
 import { Portraits, Breeds } from "../../defines/Defines";
-import DragonNode from '../../library/controller/DragonNode';
+import DragonNode from '../../library/model/DragonNode';
 
-import key0 from "./lookup-keys/iokey0.json";
+import key0 from "../lookup-keys/iokey0.json";
 
 interface Lookup {
     [key: string]: string
@@ -19,15 +18,13 @@ interface IOKey {
     [key: string]: Lookup | string
 }
 
-const lookupVersion = 0;
-
 export default class IOManager {
-    readonly parent: Model;
+    readonly tree: Tree;
     readonly ioKeys: Map<string, IOKey>;
     readonly version: string;
 
-    constructor(parent: Model, version: number) {
-        this.parent = parent;
+    constructor(tree: Tree, version: number) {
+        this.tree = tree;
         this.version = version.toString(36);
         this.ioKeys = new Map<string, IOKey>();
 
@@ -48,8 +45,8 @@ export default class IOManager {
     generateLookups() {
         let portraitLookup: Lookup = {};
         let breedLookup: Lookup = {};
-        let genderLookup: Lookup = IOManager.createGenderLookup(lookupVersion.toString());
-        let stateLookup: Lookup = IOManager.createStateLookup(lookupVersion.toString());
+        let genderLookup: Lookup = IOManager.createGenderLookup(this.version.toString());
+        let stateLookup: Lookup = IOManager.createStateLookup(this.version.toString());
 
         Portraits.arr.forEach((portrait: Portrait, index: number) => {
             let n = index.toString(36);
@@ -82,7 +79,7 @@ export default class IOManager {
      * Converts a Tree into a compressed, serialized string.
      */
     export() : string {
-        let tree = this.parent.getSnapshot();
+        let tree = this.tree;
         let version: string = this.version;
         let ioKey: IOKey; 
         let bLookup: Map<string, string>;

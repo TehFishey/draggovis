@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DragonNode from '../../../library/controller/DragonNode';
+import DragonNode from '../../../library/model/DragonNode';
 import ViewUtils from '../../_utilities/ImageSwaps';
 import Portrait from '../../../library/defines/Portrait';
 

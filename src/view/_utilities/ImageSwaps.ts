@@ -3,7 +3,7 @@ import { Swaps } from "../../defines/Defines";
 
 import Portrait from "../../library/defines/Portrait";
 import TimeRange from "../../library/defines/TimeRange";
-import DragonNode from "../../library/controller/DragonNode";
+import DragonNode from "../../library/model/DragonNode";
 import { DragonState } from "../../library/defines/Dragon";
 
 /**

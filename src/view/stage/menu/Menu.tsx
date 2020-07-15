@@ -7,7 +7,7 @@ import MenuButton from './MenuButton';
 import './menu.css';
 
 import Model from '../../../model/Model';
-import Tree from '../../../library/controller/Tree';
+import Tree from '../../../library/model/Tree';
 import { executionOutput } from '../../../model/Model';
 import { DataManager } from '../../context/DataManager';
 

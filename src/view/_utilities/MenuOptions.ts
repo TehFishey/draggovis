@@ -5,7 +5,7 @@ import { Gender, DragonState } from "../../library/defines/Dragon";
 import LineageTemplate from "../../library/view/LineageTemplate";
 import Breed from "../../library/defines/Breed";
 import Portrait from "../../library/defines/Portrait";
-import DragonNode from "../../library/controller/DragonNode";
+import DragonNode from "../../library/model/DragonNode";
 import PortraitPair from "../../library/defines/PortraitPair";
 
 /**

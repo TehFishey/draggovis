@@ -1,4 +1,4 @@
-import DragonNode from "../controller/DragonNode";
+import DragonNode from "../model/DragonNode";
 
 type validationFunc = (node: DragonNode)=>boolean;
 

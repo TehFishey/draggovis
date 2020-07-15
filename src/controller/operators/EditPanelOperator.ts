@@ -1,12 +1,12 @@
 import Model, { executionStrategy, executionOutput } from "../../model/Model";
 import Janitors from "../_utilities/Janitors";
 
-import Tree from "../../library/controller/Tree";
-import DragonNode from "../../library/controller/DragonNode";
+import Tree from "../../library/model/Tree";
+import DragonNode from "../../library/model/DragonNode";
 import { Gender, DragonState } from "../../library/defines/Dragon";
 
 import { Portraits, Breeds } from "../../defines/Defines";
-import Operator from "./_Operator";
+import Operator from "../../library/controller/Operator";
 
 
 export default class EditPanelOperator extends Operator {

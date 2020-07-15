@@ -1,8 +1,8 @@
-import IOManager from "./IOManager/IOManager";
-import RuleManager from "./RuleManager/RuleManager";
+import IOManager from "./managers/IOManager";
+import RuleManager from "./managers/RuleManager";
 
-import Tree from "../library/controller/Tree";
-import Stack from "../library/controller/Stack";
+import Tree from "../library/model/Tree";
+import Stack from "../library/model/Stack";
 import { Gender } from "../library/defines/Dragon";
 
 import { Portraits, Breeds } from "../defines/Defines";
@@ -25,8 +25,8 @@ export default class Model {
         this.undoStack = new Stack();
         this.redoStack = new Stack();
 
-        this.IOManager = new IOManager(this, 0);
-        this.ruleManager = new RuleManager();
+        this.IOManager = new IOManager(this.lineageTree, 0);
+        this.ruleManager = new RuleManager(this.lineageTree);
     }
 
     async updateTree(callback: executionStrategy) : Promise<executionOutput> {
@@ -37,8 +37,8 @@ export default class Model {
         
         try { 
             changed = callback.apply(this, [this.lineageTree]); 
-            this.ruleManager.updateWarnings(this.lineageTree);
-            this.ruleManager.validateNodes(this.lineageTree, changed);
+            this.ruleManager.updateWarnings();
+            this.ruleManager.validateNodes(changed);
 
             this.lineageSnapshot = this.lineageTree.copyTree();
             return {data : this.getSnapshot()};
@@ -78,7 +78,7 @@ export default class Model {
         return {data : this.getSnapshot()};
     }
 
-    getSnapshot() : Tree {
+    private getSnapshot() : Tree {
         console.log(`Controller: Pushing new tree data.`)
         console.log(`current:`);
         console.log(this.lineageTree);

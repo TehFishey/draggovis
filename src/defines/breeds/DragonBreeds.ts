@@ -51,7 +51,7 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("celestial-dragon", "Celestial Dragon", DragonSubType.Western, [Affinity.Magi], PortraitFactory.mfPortraits("celestial")),
     new DragonBreed("cloudplume-dragon", "Cloudplume Dragon", DragonSubType.Eastern, [Affinity.Air], PortraitFactory.uPortraits("cloudplume")),
     new DragonBreed("coastal-waverunner", "Coastal Waverunner", DragonSubType.Wyvern, [Affinity.Water], PortraitFactory.uPortraits("coastal-waverunner")),
-    new DragonBreed("copper-dragon", "Copper Dragon", DragonSubType.Western, [Affinity.Earth], [
+    new DragonBreed("copper-dragon", "Copper Dragon", DragonSubType.Wyvern, [Affinity.Earth], [
         PortraitFactory.customPortrait('copper-b-f', "Brown ♀", true, ConditionFactory.checkGender(Gender.Female,"Brown ♀")),
         PortraitFactory.customPortrait('copper-b-m', "Brown ♂", true, ConditionFactory.checkGender(Gender.Male,"Brown ♂")),
         PortraitFactory.customPortrait('copper-g-f', "Green ♀", true, ConditionFactory.checkGender(Gender.Female,"Green ♀")),
@@ -134,7 +134,7 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("mint-dragon", "Mint Dragon", DragonSubType.Wingless, [Affinity.Neutral], PortraitFactory.uPortraits("mint")),
     new DragonBreed("monarch-dragon", "Monarch Dragon", DragonSubType.Western, [Affinity.Earth], PortraitFactory.mfPortraits("monarch")),
     new DragonBreed("moonstone-dragon", "Moonstone Dragon", DragonSubType.Western, [Affinity.Magi], PortraitFactory.mfPortraits("moonstone")),
-    new DragonBreed("nebula-dragon", "Nebula Dragon", DragonSubType.Western, [Affinity.Light], [
+    new DragonBreed("nebula-dragon", "Nebula Dragon", DragonSubType.Wyvern, [Affinity.Light], [
         PortraitFactory.customPortrait('nebula-1-f', "Blue", true, ConditionFactory.checkGender(Gender.Female,"Blue")),
         PortraitFactory.customPortrait('nebula-1-m', "Green", true, ConditionFactory.checkGender(Gender.Male,"Green")),
         PortraitFactory.customPortrait('nebula-2-f', "Red", true, ConditionFactory.checkGender(Gender.Female,"Red")),
@@ -227,7 +227,7 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("striped-river-dragon", "Striped River Dragon", DragonSubType.Eastern, [Affinity.Water], PortraitFactory.uPortraits("striped-river")),
     new DragonBreed("sunrise-dragon", "Sunrise Dragon", DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("sunrise")),
     new DragonBreed("sunset-dragon", "Sunset Dragon", DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("sunset")),
-    new DragonBreed("sunsong-amphiptere", "Sunsong Amphiptere", DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("sunsong")),
+    new DragonBreed("sunsong-amphiptere", "Sunsong Amphiptere", DragonSubType.Amphiptere, [Affinity.Light], PortraitFactory.mfPortraits("sunsong")),
     new DragonBreed("sunstone-dragon", "Sunstone Dragon", DragonSubType.Western, [Affinity.Fire], PortraitFactory.uPortraits("sunstone")),
     new DragonBreed("swallowtail-dragon", "Swallowtail Dragon", DragonSubType.Western, [Affinity.Air], PortraitFactory.mfPortraits("swallowtail")),
     new DragonBreed("tercorn-dragon", "Tercorn Dragon", DragonSubType.Western, [Affinity.Water, Affinity.Life], PortraitFactory.uPortraits("tercorn")),

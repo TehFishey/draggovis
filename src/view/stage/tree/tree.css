@@ -98,9 +98,10 @@
 	display:block;
 	word-wrap:break-word;
 	position:relative;
-	width:120px;
-	height: 19px;
 	top: -4px;
+	width:120px;
+	min-height: 19px;
 	line-height: 19px;
 	font-size: 14px;
+	color: rgb(68, 48, 11);
 }

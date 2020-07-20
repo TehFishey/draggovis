@@ -11,14 +11,15 @@ interface Props {
     defaultLabel: string,
     validationNode?: DragonNode,
     validationFactors: Array<any>,
-    onChange: Function
+    onChange: Function,
+    orderOptions : boolean
 }
   
 interface State {
     validOptions: Array<menuOption>,
 }
 
-export default class EditPanelPulldown extends React.Component<Props, State> {
+export default class EditPanelSelect extends React.Component<Props, State> {
     constructor(props: Props){
         super(props);
         this.state = {
@@ -88,6 +89,7 @@ export default class EditPanelPulldown extends React.Component<Props, State> {
             <DVSelect
                 value = { this.getCurrentValue() }
                 options = { this.state.validOptions }
+                orderOptions = { this.props.orderOptions }
                 isSearchable = { true }
                 onChange = { this.handleChange }
             />

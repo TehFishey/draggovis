@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     width: 600px;
-    height: 400px;
 }
 
 .modal-body p{
@@ -11,7 +10,7 @@
 }
 
 .IO-field {
-    height: 300px;
+    height: 200px;
     padding: 8px;
     text-align: left;
     text-justify: top;

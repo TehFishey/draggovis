@@ -122,6 +122,7 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
                         value = { this.state.selectedBreedOption }
                         options = { this.state.breedOptions }
                         onChange = { this.selectBreed }
+                        orderOptions={ true }
                     />
                 </div>
                 <div className='tpi-dragon-portrait'>

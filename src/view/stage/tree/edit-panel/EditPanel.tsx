@@ -2,7 +2,7 @@ import React from 'react';
 import { SettingsConsumer } from '../../../context/Settings';
 import Image from '../../../general/image/Image'
 import DVSelect, { menuOption } from '../../../general/select/Select'
-import EditPanelPulldown from "./EditPanelPulldown";
+import EditPanelPulldown from "./EditPanelSelect";
 import './edit-panel.css';
 
 import DragonNode from '../../../../library/model/DragonNode';
@@ -178,6 +178,7 @@ export default class EditPanel extends React.Component<Props, State> {
                             <EditPanelPulldown 
                                 selectionPool={breedData}
                                 currentSelection={this.props.node.breed}
+                                orderOptions={true}
                                 defaultLabel = {'Select Breed'}
                                 validationNode = {(value.disableValid) ? undefined : this.props.node}
                                 validationFactors = {[
@@ -193,6 +194,7 @@ export default class EditPanel extends React.Component<Props, State> {
                             <EditPanelPulldown 
                                 selectionPool={this.props.node.breed.portraits}
                                 currentSelection={this.props.node.portrait}
+                                orderOptions={false}
                                 defaultLabel = {'Select Portrait'}
                                 validationNode = {(value.disableValid) ? undefined : this.props.node}
                                 validationFactors = {[

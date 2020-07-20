@@ -12,6 +12,7 @@ import { executionOutput } from '../../model/Model';
 import ErrorModal from './error-window/ErrorWindow';
 import { DataProvider } from '../context/DataManager';
 import Controller from '../../controller/Controller';
+import Select from 'react-select';
 
 interface Props {}
 

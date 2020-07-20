@@ -9,6 +9,7 @@ import { Portraits, Breeds } from "../../defines/Defines";
 import DragonNode from '../../library/model/DragonNode';
 
 import key0 from "../lookup-keys/iokey0.json";
+import key1 from "../lookup-keys/iokey1.json";
 
 interface Lookup {
     [key: string]: string
@@ -28,7 +29,7 @@ export default class IOManager {
         this.version = version.toString(36);
         this.ioKeys = new Map<string, IOKey>();
 
-        let keys = [key0]
+        let keys = [key0, key1]
         try{
             keys.forEach((k: IOKey) => {
                 if(typeof k.version == 'string')

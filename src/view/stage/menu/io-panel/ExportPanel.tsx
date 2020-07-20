@@ -9,9 +9,8 @@ interface Props {
 }
 
 interface State {
-    content : string
+    content : string,
     contentVersion : number
-    contentSize : number
 }
 
 export default class ExportPanel extends React.Component<Props, State> {
@@ -26,7 +25,6 @@ export default class ExportPanel extends React.Component<Props, State> {
         this.state = {
             content : '',
             contentVersion : 0,
-            contentSize : 0
         }
 
         this.fileLink = React.createRef();
@@ -34,19 +32,15 @@ export default class ExportPanel extends React.Component<Props, State> {
 
     updateContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         let content: string = e.target.value;
-        let contentSize: number = content.length;
         this.setState({
             content: content,
-            contentSize: contentSize
         });
     }
 
     exportContent() {
         let content: string = this.model!.IOManager.export();
-        let contentSize: number = content.length;
         this.setState({
             content: content,
-            contentSize: contentSize
         });
     }
 
@@ -65,6 +59,7 @@ export default class ExportPanel extends React.Component<Props, State> {
 
     componentDidMount() {
         this.model = this.context.model;
+        this.setState({contentVersion : this.model!.IOVersion});
         this.exportContent();
     }
 

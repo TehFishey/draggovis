@@ -12,7 +12,6 @@ import { executionOutput } from '../../model/Model';
 import ErrorModal from './error-window/ErrorWindow';
 import { DataProvider } from '../context/DataManager';
 import Controller from '../../controller/Controller';
-import Select from 'react-select';
 
 interface Props {}
 
@@ -53,7 +52,7 @@ export default class Stage extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-       //Controller.IOManager.generateLookups();
+        //this.PrimaryModel.IOManager.generateLookups();
     }
 
     componentDidUpdate() {

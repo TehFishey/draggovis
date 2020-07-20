@@ -10,7 +10,10 @@ import { Portraits, Breeds } from "../defines/Defines";
 export type executionStrategy = (tree: Tree) => Array<number> | undefined;
 export type executionOutput = { error? : string, data : Tree}
 
+const IOVersion = 1;
+
 export default class Model {
+    readonly IOVersion : number;
     readonly IOManager : IOManager;
     readonly ruleManager : RuleManager;
     private readonly lineageTree : Tree;
@@ -25,7 +28,8 @@ export default class Model {
         this.undoStack = new Stack();
         this.redoStack = new Stack();
 
-        this.IOManager = new IOManager(this.lineageTree, 0);
+        this.IOVersion = IOVersion;
+        this.IOManager = new IOManager(this.lineageTree, this.IOVersion);
         this.ruleManager = new RuleManager(this.lineageTree);
     }
 

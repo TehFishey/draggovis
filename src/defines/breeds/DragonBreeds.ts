@@ -201,7 +201,7 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("spitfire-dragon", "Spitfire Dragon", DragonSubType.Western, [Affinity.Fire], PortraitFactory.uPortraits("spitfire")),
     new DragonBreed("spotted-greenwing-dragon", "Spotted Greenwing", DragonSubType.Western, [Affinity.Neutral], PortraitFactory.uPortraits("spotted-greenwing")),
     new DragonBreed("stone-dragon", "Stone Dragon", DragonSubType.Western, [Affinity.Earth], PortraitFactory.uPortraits("stone")),
-    new DragonBreed("storm-dragon", "Storm Dragon", DragonSubType.Western, [Affinity.Air], PortraitFactory.uPortraits("storm")),
+    new DragonBreed("storm-dragon", "Storm Dragon", DragonSubType.Western, [Affinity.Air], PortraitFactory.mfPortraits("storm")),
     new DragonBreed("stratos-dragon", "Stratos Dragon", DragonSubType.SeaSerpent, [Affinity.Air, Affinity.Light], [
         PortraitFactory.customPortrait('stratos-u', "Standard", true, ConditionFactory.alwaysTrue("Standard"), [
             {range: new TimeRange('03:00:00','08:59:00'), 
@@ -256,7 +256,7 @@ let DragonBreeds: Array<Breed> = [
         PortraitFactory.customPortrait('xol-p-f', "Purple ♀", true, ConditionFactory.checkGender(Gender.Female,"Purple ♀")),
         PortraitFactory.customPortrait('xol-p-m', "Purple ♂", true, ConditionFactory.checkGender(Gender.Male,"Purple ♂")),
     ]),
-    new DragonBreed("yellow-crowned-dragon", "Yellow-Crowned Dragon", DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("yellow-crowned-dragon")),
+    new DragonBreed("yellow-crowned-dragon", "Yellow-Crowned Dragon", DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("yellow-crowned")),
     new DragonBreed("zyumorph-dragon", "Zyumorph", DragonSubType.Western, [Affinity.Neutral], [
         PortraitFactory.customPortrait('zyumorph-alpine-u', "Alpine", true),
         PortraitFactory.customPortrait('zyumorph-coast-u', "Coast", true),

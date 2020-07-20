@@ -67,8 +67,8 @@ let SpecialBreeds: Array<Breed> = [
 
     new Breed("valentine-dragon", "Valentine Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Magi], "f-f", [
         PortraitFactory.customPortrait('valentine-f', "Standard", true),
-        PortraitFactory.customPortrait('valentine-salt1-f', "Purple Salt", false, ConditionFactory.checkFirstGeneration("Purple Salt")),
-        PortraitFactory.customPortrait('valentine-salt2-f', "White Salt", false, ConditionFactory.checkFirstGeneration("White Salt")),
+        PortraitFactory.customPortrait('valentine-salt1-f', "White Salt", false, ConditionFactory.checkFirstGeneration("Purple Salt")),
+        PortraitFactory.customPortrait('valentine-salt2-f', "Purple Salt", false, ConditionFactory.checkFirstGeneration("White Salt")),
     ]),
     new Breed("sweetling-dragon", "Sweetling", DragonType.Dragon, DragonSubType.Wingless, [Affinity.Neutral], "m-m", [
         PortraitFactory.customPortrait('sweetling-m', "Standard", true),
@@ -97,7 +97,7 @@ let SpecialBreeds: Array<Breed> = [
     ]),
     new Breed("heartstealing-dragon", "Heartstealing Dragon", DragonType.Dragon, DragonSubType.Eastern, [Affinity.Neutral], "f-f", [
         PortraitFactory.customPortrait('heartstealing-f', "Standard", true),
-        PortraitFactory.customPortrait('heartstealing-salt1-f', "Salt", false, ConditionFactory.checkFirstGeneration("Salt")),
+        PortraitFactory.customPortrait('heartstealing-salt-f', "Salt", false, ConditionFactory.checkFirstGeneration("Salt")),
     ]),
     new Breed("mutamore-dragon", "Mutamore Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Earth, Affinity.Water], "m-m", [
         PortraitFactory.customPortrait('mutamore-m', "Standard", true),
@@ -117,8 +117,8 @@ let SpecialBreeds: Array<Breed> = [
     ]),
     new Breed("erador-lindwyrm", "Erador Lindwyrm", DragonType.Dragon, DragonSubType.Lindwyrm, [Affinity.Magi, Affinity.Life], "m-m", [
         PortraitFactory.customPortrait('erador-m', "Standard", true),
-        PortraitFactory.customPortrait('erador-salt1-m', "Blue Salt", false, ConditionFactory.checkFirstGeneration("Blue Salt")),
-        PortraitFactory.customPortrait('erador-salt2-m', "Green Salt", false, ConditionFactory.checkFirstGeneration("Green Salt")),
+        PortraitFactory.customPortrait('erador-salt1-m', "Green Salt", false, ConditionFactory.checkFirstGeneration("Blue Salt")),
+        PortraitFactory.customPortrait('erador-salt2-m', "Blue Salt", false, ConditionFactory.checkFirstGeneration("Green Salt")),
     ]),
     
     new Breed("holly-dragon", "Holly Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Life], "m-mf", [
@@ -157,7 +157,7 @@ let SpecialBreeds: Array<Breed> = [
     ]),
     new Breed("aegis-dragon", "Aegis Dragon", DragonType.Dragon, DragonSubType.Wingless, [Affinity.Life, Affinity.Ice], "m-m", [
         PortraitFactory.customPortrait('aegis-m', "Standard", true),
-        PortraitFactory.customPortrait('aegis-m', "Enraged", false),
+        PortraitFactory.customPortrait('aegis-rage-m', "Enraged", false),
         PortraitFactory.customPortrait('aegis-salt1-m', "Black Salt", false),
         PortraitFactory.customPortrait('aegis-salt1-rage-m', "Black Enraged", false),
         PortraitFactory.customPortrait('aegis-salt2-m', "Red Salt", false),

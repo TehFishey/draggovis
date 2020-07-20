@@ -16,7 +16,7 @@ class PygmyBreed extends Breed {
 let PygmyBreeds: Array<Breed> = [
     new PygmyBreed("avea-pygmy", "Avea Pygmy", DragonSubType.Western, [Affinity.Air], PortraitFactory.mfPortraits("avea")),
     new PygmyBreed("common-pygmy", "Common Pygmy", DragonSubType.Western, [Affinity.None], PortraitFactory.mfPortraits("common")),
-    new PygmyBreed("coral-pygmy-wyvern", "Coral Pygmy Wyvern", DragonSubType.Wyvern, [Affinity.Water], PortraitFactory.mfPortraits("avcoralea")),
+    new PygmyBreed("coral-pygmy-wyvern", "Coral Pygmy Wyvern", DragonSubType.Wyvern, [Affinity.Water], PortraitFactory.mfPortraits("coral")),
     new PygmyBreed("crimson-flare-pygmy", "Crimson Flare Pygmy", DragonSubType.Western, [Affinity.None], PortraitFactory.uPortraits("crimson-flare")),
     new PygmyBreed("dark-myst-pygmy", "Dark Myst Pygmy", DragonSubType.Western, [Affinity.None], PortraitFactory.mfPortraits("dark-myst")),
     new PygmyBreed("glowback-pygmy", "Glowback Pygmy", DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("glowback")),

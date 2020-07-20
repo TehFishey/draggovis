@@ -21,7 +21,7 @@ let TwoHeadedBreeds: Array<Breed> = [
     ]),
     new TwoHeadedBreed("bauta-dragon", "Bauta Dragon", DragonSubType.Western, [Affinity.None], PortraitFactory.uPortraits("bauta")),
     new TwoHeadedBreed("blancblack-dragon", "Blancblack Dragon", DragonSubType.Eastern, [Affinity.Light, Affinity.Dark], PortraitFactory.mfPortraits("blancblack")),
-    new TwoHeadedBreed("duotone-dragon", "Duotone Dragon", DragonSubType.Western, [Affinity.None], PortraitFactory.mfPortraits("blancblack")),
+    new TwoHeadedBreed("duotone-dragon", "Duotone Dragon", DragonSubType.Western, [Affinity.None], PortraitFactory.mfPortraits("duotone")),
     new TwoHeadedBreed("geminae-dragon", "Geminae Dragon", DragonSubType.Western, [Affinity.Magi], PortraitFactory.uPortraits("geminae")),
     new TwoHeadedBreed("gilded-bloodscale-dragon", "Gilded Bloodscale Dragon", DragonSubType.Western, [Affinity.None], PortraitFactory.mfPortraits("gilded-bloodscale")),
     new TwoHeadedBreed("hooktalon-dragon", "Hooktalon Dragon", DragonSubType.Western, [Affinity.None], PortraitFactory.mfPortraits("hooktalon")),

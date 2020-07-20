@@ -209,7 +209,7 @@ let HybridBreeds: Array<Breed> = [
             ]),
         ])
     ),
-    new HybridBreed("ultraviolet-dragon", "Ultraviolet Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Light], PortraitFactory.uPortraits("ultraviolet"),
+    new HybridBreed("ultraviolet-dragon", "Ultraviolet Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("ultraviolet"),
         ConditionFactory.or("Ultraviolet Dragon", [
             ConditionFactory.checkParentBreedIds([{id: "ultraviolet-dragon", label: "Ultraviolet Dragon"}]),
             ConditionFactory.and("", [

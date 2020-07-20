@@ -42,6 +42,11 @@ export default {
         return out
     },
 
+    /**
+     * Returns a set of menu options for a react-select menu, with each entry corresponding
+     * to a dimorphic pair of portrait objects from Defines.
+     * @param ids Set of valid Portrait-Pair Ids for select menu. Defaults to all.
+     */
     portraitPairOptions(ids : Array<string>) : Array<menuOption> {
         let pairs: Array<PortraitPair> = [];
         let out : Array<menuOption> = [];

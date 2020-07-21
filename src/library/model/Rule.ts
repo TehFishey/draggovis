@@ -34,6 +34,15 @@ export default class Rule {
         return targets;
     }
 
+    static targetParents = (node: DragonNode) => {
+        let targets : Array<DragonNode> = [];
+        if(node.hasParents()) {
+            targets.push(node.mother()!);
+            targets.push(node.father()!);
+        }
+        return targets;
+    }
+
     static targetTree = (node: DragonNode) => {
         let targets : Array<DragonNode>;
 

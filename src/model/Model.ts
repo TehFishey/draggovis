@@ -5,7 +5,7 @@ import Tree from "../library/model/Tree";
 import Stack from "../library/model/Stack";
 import { Gender } from "../library/defines/Dragon";
 
-import { Portraits, Breeds } from "../defines/Defines";
+import { Sprites, Breeds } from "../defines/Defines";
 
 export type executionStrategy = (tree: Tree) => Array<number> | undefined;
 export type executionOutput = { error? : string, data : Tree}
@@ -95,7 +95,7 @@ export default class Model {
 
     static getDefaultTree() : Tree {
         let out = new Tree();
-        out.createNode(0,Gender.Female,Breeds.dict.get('guardian-dragon')!,Portraits.dict.get('guardian-u')!);
+        out.createNode(0,Gender.Female,Breeds.dict.get('guardian-dragon')!,Sprites.dict.get('guardian-u')!);
         return out;
     }
 }

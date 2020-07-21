@@ -1,23 +1,23 @@
 import Condition from '../../library/defines/Condition';
-import Portrait from '../../library/defines/Portrait';
+import Sprite from '../../library/defines/Sprite';
 import Breed, { DragonType, DragonSubType, Affinity } from '../../library/defines/Breed';
 import DragonNode from '../../library/model/DragonNode'
 
-import PortraitFactory from '../_utilities/PortraitFactory';
-import ConditionFactory from '../_utilities/ConditionFactory';
+import SpriteFactory from '../_utilities/SpriteFactory';
+import ConditionBuilder from '../_utilities/ConditionBuilder';
 
 class HybridBreed extends Breed {
-    constructor(id: string, label: string, type: DragonType, subType: DragonSubType, affinity: Array<Affinity>, portraits: Array<Portrait>, condition?: Condition) {
-        super(id, label, type, subType, affinity, "mf-mf", portraits, condition)
+    constructor(id: string, label: string, type: DragonType, subType: DragonSubType, affinity: Array<Affinity>, sprites: Array<Sprite>, condition?: Condition) {
+        super(id, label, type, subType, affinity, "mf-mf", sprites, condition)
     }
 }
 
 let HybridBreeds: Array<Breed> = [
-    new HybridBreed("avatar-of-change", "Avatar of Change", DragonType.Dragon, DragonSubType.Western, [Affinity.Magi], PortraitFactory.uPortraits("avatar-of-change"), 
-        ConditionFactory.or('Avatar of Change', [
-            ConditionFactory.checkParentBreedIds([{id: 'avatar-of-change', label: 'Avatar of Change'}]),
-            ConditionFactory.and('', [
-                ConditionFactory.checkParentBreedIds([
+    new HybridBreed("avatar-of-change", "Avatar of Change", DragonType.Dragon, DragonSubType.Western, [Affinity.Magi], SpriteFactory.uSprites("avatar-of-change"), 
+        ConditionBuilder.or('Avatar of Change', [
+            ConditionBuilder.checkParentBreedIds([{id: 'avatar-of-change', label: 'Avatar of Change'}]),
+            ConditionBuilder.and('', [
+                ConditionBuilder.checkParentBreedIds([
                     {id: 'guardian-of-nature', label: 'Guardian of Nature'},
                     {id: 'avatar-of-destruction', label: 'Avatar of Destruction'},
                     {id: 'avatar-of-creation', label: 'Avatar of Creation'}
@@ -39,11 +39,11 @@ let HybridBreeds: Array<Breed> = [
             ])
         ])
     ),
-    new HybridBreed("avatar-of-creation", "Avatar of Creation", DragonType.Dragon, DragonSubType.Western, [Affinity.Light], PortraitFactory.uPortraits("avatar-of-creation"),
-        ConditionFactory.or('Avatar of Change', [
-            ConditionFactory.checkParentBreedIds([{id: 'avatar-of-creation', label: 'Avatar of Creation'}]),
-            ConditionFactory.and('', [
-                ConditionFactory.checkParentBreedIds([
+    new HybridBreed("avatar-of-creation", "Avatar of Creation", DragonType.Dragon, DragonSubType.Western, [Affinity.Light], SpriteFactory.uSprites("avatar-of-creation"),
+        ConditionBuilder.or('Avatar of Change', [
+            ConditionBuilder.checkParentBreedIds([{id: 'avatar-of-creation', label: 'Avatar of Creation'}]),
+            ConditionBuilder.and('', [
+                ConditionBuilder.checkParentBreedIds([
                     {id: 'guardian-of-nature', label: 'Guardian of Nature'},
                     {id: 'avatar-of-destruction', label: 'Avatar of Destruction'},
                     {id: 'avatar-of-change', label: 'Avatar of Change'}
@@ -65,11 +65,11 @@ let HybridBreeds: Array<Breed> = [
             ])
         ])
     ),
-    new HybridBreed("avatar-of-destruction", "Avatar of Destruction", DragonType.Dragon, DragonSubType.Western, [Affinity.Dark], PortraitFactory.uPortraits("avatar-of-destruction"),
-        ConditionFactory.or('Avatar of Destruction', [
-            ConditionFactory.checkParentBreedIds([{id: 'avatar-of-destruction', label: 'Avatar of Destruction'}]),
-            ConditionFactory.and('', [
-                ConditionFactory.checkParentBreedIds([
+    new HybridBreed("avatar-of-destruction", "Avatar of Destruction", DragonType.Dragon, DragonSubType.Western, [Affinity.Dark], SpriteFactory.uSprites("avatar-of-destruction"),
+        ConditionBuilder.or('Avatar of Destruction', [
+            ConditionBuilder.checkParentBreedIds([{id: 'avatar-of-destruction', label: 'Avatar of Destruction'}]),
+            ConditionBuilder.and('', [
+                ConditionBuilder.checkParentBreedIds([
                     {id: 'guardian-of-nature', label: 'Guardian of Nature'},
                     {id: 'avatar-of-creation', label: 'Avatar of Creation'},
                     {id: 'avatar-of-change', label: 'Avatar of Change'}
@@ -91,33 +91,33 @@ let HybridBreeds: Array<Breed> = [
             ])
         ])
     ),
-    new HybridBreed("amalthean-dragon", "Amalthean Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Life, Affinity.Water], PortraitFactory.mfPortraits("amalthean"),
-        ConditionFactory.and("Amalthean Dragon", [
-            ConditionFactory.checkParentBreedIds([{id: "white-dragon", label: "White Dragon"}]),
-            ConditionFactory.checkParentBreedIds([{id: "undine-dragon", label: "Undine Dragon"}])
+    new HybridBreed("amalthean-dragon", "Amalthean Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Life, Affinity.Water], SpriteFactory.mfSprites("amalthean"),
+        ConditionBuilder.and("Amalthean Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "white-dragon", label: "White Dragon"}]),
+            ConditionBuilder.checkParentBreedIds([{id: "undine-dragon", label: "Undine Dragon"}])
         ])
     ),
-    new HybridBreed("carina-dragon", "Carina Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Fire], PortraitFactory.mfPortraits("carina"), 
-        ConditionFactory.or("Carina Dragon", [
-            ConditionFactory.checkParentBreedIds([{id: "carina-dragon", label: "Carina Dragon"}]),
-            ConditionFactory.and("", [
-                ConditionFactory.checkParentBreedIds([{id: "ridgewing-dragon", label: "Ridgewing Dragon"}]),
-                ConditionFactory.checkParentBreedIds([{id: "nebula-dragon", label: "Nebula Dragon"}])
+    new HybridBreed("carina-dragon", "Carina Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Fire], SpriteFactory.mfSprites("carina"), 
+        ConditionBuilder.or("Carina Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "carina-dragon", label: "Carina Dragon"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "ridgewing-dragon", label: "Ridgewing Dragon"}]),
+                ConditionBuilder.checkParentBreedIds([{id: "nebula-dragon", label: "Nebula Dragon"}])
             ])
         ])
     ),
-    new HybridBreed("dusk-pygmy", "Dusk Pygmy", DragonType.Pygmy, DragonSubType.Western, [Affinity.None], PortraitFactory.mfPortraits("dusk"), 
-        ConditionFactory.or("Dusk Pygmy", [
-            ConditionFactory.checkParentBreedIds([{id: "dusk-pygmy", label: "Dusk Pygmy"}]),
-            ConditionFactory.and("", [
-                ConditionFactory.checkParentBreedIds([{id: "crimson-flare-pygmy", label: "Crimson Flare Pygmy"}]),
-                ConditionFactory.checkParentBreedIds([{id: "nilia-pygmy", label: "Nilia Pygmy"}])
+    new HybridBreed("dusk-pygmy", "Dusk Pygmy", DragonType.Pygmy, DragonSubType.Western, [Affinity.None], SpriteFactory.mfSprites("dusk"), 
+        ConditionBuilder.or("Dusk Pygmy", [
+            ConditionBuilder.checkParentBreedIds([{id: "dusk-pygmy", label: "Dusk Pygmy"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "crimson-flare-pygmy", label: "Crimson Flare Pygmy"}]),
+                ConditionBuilder.checkParentBreedIds([{id: "nilia-pygmy", label: "Nilia Pygmy"}])
             ])
         ])
     ),
-    new HybridBreed("geode-dragon", "Geode Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Earth], PortraitFactory.mfPortraits("geode"),
-        ConditionFactory.or('Geode Dragon', [
-            ConditionFactory.checkParentBreedIds([{id: "geode-dragon", label: "Geode Dragon"}]),
+    new HybridBreed("geode-dragon", "Geode Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Earth], SpriteFactory.mfSprites("geode"),
+        ConditionBuilder.or('Geode Dragon', [
+            ConditionBuilder.checkParentBreedIds([{id: "geode-dragon", label: "Geode Dragon"}]),
             new Condition(
                 (dragon: DragonNode) => {
                     if(dragon.hasParents()) {
@@ -131,90 +131,90 @@ let HybridBreeds: Array<Breed> = [
             )
         ]),
     ),
-    new HybridBreed("hellhorse-dragon", "Hellhorse Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Fire], PortraitFactory.mfPortraits("hellhorse"),
-        ConditionFactory.or("Hellorse Dragon", [
-            ConditionFactory.checkParentBreedIds([{id: "hellhorse-dragon", label: "Hellorse Dragon"}]),
-            ConditionFactory.and("", [
-                ConditionFactory.checkParentBreedIds([{id: "hellfire-wyvern", label: "Hellfire Wyvern"}]),
-                ConditionFactory.checkParentBreedIds([{id: "horse-dragon", label: "Horse Dragon"}])
+    new HybridBreed("hellhorse-dragon", "Hellhorse Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Fire], SpriteFactory.mfSprites("hellhorse"),
+        ConditionBuilder.or("Hellorse Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "hellhorse-dragon", label: "Hellorse Dragon"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "hellfire-wyvern", label: "Hellfire Wyvern"}]),
+                ConditionBuilder.checkParentBreedIds([{id: "horse-dragon", label: "Horse Dragon"}])
             ])
         ])
     ),
-    new HybridBreed("jester-dragon", "Jester Dragon", DragonType.TwoHeaded, DragonSubType.Western, [Affinity.Death], PortraitFactory.mfPortraits("jester"),
-        ConditionFactory.and("Jester Dragon", [
-            ConditionFactory.checkParentBreedIds([{id: "blancblack-dragon", label: "Blancblack Dragon"}]),
-            ConditionFactory.checkParentBreedIds([{id: "bauta-dragon", label: "Bauta Dragon"}])
+    new HybridBreed("jester-dragon", "Jester Dragon", DragonType.TwoHeaded, DragonSubType.Western, [Affinity.Death], SpriteFactory.mfSprites("jester"),
+        ConditionBuilder.and("Jester Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "blancblack-dragon", label: "Blancblack Dragon"}]),
+            ConditionBuilder.checkParentBreedIds([{id: "bauta-dragon", label: "Bauta Dragon"}])
         ])
     ),
-    new HybridBreed("risensong-dragon", "Risensong Dragon", DragonType.Dragon, DragonSubType.Lindwyrm, [Affinity.Light], PortraitFactory.uPortraits("risensong"),
-        ConditionFactory.or("Risensong Dragon", [
-            ConditionFactory.checkParentBreedIds([{id: "risensong-dragon", label: "Risensong Dragon"}]),
-            ConditionFactory.and("", [
-                ConditionFactory.checkParentBreedIds([{id: "sunrise-dragon", label: "Sunrise Dragon"}]),
-                ConditionFactory.or("", [
-                    ConditionFactory.checkParentBreedIds([{id: "sunsong-amphiptere", label: "Sunsong Amphiptere"}]),
-                    ConditionFactory.checkParentBreedIds([{id: "setsong-dragon", label: "Setsong Dragon"}]),
+    new HybridBreed("risensong-dragon", "Risensong Dragon", DragonType.Dragon, DragonSubType.Lindwyrm, [Affinity.Light], SpriteFactory.uSprites("risensong"),
+        ConditionBuilder.or("Risensong Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "risensong-dragon", label: "Risensong Dragon"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "sunrise-dragon", label: "Sunrise Dragon"}]),
+                ConditionBuilder.or("", [
+                    ConditionBuilder.checkParentBreedIds([{id: "sunsong-amphiptere", label: "Sunsong Amphiptere"}]),
+                    ConditionBuilder.checkParentBreedIds([{id: "setsong-dragon", label: "Setsong Dragon"}]),
                 ])
             ]),
         ])
     ),
-    new HybridBreed("setsong-dragon", "Setsong Dragon", DragonType.Dragon, DragonSubType.Lindwyrm, [Affinity.Light], PortraitFactory.uPortraits("setsong"),
-        ConditionFactory.or("Setsong Dragon", [
-            ConditionFactory.checkParentBreedIds([{id: "setsong-dragon", label: "Setsong Dragon"}]),
-            ConditionFactory.and("", [
-                ConditionFactory.checkParentBreedIds([{id: "sunset-dragon", label: "Sunset Dragon"}]),
-                ConditionFactory.or("", [
-                    ConditionFactory.checkParentBreedIds([{id: "sunsong-amphiptere", label: "Sunsong Amphiptere"}]),
-                    ConditionFactory.checkParentBreedIds([{id: "risensong-dragon", label: "Risensong Dragon"}]),
+    new HybridBreed("setsong-dragon", "Setsong Dragon", DragonType.Dragon, DragonSubType.Lindwyrm, [Affinity.Light], SpriteFactory.uSprites("setsong"),
+        ConditionBuilder.or("Setsong Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "setsong-dragon", label: "Setsong Dragon"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "sunset-dragon", label: "Sunset Dragon"}]),
+                ConditionBuilder.or("", [
+                    ConditionBuilder.checkParentBreedIds([{id: "sunsong-amphiptere", label: "Sunsong Amphiptere"}]),
+                    ConditionBuilder.checkParentBreedIds([{id: "risensong-dragon", label: "Risensong Dragon"}]),
                 ])
             ]),
         ])
     ),
-    new HybridBreed("shallow-water-dragon", "Shallow Water Dragon", DragonType.Dragon, DragonSubType.SeaSerpent, [Affinity.Water], PortraitFactory.mfPortraits("shallow-water"),
-        ConditionFactory.or("Shallow Water Dragon", [
-            ConditionFactory.checkParentBreedIds([{id: "shallow-water-dragon", label: "Shallow Water Dragon"}]),
-            ConditionFactory.and("", [
-                ConditionFactory.checkParentBreedIds([{id: "water-dragon", label: "Water Dragon"}]),
-                ConditionFactory.checkParentBreedIds([{id: "magi-dragon", label: "Magi Dragon"}])
+    new HybridBreed("shallow-water-dragon", "Shallow Water Dragon", DragonType.Dragon, DragonSubType.SeaSerpent, [Affinity.Water], SpriteFactory.mfSprites("shallow-water"),
+        ConditionBuilder.or("Shallow Water Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "shallow-water-dragon", label: "Shallow Water Dragon"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "water-dragon", label: "Water Dragon"}]),
+                ConditionBuilder.checkParentBreedIds([{id: "magi-dragon", label: "Magi Dragon"}])
             ])
         ])
     ),
-    new HybridBreed("soulpeace-dragon", "Soulpeace Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("soulpeace"),
-        ConditionFactory.or("Soulpeace Dragon", [
-            ConditionFactory.checkParentBreedIds([{id: "soulpeace-dragon", label: "Soulpeace Dragon"}]),
-            ConditionFactory.and("", [
-                ConditionFactory.checkParentBreedIds([{id: "daydream-dragon", label: "Daydream Dragon"}]),
-                ConditionFactory.checkParentBreedIds([{id: "white-dragon", label: "White Dragon"}])
+    new HybridBreed("soulpeace-dragon", "Soulpeace Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Light], SpriteFactory.mfSprites("soulpeace"),
+        ConditionBuilder.or("Soulpeace Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "soulpeace-dragon", label: "Soulpeace Dragon"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "daydream-dragon", label: "Daydream Dragon"}]),
+                ConditionBuilder.checkParentBreedIds([{id: "white-dragon", label: "White Dragon"}])
             ])
         ])
     ),
-    new HybridBreed("storm-rider-dragon", "Storm-Rider Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Lightning], PortraitFactory.uPortraits("storm-rider"),
-        ConditionFactory.or("Storm-Rider Dragon", [
-            ConditionFactory.checkParentBreedIds([{id: "storm-rider-dragon", label: "Storm-Rider Dragon"}]),
-            ConditionFactory.and("", [
-                ConditionFactory.checkParentBreedIds([{id: "coastal-waverunner", label: "Coastal-Waverunner"}]),
-                ConditionFactory.checkParentBreedIds([{id: "electric-dragon", label: "Electric Dragon"}])
+    new HybridBreed("storm-rider-dragon", "Storm-Rider Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Lightning], SpriteFactory.uSprites("storm-rider"),
+        ConditionBuilder.or("Storm-Rider Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "storm-rider-dragon", label: "Storm-Rider Dragon"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "coastal-waverunner", label: "Coastal-Waverunner"}]),
+                ConditionBuilder.checkParentBreedIds([{id: "electric-dragon", label: "Electric Dragon"}])
             ])
         ])
     ),
-    new HybridBreed("two-finned-bluna", "Two-Finned Bluna", DragonType.Dragon, DragonSubType.Amphiptere, [Affinity.Water], PortraitFactory.mfPortraits("two-finned-bluna"),
-        ConditionFactory.or("Two-Finned Bluna", [
-            ConditionFactory.checkParentBreedIds([{id: "two-finned-bluna", label: "Two-Finned Bluna"}]),
-            ConditionFactory.and("", [
-                ConditionFactory.checkParentBreedIds([{id: "skywing-dragon", label: "Skywing Dragon"}]),
-                ConditionFactory.or("", [
-                    ConditionFactory.checkParentBreedIds([{id: "deep-sea-dragon", label: "Deep Sea Dragon"}]),
-                    ConditionFactory.checkParentBreedIds([{id: "water-dragon", label: "Water Dragon"}]),
+    new HybridBreed("two-finned-bluna", "Two-Finned Bluna", DragonType.Dragon, DragonSubType.Amphiptere, [Affinity.Water], SpriteFactory.mfSprites("two-finned-bluna"),
+        ConditionBuilder.or("Two-Finned Bluna", [
+            ConditionBuilder.checkParentBreedIds([{id: "two-finned-bluna", label: "Two-Finned Bluna"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "skywing-dragon", label: "Skywing Dragon"}]),
+                ConditionBuilder.or("", [
+                    ConditionBuilder.checkParentBreedIds([{id: "deep-sea-dragon", label: "Deep Sea Dragon"}]),
+                    ConditionBuilder.checkParentBreedIds([{id: "water-dragon", label: "Water Dragon"}]),
                 ])
             ]),
         ])
     ),
-    new HybridBreed("ultraviolet-dragon", "Ultraviolet Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Light], PortraitFactory.mfPortraits("ultraviolet"),
-        ConditionFactory.or("Ultraviolet Dragon", [
-            ConditionFactory.checkParentBreedIds([{id: "ultraviolet-dragon", label: "Ultraviolet Dragon"}]),
-            ConditionFactory.and("", [
-                ConditionFactory.checkParentBreedIds([{id: "spitfire-dragon", label: "Spitfire Dragon"}]),
-                ConditionFactory.checkParentBreedIds([{id: "purple-dragon", label: "Purple Dragon"}]),
+    new HybridBreed("ultraviolet-dragon", "Ultraviolet Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Light], SpriteFactory.mfSprites("ultraviolet"),
+        ConditionBuilder.or("Ultraviolet Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "ultraviolet-dragon", label: "Ultraviolet Dragon"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "spitfire-dragon", label: "Spitfire Dragon"}]),
+                ConditionBuilder.checkParentBreedIds([{id: "purple-dragon", label: "Purple Dragon"}]),
             ]),
         ])
     ),

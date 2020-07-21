@@ -17,7 +17,7 @@ export default class DragDropOperator extends Operator {
                 let n = tree.copyNode(dragon, dropNodeIndex);
                 
                 n.gender = Janitors.correctDragonGender(n);
-                n.portrait = Janitors.correctPortraitGender(n);
+                n.sprite = Janitors.correctSpriteGender(n);
                 if (validate) n.state = Janitors.correctDragonState(n);
             }
             return [dropNodeIndex];
@@ -33,12 +33,12 @@ export default class DragDropOperator extends Operator {
             if(dragged != null && dropped != null){
                 let n = tree.copyNode(dragged, dropNodeIndex);
                 n.gender = Janitors.correctDragonGender(n);
-                n.portrait = Janitors.correctPortraitGender(n);
+                n.sprite = Janitors.correctSpriteGender(n);
                 if (validate) n.state = Janitors.correctDragonState(n);
 
                 n = tree.copyNode(dropped, dragNodeIndex);
                 n.gender = Janitors.correctDragonGender(n);
-                n.portrait = Janitors.correctPortraitGender(n);
+                n.sprite = Janitors.correctSpriteGender(n);
                 if (validate) n.state = Janitors.correctDragonState(n);
 
                 return [dragNodeIndex, dropNodeIndex];
@@ -61,7 +61,7 @@ export default class DragDropOperator extends Operator {
                 n = tree[dropNodeIndex]!
 
                 n.gender = Janitors.correctDragonGender(n);
-                n.portrait = Janitors.correctPortraitGender(n);
+                n.sprite = Janitors.correctSpriteGender(n);
                 if (validate) n.state = Janitors.correctDragonState(n);
 
                 return tree.getBranch(dropNodeIndex, false).reduce(
@@ -90,13 +90,13 @@ export default class DragDropOperator extends Operator {
                     tree.setBranch(dropNodeIndex, dragBranch);
                     n = tree[dropNodeIndex]!;
                     n.gender = Janitors.correctDragonGender(n);
-                    n.portrait = Janitors.correctPortraitGender(n);
+                    n.sprite = Janitors.correctSpriteGender(n);
                     if (validate) n.state = Janitors.correctDragonState(n);
 
                     tree.setBranch(dragNodeIndex, dropBranch);
                     n = tree[dragNodeIndex]!;
                     n.gender = Janitors.correctDragonGender(n);
-                    n.portrait = Janitors.correctPortraitGender(n);
+                    n.sprite = Janitors.correctSpriteGender(n);
                     if (validate) n.state = Janitors.correctDragonState(n);
 
                     let i1 = tree.getBranch(dragNodeIndex, false).reduce(

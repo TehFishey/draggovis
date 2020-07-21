@@ -1,4 +1,4 @@
-import Portrait from './Portrait';
+import Sprite from './Sprite';
 import Condition, { CompoundCondition, Operator } from './Condition';
 import { Gender } from './Dragon';
 
@@ -46,19 +46,19 @@ export default class Breed {
     subType: DragonSubType;
     affinity: Array<Affinity>;
     genders: string;                    // String representing possble dragon genders. Format: "{Genders possible for gen1}-{Genders possible for later gens}"
-    portraits: Map<string, Portrait>;   // Dictionary of Portraits associated with this breed, keyed by Portrait.id
+    sprites: Map<string, Sprite>;   // Dictionary of Sprites associated with this breed, keyed by Sprite.id
     condition: Condition;               // Condition to be used for validation checks
 
-    constructor(id: string, label: string, type=DragonType.Dragon, subType=DragonSubType.Western, affinity=[Affinity.Neutral], genders="mf-mf", portraits?: Array<Portrait>, condition?: Condition) {
+    constructor(id: string, label: string, type=DragonType.Dragon, subType=DragonSubType.Western, affinity=[Affinity.Neutral], genders="mf-mf", sprites?: Array<Sprite>, condition?: Condition) {
         this.id = id;                                           
         this.label = label;                                     
         this.type = type;
         this.subType = subType;
         this.affinity = affinity                     
         this.genders = genders;                      
-        this.portraits = new Map<string, Portrait>();
-        if(portraits !== undefined)
-            portraits.forEach((portrait: Portrait)=>this.portraits.set(portrait.id, portrait));
+        this.sprites = new Map<string, Sprite>();
+        if(sprites !== undefined)
+            sprites.forEach((sprite: Sprite)=>this.sprites.set(sprite.id, sprite));
             
         this.condition = Breed.setBreedCondition(this.id, this.genders, this.label, condition);
     }

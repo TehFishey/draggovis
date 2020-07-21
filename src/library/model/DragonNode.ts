@@ -1,6 +1,6 @@
 import Dragon, { Gender, DragonState } from '../defines/Dragon';
 import Breed from "../defines/Breed";
-import Portrait from "../defines/Portrait";
+import Sprite from "../defines/Sprite";
 import MetaData from '../defines/MetaData';
 import Tree from './Tree';
 
@@ -11,8 +11,8 @@ export default class DragonNode extends Dragon {
     tree: Tree;
     meta: MetaData;
 
-    constructor(tree: Tree, index: number, gender: Gender, breed: Breed, portrait?: Portrait, state?: DragonState) {
-        super(gender, breed, portrait, state)
+    constructor(tree: Tree, index: number, gender: Gender, breed: Breed, sprite?: Sprite, state?: DragonState) {
+        super(gender, breed, sprite, state)
         this.index = index;
         this.tree = tree;
         this.meta = new MetaData()

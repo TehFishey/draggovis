@@ -1,11 +1,11 @@
 import React from 'react';
 import DVSelect, { menuOption } from '../../../general/select/Select'
 import Breed from '../../../../library/defines/Breed';
-import Portrait from '../../../../library/defines/Portrait';
+import Sprite from '../../../../library/defines/Sprite';
 import Dragon, { DragonState, Gender } from '../../../../library/defines/Dragon';
 
 import Validation from '../../../_utilities/TemplateValidation';
-import { Breeds, Portraits } from '../../../../defines/Defines';
+import { Breeds, Sprites } from '../../../../defines/Defines';
 import { Settings } from '../../../context/Settings';
 
 interface Props {
@@ -17,11 +17,11 @@ interface Props {
 
 interface State {
     breedOptions: Array<menuOption>,
-    portraitOptions: Array<menuOption>,
+    spriteOptions: Array<menuOption>,
     selectedBreedOption: menuOption,
-    selectedPortraitOption : menuOption,
+    selectedSpriteOption : menuOption,
     selectedBreed: Breed,
-    selectedPortrait: Portrait,
+    selectedSprite: Sprite,
     selectedState: DragonState,
     validate: boolean
 }
@@ -35,18 +35,18 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
 
         this.state = {
             breedOptions : [],
-            portraitOptions : [],
+            spriteOptions : [],
             selectedBreedOption : {value : 'guardian-dragon', label: 'Guardian Dragon'},
-            selectedPortraitOption : {value: 'guardian-u', label: 'Standard'},
+            selectedSpriteOption : {value: 'guardian-u', label: 'Standard'},
             selectedBreed : Breeds.dict.get('guardian-dragon')!,
-            selectedPortrait : Portraits.dict.get('guardian-u')!,
+            selectedSprite : Sprites.dict.get('guardian-u')!,
             selectedState : DragonState.Healthy,
             validate: true
         }
     }
 
     updateArg() {
-        let arg = new Dragon(Gender.Undefined, this.state.selectedBreed, this.state.selectedPortrait, this.state.selectedState)
+        let arg = new Dragon(Gender.Undefined, this.state.selectedBreed, this.state.selectedSprite, this.state.selectedState)
         this.props.setArg(arg);
     }
 
@@ -56,7 +56,7 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
             selectedBreed : breed,
             selectedBreedOption : {value : breed.id, label: breed.label},
         }, () => {
-            this.updatePortraitOptions(
+            this.updateSpriteOptions(
                 () => {this.updateArg();}
             );
         });
@@ -70,23 +70,23 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
         this.setState({breedOptions : options}, callback)
     }
 
-    updatePortraitOptions(callback?: () => void) {
+    updateSpriteOptions(callback?: () => void) {
         let options: Array<menuOption> = (this.state.validate) ? 
-            Validation.setPortraitOptions(this.state.selectedBreed, this.props.gender, this.state.validate) : 
-            Validation.setPortraitOptions(this.state.selectedBreed, undefined, this.state.validate);
+            Validation.setSpriteOptions(this.state.selectedBreed, this.props.gender, this.state.validate) : 
+            Validation.setSpriteOptions(this.state.selectedBreed, undefined, this.state.validate);
         
         this.setState({
-                portraitOptions : options,
-                selectedPortraitOption : options[0],
-                selectedPortrait : Portraits.dict.get(options[0].value)!
+                spriteOptions : options,
+                selectedSpriteOption : options[0],
+                selectedSprite : Sprites.dict.get(options[0].value)!
             }, callback
         )
     }
 
-    selectPortrait = (selectedOption: any) => {
+    selectSprite = (selectedOption: any) => {
         this.setState({
-            selectedPortrait : Portraits.dict.get(selectedOption.value)!,
-            selectedPortraitOption : {value : selectedOption.value, label: selectedOption.label}
+            selectedSprite : Sprites.dict.get(selectedOption.value)!,
+            selectedSpriteOption : {value : selectedOption.value, label: selectedOption.label}
         },() => { this.updateArg(); });
     }
     
@@ -108,7 +108,7 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
     componentDidMount() {
         this.setState({validate: !this.context.disableValid}, ()=>{
             this.updateBreedOptions();
-            this.updatePortraitOptions();
+            this.updateSpriteOptions();
         });
     }
 
@@ -125,12 +125,12 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
                         orderOptions={ true }
                     />
                 </div>
-                <div className='tpi-dragon-portrait'>
-                    Portrait:<br/>
+                <div className='tpi-dragon-sprite'>
+                    Sprite:<br/>
                     <DVSelect
-                        value = { this.state.selectedPortraitOption }
-                        options = { this.state.portraitOptions }
-                        onChange = { this.selectPortrait }
+                        value = { this.state.selectedSpriteOption }
+                        options = { this.state.spriteOptions }
+                        onChange = { this.selectSprite }
                     />
                 </div>
                 <div className='tpi-dragon-state'>

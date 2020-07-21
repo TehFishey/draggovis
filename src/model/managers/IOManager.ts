@@ -2,10 +2,10 @@ import _invert from 'lodash/invert';
 
 import Tree from "../../library/model/Tree";
 import Breed from "../../library/defines/Breed"
-import Portrait from "../../library/defines/Portrait"
+import Sprite from "../../library/defines/Sprite"
 import { Gender, DragonState } from "../../library/defines/Dragon";
 
-import { Portraits, Breeds } from "../../defines/Defines";
+import { Sprites, Breeds } from "../../defines/Defines";
 import DragonNode from '../../library/model/DragonNode';
 
 import key0 from "../lookup-keys/iokey0.json";
@@ -44,14 +44,14 @@ export default class IOManager {
     }
 
     generateLookups() {
-        let portraitLookup: Lookup = {};
+        let spriteLookup: Lookup = {};
         let breedLookup: Lookup = {};
         let genderLookup: Lookup = IOManager.createGenderLookup(this.version.toString());
         let stateLookup: Lookup = IOManager.createStateLookup(this.version.toString());
 
-        Portraits.arr.forEach((portrait: Portrait, index: number) => {
+        Sprites.arr.forEach((sprite: Sprite, index: number) => {
             let n = index.toString(36);
-            portraitLookup[n] = portrait.id;
+            spriteLookup[n] = sprite.id;
         });
         Breeds.arr.forEach((breed: Breed, index: number) => {
             let n = index.toString(36);
@@ -59,7 +59,7 @@ export default class IOManager {
         });
 
         let IOKey: IOKey = {'version' : this.version.toString()}
-        IOKey['portraitLookup'] = portraitLookup;
+        IOKey['spriteLookup'] = spriteLookup;
         IOKey['breedLookup'] = breedLookup;
         IOKey['genderLookup'] = genderLookup;
         IOKey['stateLookup'] = stateLookup;
@@ -95,7 +95,7 @@ export default class IOManager {
             if (this.ioKeys.get(version) != null) {
                 ioKey = this.ioKeys.get(version)!;
                 bLookup = new Map(Object.entries(_invert(ioKey.breedLookup as Object)));
-                pLookup = new Map(Object.entries(_invert(ioKey.portraitLookup as Object)));
+                pLookup = new Map(Object.entries(_invert(ioKey.spriteLookup as Object)));
                 gLookup = new Map(Object.entries(_invert(ioKey.genderLookup as Object)));
                 sLookup = new Map(Object.entries(_invert(ioKey.stateLookup as Object)));
             }
@@ -138,7 +138,7 @@ export default class IOManager {
             else if (this.ioKeys.get(version) != null) {
                 ioKey = this.ioKeys.get(version)!
                 bLookup = new Map(Object.entries(ioKey.breedLookup));
-                pLookup = new Map(Object.entries(ioKey.portraitLookup));
+                pLookup = new Map(Object.entries(ioKey.spriteLookup));
                 gLookup = new Map(Object.entries(ioKey.genderLookup));
                 sLookup = new Map(Object.entries(ioKey.stateLookup));
             }
@@ -154,7 +154,7 @@ export default class IOManager {
      * @param tree tree to serialize
      * @param version version of iokey to use.
      * @param bLookup Map of breed-id : lookup-index
-     * @param pLookup Map of portrait-id : lookup-index
+     * @param pLookup Map of sprite-id : lookup-index
      * @param gLookup Map of Gender : lookup-index
      * @param sLookup Map of DragonState : lookup-index
      */
@@ -169,7 +169,7 @@ export default class IOManager {
                 throw new Error(`Exporter: Lookup Error! Cannot find gender key for gender: '${tree[0]!.gender}'`)
         
             // Data for individual tree nodes
-            // Format: |'breed id index''portrait id index''state index''name'|`
+            // Format: |'breed id index''sprite id index''state index''name'|`
             for (let i = 0; i < tree.length; i++) {
                 let node: DragonNode | null = tree[i]!;
                 let str: string = '|';
@@ -185,10 +185,10 @@ export default class IOManager {
                     else 
                         throw new Error(`Exporter: Lookup Error! Cannot find breed index for breed: '${node.breed.id}'`);
 
-                    if((pLookup.get(node.portrait.id)) != null) 
-                        p = pLookup.get(node.portrait.id)!;
+                    if((pLookup.get(node.sprite.id)) != null) 
+                        p = pLookup.get(node.sprite.id)!;
                     else 
-                        throw new Error(`Exporter: Lookup Error! Cannot find portrait index for breed: '${node.portrait.id}'`);
+                        throw new Error(`Exporter: Lookup Error! Cannot find sprite index for breed: '${node.sprite.id}'`);
 
                     if((sLookup.get(node.state)) != null) 
                         s = sLookup.get(node.state)!;
@@ -212,7 +212,7 @@ export default class IOManager {
      * Deserializes an array of strings, returning a Tree object. Expects full tree string, split by '|', minus version tag.
      * @param data split data string to parse
      * @param bLookup Map of lookup-index : breed-id
-     * @param pLookup Map of lookup-index : portrait-id
+     * @param pLookup Map of lookup-index : sprite-id
      * @param gLookup Map of lookup-index : Gender
      * @param sLookup Map of lookup-index : DragonState
      */
@@ -231,12 +231,12 @@ export default class IOManager {
                 if(data[i] !== '') {
                     let node: Array<string> = [
                         data[i].slice(0,2).replace('_',''), // Breed code
-                        data[i].slice(2,4).replace('_',''), // Portrait code
+                        data[i].slice(2,4).replace('_',''), // Sprite code
                         data[i].slice(4,5),                 // State code
                         data[i].slice(5,data[i].length)     // Name
                     ];
                     let breed: Breed;
-                    let portrait: Portrait;
+                    let sprite: Sprite;
                     let gender: Gender = (i === 0) ? rootGender : 
                         (i % 2 === 0) ? Gender.Female : Gender.Male;
                     let state: DragonState;
@@ -251,16 +251,16 @@ export default class IOManager {
                     else throw new Error(`Importer: Parse Error! Breed id '${bId}' at index ${i} is invalid or unreadable.`)
                     
                     if(pId != null) {
-                        if(Portraits.dict.get(pId) != null) portrait = Portraits.dict.get(pId)!;
-                        else throw new Error(`Lookup Error: Cannot find portrait with id '${pId}'.`);
+                        if(Sprites.dict.get(pId) != null) sprite = Sprites.dict.get(pId)!;
+                        else throw new Error(`Lookup Error: Cannot find sprite with id '${pId}'.`);
                     } 
-                    else throw new Error(`Importer: Parse Error! Portrait id '${pId}' at index ${i} is invalid or unreadable.`);
+                    else throw new Error(`Importer: Parse Error! Sprite id '${pId}' at index ${i} is invalid or unreadable.`);
 
                     if (sLookup.get(node[2]) != null && sLookup.get(node[2])! in DragonState) 
                         state = sLookup.get(node[2])! as DragonState;
                     else throw new Error(`Importer: Parse Error! Dragon State '${node[2]}' at index ${i} is invalid or unreadable.`);
 
-                    out.createNode(i,gender,breed,portrait,state);
+                    out.createNode(i,gender,breed,sprite,state);
                     out[i]!.name = (node[3] != null) ? node[3] : '';
                 }
             }

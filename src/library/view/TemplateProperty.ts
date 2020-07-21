@@ -8,7 +8,7 @@ export enum propType {
 }
 
 // Dragon template props will always default to Guardian, for *reasons*...
-const defaultDragon = new Dragon(Gender.Undefined, DragonBreeds[59], DragonBreeds[59].portraits.get('guardian-u'),DragonState.Healthy);
+const defaultDragon = new Dragon(Gender.Undefined, DragonBreeds[59], DragonBreeds[59].sprites.get('guardian-u'),DragonState.Healthy);
 
 export abstract class TemplateProperty {
     id: string;

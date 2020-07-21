@@ -5,7 +5,7 @@ import Tree from "../../library/model/Tree";
 import DragonNode from "../../library/model/DragonNode";
 import { Gender, DragonState } from "../../library/defines/Dragon";
 
-import { Portraits, Breeds } from "../../defines/Defines";
+import { Sprites, Breeds } from "../../defines/Defines";
 import Operator from "../../library/controller/Operator";
 
 
@@ -34,7 +34,7 @@ export default class EditPanelOperator extends Operator {
             let dragon = tree[index];
             if(dragon != null && index === 0) {
                 dragon.gender = gender;
-                dragon.portrait = dragon.portrait = Janitors.getDefaultPortrait(dragon, [...dragon.breed.portraits.values()]);
+                dragon.sprite = dragon.sprite = Janitors.getDefaultSprite(dragon, [...dragon.breed.sprites.values()]);
                 return[index];
             }
             return[];
@@ -48,7 +48,7 @@ export default class EditPanelOperator extends Operator {
             let dragon = tree[index];
             if(dragon != null) {
                 dragon.breed = Breeds.dict.get(breedId)!;
-                dragon.portrait = Janitors.getDefaultPortrait(dragon, [...dragon.breed.portraits.values()]);
+                dragon.sprite = Janitors.getDefaultSprite(dragon, [...dragon.breed.sprites.values()]);
                 return[index];
             }
             return [];
@@ -57,11 +57,11 @@ export default class EditPanelOperator extends Operator {
         return this.executeStrategy(strategy);
     }
 
-    updatePortrait(index: number, portraitId: string, validate: boolean=true) : Promise<executionOutput> {
+    updateSprite(index: number, spriteId: string, validate: boolean=true) : Promise<executionOutput> {
         let strategy : executionStrategy = (tree: Tree) => {
             let dragon = tree[index];
             if(dragon != null) {
-                dragon.portrait = Portraits.dict.get(portraitId)!;
+                dragon.sprite = Sprites.dict.get(spriteId)!;
                 return[index];
             }
             return [];
@@ -78,28 +78,28 @@ export default class EditPanelOperator extends Operator {
                 let n : DragonNode;
 
                 tree.removeNode(0);
-                n = tree.createNode(0, Gender.Male, dragon.breed, dragon.portrait)
+                n = tree.createNode(0, Gender.Male, dragon.breed, dragon.sprite)
                 
-                n.portrait = Janitors.correctPortraitGender(n);
+                n.sprite = Janitors.correctSpriteGender(n);
 
                 if(dragon.gender === Gender.Male) {
                     tree.setBranch(1, branch);
                     if (validate) tree[1]!.state = Janitors.correctDragonState(tree[1]!);
-                    n = tree.createNode(2, Gender.Female, dragon.breed, dragon.portrait);
-                    n.portrait = Janitors.correctPortraitGender(n);
+                    n = tree.createNode(2, Gender.Female, dragon.breed, dragon.sprite);
+                    n.sprite = Janitors.correctSpriteGender(n);
                 }
                 else {
                     tree.setBranch(2, branch);
                     if (validate) tree[2]!.state = Janitors.correctDragonState(tree[2]!);
-                    n = tree.createNode(1, Gender.Male, dragon.breed, dragon.portrait);
-                    n.portrait = Janitors.correctPortraitGender(n);
+                    n = tree.createNode(1, Gender.Male, dragon.breed, dragon.sprite);
+                    n.sprite = Janitors.correctSpriteGender(n);
                 } 
                 if(dragon.gender === Gender.Undefined) {
                     tree.setBranch(2, branch);
                     if (validate) tree[2]!.state = Janitors.correctDragonState(tree[2]!);
                     tree[2]!.gender = Janitors.correctDragonGender(tree[2]!);
-                    n = tree.createNode(1, Gender.Male, dragon.breed, dragon.portrait);
-                    n.portrait = Janitors.correctPortraitGender(n);
+                    n = tree.createNode(1, Gender.Male, dragon.breed, dragon.sprite);
+                    n.sprite = Janitors.correctSpriteGender(n);
                     
                 }
 
@@ -122,7 +122,7 @@ export default class EditPanelOperator extends Operator {
             if(index !== 0 && dragon != null) {
                 let branch = tree.getBranch(index, true);
                 tree.setBranch(0, branch);
-                tree[0]!.portrait = Janitors.correctPortraitGender(tree[0]!);
+                tree[0]!.sprite = Janitors.correctSpriteGender(tree[0]!);
 
                 return tree.getBranch(0, false).reduce(
                     function(result, node) {
@@ -146,10 +146,10 @@ export default class EditPanelOperator extends Operator {
                     let fi = dragon.getFatherIndex();
                     let n : DragonNode;
                     
-                    n = tree.createNode(dragon.getFatherIndex(), Gender.Male, dragon.breed, dragon.portrait);
-                    n.portrait = Janitors.getDefaultPortrait(n, [...n.breed.portraits.values()]);
-                    n = tree.createNode(dragon.getMotherIndex(), Gender.Female, dragon.breed, dragon.portrait);
-                    n.portrait = Janitors.getDefaultPortrait(n, [...n.breed.portraits.values()]);
+                    n = tree.createNode(dragon.getFatherIndex(), Gender.Male, dragon.breed, dragon.sprite);
+                    n.sprite = Janitors.getDefaultSprite(n, [...n.breed.sprites.values()]);
+                    n = tree.createNode(dragon.getMotherIndex(), Gender.Female, dragon.breed, dragon.sprite);
+                    n.sprite = Janitors.getDefaultSprite(n, [...n.breed.sprites.values()]);
                     return [fi, mi];
                 };
             }
@@ -195,7 +195,7 @@ export default class EditPanelOperator extends Operator {
                         tree.setBranch(fi, mBranch);
                         [tree[mi], tree[fi]].forEach((n: DragonNode | null) =>{
                             n!.gender = Janitors.correctDragonGender(n!);
-                            n!.portrait = Janitors.correctPortraitGender(n!);
+                            n!.sprite = Janitors.correctSpriteGender(n!);
                         });
                         changed.push(mi,fi);
                     }

@@ -11,8 +11,8 @@ let GenericRules : Array<Rule> = [
     new Rule("g-invport",
         (node: DragonNode) => { return true },
         Rule.targetFamily,
-        (node: DragonNode) => { return node.portrait.condition.validateVerbose(node) }, 
-        'Invalid Portrait:<br/>'
+        (node: DragonNode) => { return node.sprite.condition.validateVerbose(node) }, 
+        'Invalid Sprite:<br/>'
     )
 ]
 

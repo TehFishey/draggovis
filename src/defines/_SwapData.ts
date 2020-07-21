@@ -1,21 +1,21 @@
-import {neglectedPortraits, neglectedCondition} from './swaps/NeglectedPortraits';
-import {vampirePortraits, vampireCondition} from './swaps/VampirePortraits';
-import {zombiePortraits, zombieCondition} from './swaps/ZombiePortraits';
-import {deadPortraits, deadCondition} from './swaps/GravePortraits';
+import {neglectedSprites, neglectedCondition} from './swaps/NeglectedSprites';
+import {vampireSprites, vampireCondition} from './swaps/VampireSprites';
+import {zombieSprites, zombieCondition} from './swaps/ZombieSprites';
+import {deadSprites, deadCondition} from './swaps/GraveSprites';
 
-import Portrait from '../library/defines/Portrait';
+import Sprite from '../library/defines/Sprite';
 import { DragonState } from '../library/defines/Dragon';
 import Condition from '../library/defines/Condition';
 
 
 export default class SwapData {
     readonly conds: Map<DragonState, Condition>
-    readonly dict: Map<DragonState, Array<Portrait>>;
-    readonly arr: Array<Array<Portrait>>;
+    readonly dict: Map<DragonState, Array<Sprite>>;
+    readonly arr: Array<Array<Sprite>>;
 
     constructor() {
-        this.arr = [deadPortraits, zombiePortraits, vampirePortraits, neglectedPortraits];
-        this.dict = new Map<DragonState, Array<Portrait>>();
+        this.arr = [deadSprites, zombieSprites, vampireSprites, neglectedSprites];
+        this.dict = new Map<DragonState, Array<Sprite>>();
         this.dict.set(DragonState.Dead, this.arr[0]);
         this.dict.set(DragonState.Undead, this.arr[1]);
         this.dict.set(DragonState.Vampire, this.arr[2]);
@@ -27,7 +27,7 @@ export default class SwapData {
         this.conds.set(DragonState.Vampire, vampireCondition);
         this.conds.set(DragonState.Neglected, neglectedCondition);
 
-        console.log(`Model: Defining alternate portrait data...`);
+        console.log(`Model: Defining alternate sprite data...`);
     };
 };
 

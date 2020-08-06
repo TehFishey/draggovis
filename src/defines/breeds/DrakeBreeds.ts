@@ -30,6 +30,7 @@ let DrakeBreeds: Array<Breed> = [
         ])
     ),
     new DrakeBreed("ochredrake", "Ochredrake", [Affinity.Neutral], SpriteFactory.uSprites("ochredrake")),
+    new DrakeBreed("pseudo-wyvern", "Pseudo-Wyvern Drake", [Affinity.Neutral], SpriteFactory.uSprites("pseudo-wyvern")),
     new DrakeBreed("tarantula-hawk-drake", "Tarantula Hawk Drake", [Affinity.Earth], SpriteFactory.uSprites("tarantula-hawk")),
     new DrakeBreed("tatterdrake", "Tatterdrake", [Affinity.Dark], SpriteFactory.uSprites("tatterdrake")),
     new DrakeBreed("vremya-drake", "Vremya Drake", [Affinity.Time], SpriteFactory.uSprites("vremya"))

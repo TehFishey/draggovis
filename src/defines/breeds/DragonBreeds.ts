@@ -75,6 +75,7 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("dorsal-dragon", "Dorsal Dragon", DragonSubType.Wingless, [Affinity.Neutral], SpriteFactory.mfAltSprites("ridgewing", true)),
     new DragonBreed("electric-dragon", "Electric Dragon", DragonSubType.Western, [Affinity.Lightning], SpriteFactory.mfSprites("electric")),
     new DragonBreed("ember-dragon", "Ember Dragon", DragonSubType.Western, [Affinity.Fire], SpriteFactory.mfSprites("ember")),
+    new DragonBreed("elux-lucis-dragon", "Elux Lucis Dragon", DragonSubType.Lindwyrm, [Affinity.Light, Affinity.Air], SpriteFactory.uSprites("elux-lucis")),
     new DragonBreed("falconiform-wyvern", "Falconiform Wyvern", DragonSubType.Wyvern, [Affinity.Fire], SpriteFactory.mfSprites("falconiform")),
     new DragonBreed("fell-dragon", "Fell Dragon", DragonSubType.Wingless, [Affinity.Death], SpriteFactory.mfSprites("fell")),
     new DragonBreed("fever-wyvern", "Fever Wyvern", DragonSubType.Wyvern, [Affinity.Death], SpriteFactory.uSprites("fever")),

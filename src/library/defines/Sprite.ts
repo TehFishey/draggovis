@@ -26,8 +26,8 @@ export default class Sprite {
     }
 
     static imgRoot = `./sprites/`
-    static unkLargeImgPath = `${Sprite.imgRoot}/unknown_large.png`;
-    static unkThumbImgPath = `${Sprite.imgRoot}/unknown_small.png`;
+    static unkLargeImgPath = `${Sprite.imgRoot}unknown_large.png`;
+    static unkThumbImgPath = `${Sprite.imgRoot}unknown_small.png`;
 
     private static getLargeImg(sprite : Sprite | null) : string {
         if(sprite != null) 

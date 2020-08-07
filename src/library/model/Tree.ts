@@ -1,6 +1,6 @@
 import DragonNode from './DragonNode';
 import Breed from '../defines/Breed';
-import Portrait from '../defines/Portrait';
+import Sprite from '../defines/Sprite';
 import { Gender, DragonState } from '../defines/Dragon';
 
 export default class Tree extends Array<DragonNode | null> {
@@ -21,14 +21,14 @@ export default class Tree extends Array<DragonNode | null> {
      * @param index Index of node within the tree.
      * @param gender Gender of dragon.
      * @param breed Breed of dragon.
-     * @param portrait Portrait of dragon.
+     * @param sprite Sprite of dragon.
      * @param state DragonState of dragon. Defaults to Healthy.
      */
-    createNode(index: number, gender: Gender, breed: Breed, portrait:Portrait, state?:DragonState) : DragonNode {
+    createNode(index: number, gender: Gender, breed: Breed, sprite:Sprite, state?:DragonState) : DragonNode {
         if(index >= Tree.generation(12)) 
             throw new Error(`Lineage size cannot exceed 12 generations.`)
         else {
-            this[index] = new DragonNode(this, index, gender, breed, portrait, state);
+            this[index] = new DragonNode(this, index, gender, breed, sprite, state);
             return this[index]!;
         }
     }
@@ -59,7 +59,7 @@ export default class Tree extends Array<DragonNode | null> {
      */
     copyNode(node: DragonNode, index?: number) : DragonNode {
         index = (index != null) ? index : node.index;
-        let n = this.createNode(index, node.gender, node.breed, node.portrait, node.state);
+        let n = this.createNode(index, node.gender, node.breed, node.sprite, node.state);
         n.name = node.name;
 
         return n;

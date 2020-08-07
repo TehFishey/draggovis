@@ -1,6 +1,6 @@
 import Breed from "../../library/defines/Breed";
 import HybridBreeds from "../../defines/breeds/HybridBreeds";
-import Portrait from "../../library/defines/Portrait";
+import Sprite from "../../library/defines/Sprite";
 import { Gender } from "../../library/defines/Dragon";
 import { menuOption } from "../general/select/Select";
 import { Breeds } from "../../defines/Defines";
@@ -20,8 +20,8 @@ export default {
      * Returns filtered set of menu options for a react-select menu, with each entry corresponding
      * to a validated Breed object from Defines. If gender is defined, returns only breeds that are always
      * valid for that gender. If validation is false, returns all breed objects.
-     * @param ids Set of valid Portrait Ids for select menu. Defaults to all.
-     * @param pool Pool to select Portraits from. Defaults to Portraits.dict.
+     * @param ids Set of valid Sprite Ids for select menu. Defaults to all.
+     * @param pool Pool to select Sprites from. Defaults to Sprites.dict.
      */
     setBreedOptions(gender?: Gender, validate: boolean=true) : Array<menuOption> {
         let validBreedIds: Array<string> = [];
@@ -43,35 +43,35 @@ export default {
 
     /**
      * Returns filtered set of menu options for a react-select menu, with each entry corresponding
-     * to a portrait associated with the given breed. If gender is defined, returns only portraits that are
-     * valid for that gender. If validation is false, returns all portraits associated with breed.
-     * @param ids Set of valid Portrait Ids for select menu. Defaults to all.
-     * @param pool Pool to select Portraits from. Defaults to Portraits.dict.
+     * to a sprite associated with the given breed. If gender is defined, returns only sprites that are
+     * valid for that gender. If validation is false, returns all sprites associated with breed.
+     * @param ids Set of valid Sprite Ids for select menu. Defaults to all.
+     * @param pool Pool to select Sprites from. Defaults to Sprites.dict.
      */
-    setPortraitOptions(breed: Breed, gender?: Gender, validate: boolean=true) : Array<menuOption> {
-        let validPortraitIds: Array<string> = [];
-        let pool: Map<string, Portrait> = breed.portraits;
+    setSpriteOptions(breed: Breed, gender?: Gender, validate: boolean=true) : Array<menuOption> {
+        let validSpriteIds: Array<string> = [];
+        let pool: Map<string, Sprite> = breed.sprites;
 
-        [...pool.keys()].forEach((portraitId: string) => {
-            if(!validate) validPortraitIds.push(portraitId);
+        [...pool.keys()].forEach((spriteId: string) => {
+            if(!validate) validSpriteIds.push(spriteId);
 
-            else if (this.isDefault(pool.get(portraitId)!) && (
-                    (gender === Gender.Male && this.canBeMale(pool.get(portraitId)!)) ||
-                    (gender === Gender.Female && this.canBeFemale(pool.get(portraitId)!)) ||
+            else if (this.isDefault(pool.get(spriteId)!) && (
+                    (gender === Gender.Male && this.canBeMale(pool.get(spriteId)!)) ||
+                    (gender === Gender.Female && this.canBeFemale(pool.get(spriteId)!)) ||
                     (gender === undefined))
                 )
-                validPortraitIds.push(portraitId);
+                validSpriteIds.push(spriteId);
         });
 
-        if (gender === undefined) return MenuOptions.portraitPairOptions(validPortraitIds);
-        return MenuOptions.portraitOptions(validPortraitIds, pool);
+        if (gender === undefined) return MenuOptions.spritePairOptions(validSpriteIds);
+        return MenuOptions.spriteOptions(validSpriteIds, pool);
     },
 
     /**
-     * Checks if a breed or dimorphic portrait is valid for female dragons. 
-     * @param item breed or portrait to check.
+     * Checks if a breed or dimorphic sprite is valid for female dragons. 
+     * @param item breed or sprite to check.
      */
-    canBeFemale(item: Breed | Portrait) : boolean {
+    canBeFemale(item: Breed | Sprite) : boolean {
         if(item instanceof Breed)
             return (item.genders.split('-')[0].includes('f') && item.genders.split('-')[1].includes('f'));
         else
@@ -79,10 +79,10 @@ export default {
     },
     
     /**
-     * Checks if a breed or dimorphic portrait is valid for male dragons. 
-     * @param item breed or portrait to check.
+     * Checks if a breed or dimorphic sprite is valid for male dragons. 
+     * @param item breed or sprite to check.
      */
-    canBeMale(item: Breed | Portrait) : boolean {
+    canBeMale(item: Breed | Sprite) : boolean {
         if(item instanceof Breed)
             return (item.genders.split('-')[0].includes('m') && item.genders.split('-')[1].includes('m'));
         else
@@ -98,10 +98,10 @@ export default {
     },
 
     /**
-     * Checks if a portrait is a default selection option.
-     * @param portrait portrait to check.
+     * Checks if a sprite is a default selection option.
+     * @param sprite sprite to check.
      */
-    isDefault(portrait: Portrait) : boolean {
-        return(portrait.isDefault)
+    isDefault(sprite: Sprite) : boolean {
+        return(sprite.isDefault)
     }
 }

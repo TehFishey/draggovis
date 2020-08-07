@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/public/portraits
 /public/sprites
 /.pnp
 .pnp.js

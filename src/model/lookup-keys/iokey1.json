@@ -1,6 +1,6 @@
 {
     "version": "1",
-    "portraitLookup": {
+    "spriteLookup": {
         "0": "aeon-m",
         "1": "aeon-f",
         "2": "aeria-gloris-u",

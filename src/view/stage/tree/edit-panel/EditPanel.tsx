@@ -63,10 +63,10 @@ export default class EditPanel extends React.Component<Props, State> {
             );
     }
 
-    handlePortraitUpdate = (portraitId: string, validate : boolean) => {
+    handleSpriteUpdate = (spriteId: string, validate : boolean) => {
         if(this.operator != null)
             this.props.setData(
-                this.operator.updatePortrait(this.props.node.index, portraitId, validate)
+                this.operator.updateSprite(this.props.node.index, spriteId, validate)
             );
     }
 
@@ -189,21 +189,21 @@ export default class EditPanel extends React.Component<Props, State> {
                                 onChange={this.handleBreedUpdate}
                             />
                         </div>
-                        <div className='ep-props-label' style={{gridArea: 'p-label'}}>Art</div>
+                        <div className='ep-props-label' style={{gridArea: 'p-label'}}>Sprite</div>
                         <div className='ep-props-control' style={{gridArea: 'p-set'}}>
                             <EditPanelPulldown 
-                                selectionPool={this.props.node.breed.portraits}
-                                currentSelection={this.props.node.portrait}
+                                selectionPool={this.props.node.breed.sprites}
+                                currentSelection={this.props.node.sprite}
                                 orderOptions={false}
-                                defaultLabel = {'Select Portrait'}
+                                defaultLabel = {'Select Sprite'}
                                 validationNode = {(value.disableValid) ? undefined : this.props.node}
                                 validationFactors = {[
                                     this.props.node.breed,
                                     this.props.node.gender,
-                                    ((this.props.node.father() !== undefined) ? this.props.node.father()!.portrait : null),
-                                    ((this.props.node.mother() !== undefined) ? this.props.node.mother()!.portrait : null)
+                                    ((this.props.node.father() !== undefined) ? this.props.node.father()!.sprite : null),
+                                    ((this.props.node.mother() !== undefined) ? this.props.node.mother()!.sprite : null)
                                 ]}
-                                onChange={this.handlePortraitUpdate}
+                                onChange={this.handleSpriteUpdate}
                             />
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 import Breed from "./Breed";
-import Portrait from "./Portrait";
+import Sprite from "./Sprite";
 
 export enum Gender {
     Undefined = 'Undefined',
@@ -19,14 +19,14 @@ export default class Dragon {
     name: string;
     gender: Gender;
     breed: Breed;
-    portrait: Portrait;
+    sprite: Sprite;
     state: DragonState;
 
-    constructor(gender: Gender, breed: Breed, portrait?: Portrait, state?: DragonState) {
+    constructor(gender: Gender, breed: Breed, sprite?: Sprite, state?: DragonState) {
         this.name = "";
         this.gender = gender || Gender.Undefined;
         this.breed = breed || undefined;
-        this.portrait = portrait || new Portrait("undefined-portrait", "Undefined Portrait", false);
+        this.sprite = sprite || new Sprite("undefined-sprite", "Undefined Sprite", false);
         this.state = state || DragonState.Healthy;
     }
 };

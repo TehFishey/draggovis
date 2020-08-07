@@ -2,12 +2,12 @@ import React from 'react';
 import DVSelect, {menuOption} from '../../../general/select/Select'
 
 import Breed from '../../../../library/defines/Breed';
-import Portrait from '../../../../library/defines/Portrait';
+import Sprite from '../../../../library/defines/Sprite';
 import DragonNode from '../../../../library/model/DragonNode';
 
 interface Props {
-    selectionPool: Map<string,Breed> | Map<string,Portrait>,
-    currentSelection?: Breed | Portrait,
+    selectionPool: Map<string,Breed> | Map<string,Sprite>,
+    currentSelection?: Breed | Sprite,
     defaultLabel: string,
     validationNode?: DragonNode,
     validationFactors: Array<any>,
@@ -35,22 +35,22 @@ export default class EditPanelSelect extends React.Component<Props, State> {
     }
     
     /**
-     * Filters through Breeds/Portraits in a dictionary (selectionPool prop), determining which are valid
-     * choices for the current DragonNode (validationNode prop). If no validationNode exists, all Breeds/Portraits 
+     * Filters through Breeds/Sprites in a dictionary (selectionPool prop), determining which are valid
+     * choices for the current DragonNode (validationNode prop). If no validationNode exists, all Breeds/Sprites 
      * are considered valid. Populates menuOption array (validOptions state) with validated items.
      */
     setValidOptions() {
-        let selectionPool : Array<Breed | Portrait> = [...this.props.selectionPool.values()];
+        let selectionPool : Array<Breed | Sprite> = [...this.props.selectionPool.values()];
         
-        // If a DragonNode was input, filter selection pool by validating each Breed/Portrait against it
+        // If a DragonNode was input, filter selection pool by validating each Breed/Sprite against it
         if(this.props.validationNode !== undefined) {
-            selectionPool = selectionPool.filter((item : Breed | Portrait)=>{
+            selectionPool = selectionPool.filter((item : Breed | Sprite)=>{
                 return item.condition.validate(this.props.validationNode!);
             });
 
-            // If currently selected Breed/Portrait is NOT in filtered pool, add it
+            // If currently selected Breed/Sprite is NOT in filtered pool, add it
             if(this.props.currentSelection !== undefined &&
-                !selectionPool.some((item : Breed | Portrait)=>{
+                !selectionPool.some((item : Breed | Sprite)=>{
                    return item.id === this.props.currentSelection!.id
                 })) {
                 selectionPool.push(this.props.currentSelection);
@@ -58,7 +58,7 @@ export default class EditPanelSelect extends React.Component<Props, State> {
         }
 
         // Map selection pool to form used by react-select library
-        let options : Array<menuOption> = selectionPool.map((item : Breed | Portrait)=>{ 
+        let options : Array<menuOption> = selectionPool.map((item : Breed | Sprite)=>{ 
             return { value: item.id, label: item.label }
         });
 

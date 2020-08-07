@@ -1,20 +1,20 @@
 import Janitors from "../../controller/_utilities/Janitors";
 import { Swaps } from "../../defines/Defines";
 
-import Portrait from "../../library/defines/Portrait";
+import Sprite from "../../library/defines/Sprite";
 import TimeRange from "../../library/defines/TimeRange";
 import DragonNode from "../../library/model/DragonNode";
 import { DragonState } from "../../library/defines/Dragon";
 
 /**
  * Helper functions intended for use by React components. Deal with selecting
- * proper Portrait images for Dragons based on different conditions and factors.
+ * proper Sprite images for Dragons based on different conditions and factors.
  */
 export default {
 
     /**
-     * Returns the correct portrait image path for a DragonNode, accounting for state-based swaps 
-     * (undead portraits, etc.) and time-based swaps as necessary.
+     * Returns the correct sprite image path for a DragonNode, accounting for state-based swaps 
+     * (undead sprites, etc.) and time-based swaps as necessary.
      * 
      * @param node DragonNode to find image.
      * @param time Current time context, as 'HH:MM:SS'.
@@ -22,18 +22,18 @@ export default {
      * @returns image file path.
      */
     getImgForNode(node: DragonNode, time: string, thumb?: boolean) : string {
-        let portrait = node.portrait;
+        let sprite = node.sprite;
 
         if(node.state !== DragonState.Healthy) {
-            portrait = Janitors.getDefaultPortrait(node, Swaps.dict.get(node.state)!);
+            sprite = Janitors.getDefaultSprite(node, Swaps.dict.get(node.state)!);
         }
 
-        if(portrait.hasTimeSwaps()) {
-            portrait.timeSwaps.forEach((swapSet: Array<Portrait>, r: TimeRange) => {
-                if(r.includes(time)) portrait = Janitors.getDefaultPortrait(node, swapSet);
+        if(sprite.hasTimeSwaps()) {
+            sprite.timeSwaps.forEach((swapSet: Array<Sprite>, r: TimeRange) => {
+                if(r.includes(time)) sprite = Janitors.getDefaultSprite(node, swapSet);
             });
         }
 
-        return Portrait.getImgPath(portrait, thumb);
+        return Sprite.getImgPath(sprite, thumb);
     }
 }

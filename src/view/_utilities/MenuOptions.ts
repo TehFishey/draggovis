@@ -1,12 +1,12 @@
 import { menuOption } from "../general/select/Select";
 
-import { Templates, Breeds, Portraits } from "../../defines/Defines";
+import { Templates, Breeds, Sprites } from "../../defines/Defines";
 import { Gender, DragonState } from "../../library/defines/Dragon";
 import LineageTemplate from "../../library/view/LineageTemplate";
 import Breed from "../../library/defines/Breed";
-import Portrait from "../../library/defines/Portrait";
+import Sprite from "../../library/defines/Sprite";
 import DragonNode from "../../library/model/DragonNode";
-import PortraitPair from "../../library/defines/PortraitPair";
+import SpritePair from "../../library/defines/SpritePair";
 
 /**
  * Helper functions intended for use by React components. Deal with creating sets of
@@ -16,12 +16,12 @@ export default {
     
     /**
      * Returns a set of menu options for a react-select menu, with each entry corresponding
-     * to an existing Portrait object from Defines.
-     * @param ids Set of valid Portrait Ids for select menu. Defaults to all.
-     * @param pool Pool to select Portraits from. Defaults to Portraits.dict.
+     * to an existing Sprite object from Defines.
+     * @param ids Set of valid Sprite Ids for select menu. Defaults to all.
+     * @param pool Pool to select Sprites from. Defaults to Sprites.dict.
      */
-    portraitOptions(ids? : Set<string> | Array<string>, pool? : Map<string, Portrait>) : Array<menuOption> {
-        if(pool == null) pool = Portraits.dict;
+    spriteOptions(ids? : Set<string> | Array<string>, pool? : Map<string, Sprite>) : Array<menuOption> {
+        if(pool == null) pool = Sprites.dict;
         let out : Array<menuOption> = [];
 
         if(ids != null) {
@@ -32,7 +32,7 @@ export default {
                 });
             });
         } else {
-            pool.forEach((p: Portrait) => {
+            pool.forEach((p: Sprite) => {
                 out.push({
                     value : p.id,
                     label : p.label
@@ -44,27 +44,27 @@ export default {
 
     /**
      * Returns a set of menu options for a react-select menu, with each entry corresponding
-     * to a dimorphic pair of portrait objects from Defines.
-     * @param ids Set of valid Portrait-Pair Ids for select menu. Defaults to all.
+     * to a dimorphic pair of sprite objects from Defines.
+     * @param ids Set of valid Sprite-Pair Ids for select menu. Defaults to all.
      */
-    portraitPairOptions(ids : Array<string>) : Array<menuOption> {
-        let pairs: Array<PortraitPair> = [];
+    spritePairOptions(ids : Array<string>) : Array<menuOption> {
+        let pairs: Array<SpritePair> = [];
         let out : Array<menuOption> = [];
 
         ids.forEach((id: string) => {
             if(id.endsWith("-u")) {
                 out.push({
                     value : id,
-                    label : Portraits.dict.get(id)!.label
+                    label : Sprites.dict.get(id)!.label
                 });
             } else {
                 let pairId = id.slice(0,-2);
                 if(id.endsWith("-m") && ids.includes(`${pairId}-f`))
-                    pairs.push(Portraits.pairs.get(pairId)!)
+                    pairs.push(Sprites.pairs.get(pairId)!)
             }  
         });
 
-        pairs.forEach((pair: PortraitPair)=> {
+        pairs.forEach((pair: SpritePair)=> {
             out.push({
                 value : pair.male.id,
                 label : pair.label
@@ -75,7 +75,7 @@ export default {
             ids.forEach((id: string) => {
                 out.push({
                     value : id,
-                    label : Portraits.dict.get(id)!.label
+                    label : Sprites.dict.get(id)!.label
                 });
             });
         }

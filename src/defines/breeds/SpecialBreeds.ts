@@ -124,7 +124,8 @@ let SpecialBreeds: Array<Breed> = [
         SpriteFactory.customSprite('wrapping-wing-salt-m', "Salt", false)
     ]),
     new Breed("solstice-dragon", "Solstice Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Time], "f-f", [
-        SpriteFactory.customSprite('solstice-f', "Standard", true),
+        SpriteFactory.customSprite('solstice-b-f', "Blue", true),
+        SpriteFactory.customSprite('solstice-p-f', "Rosy", true),
         SpriteFactory.customSprite('solstice-salt-f', "Salt", false),
     ]),
     new Breed("mistletoe-dragon", "Mistletoe Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Life], "f-mf", [

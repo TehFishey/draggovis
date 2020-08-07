@@ -4,6 +4,8 @@ import DragonNode from '../../../library/model/DragonNode';
 import ViewUtils from '../../_utilities/ImageSwaps';
 import Sprite from '../../../library/defines/Sprite';
 
+import './image.css';
+
 interface Props {
     node : DragonNode,
     time : string,

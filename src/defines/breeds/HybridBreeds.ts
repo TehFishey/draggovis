@@ -92,9 +92,12 @@ let HybridBreeds: Array<Breed> = [
         ])
     ),
     new HybridBreed("amalthean-dragon", "Amalthean Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Life, Affinity.Water], SpriteFactory.mfSprites("amalthean"),
-        ConditionBuilder.and("Amalthean Dragon", [
-            ConditionBuilder.checkParentBreedIds([{id: "white-dragon", label: "White Dragon"}]),
-            ConditionBuilder.checkParentBreedIds([{id: "undine-dragon", label: "Undine Dragon"}])
+        ConditionBuilder.or("Amalthean Dragon", [
+            ConditionBuilder.checkParentBreedIds([{id: "amalthean-dragon", label: "Amalthean Dragon"}]),
+            ConditionBuilder.and("", [
+                ConditionBuilder.checkParentBreedIds([{id: "white-dragon", label: "White Dragon"}]),
+                ConditionBuilder.checkParentBreedIds([{id: "undine-dragon", label: "Undine Dragon"}])
+            ])
         ])
     ),
     new HybridBreed("carina-dragon", "Carina Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Fire], SpriteFactory.mfSprites("carina"), 

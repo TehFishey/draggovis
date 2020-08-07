@@ -16,6 +16,7 @@ export default class DragDropOperator extends Operator {
             if(dragon != null) {
                 let n = tree.copyNode(dragon, dropNodeIndex);
                 
+                n.name = '';
                 n.gender = Janitors.correctDragonGender(n);
                 n.sprite = Janitors.correctSpriteGender(n);
                 if (validate) n.state = Janitors.correctDragonState(n);
@@ -58,6 +59,7 @@ export default class DragDropOperator extends Operator {
                 let n : DragonNode;
 
                 tree.setBranch(dropNodeIndex, branch);
+                Tree.iterate(tree,dropNodeIndex,[],0,(t,ti,b,bi)=>{if(t[ti]!=null) t[ti]!.name = ''});
                 n = tree[dropNodeIndex]!
 
                 n.gender = Janitors.correctDragonGender(n);

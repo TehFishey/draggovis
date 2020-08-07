@@ -4,6 +4,8 @@ import { SettingsConsumer, DragDrop } from '../../context/Settings';
 import './sidebar.css';
 import Tree from '../../../library/model/Tree';
 import { DataConsumer } from '../../context/DataManager';
+import Modal from '../../general/modal/Modal';
+import StatsPanel from './stats-panel/StatsPanel';
 
 interface Props {
     tree : Tree;
@@ -11,6 +13,7 @@ interface Props {
 
 interface State {
     imgError : boolean
+    showStats : boolean
 }
 
 export default class Sidebar extends React.Component<Props, State> {
@@ -19,7 +22,8 @@ export default class Sidebar extends React.Component<Props, State> {
         super(props);
 
         this.state = {
-            imgError : false
+            imgError : false,
+            showStats : false
         }
     }
 
@@ -49,9 +53,28 @@ export default class Sidebar extends React.Component<Props, State> {
         }
     }
 
+    openStats = () => {
+        this.setState({
+            showStats : true
+        });
+    }
+
+    closeStats = () => {
+        this.setState({
+            showStats : false
+        });
+    }
+
     render() {
         return (
             <div className='stage-sidebar'>
+                <Modal 
+                    show = {this.state.showStats}
+                    handleClose = {this.closeStats}
+                    children = { 
+                        <StatsPanel tree={this.props.tree} />
+                    }
+                />
                 <SettingsConsumer>
                     {settings => { return (
                     <div className='sidebar-content'>
@@ -68,7 +91,7 @@ export default class Sidebar extends React.Component<Props, State> {
                         </DataConsumer>
                         <div className='sidebar-feedback'></div>
                         <div className='sidebar-settings'>
-                            <div className='sb-setting-label'>Display</div>
+                            <div className='sb-label'>Display</div>
                             <div className='sb-setting'>
                                 <div>
                                     Cave Time: 
@@ -93,7 +116,7 @@ export default class Sidebar extends React.Component<Props, State> {
                                     Show Generations
                                 </div>
                             </div>
-                            <div className='sb-setting-label'>Drag - Drop</div>
+                            <div className='sb-label'>Drag - Drop</div>
                             <div className='sb-setting'>
                                 <select 
                                     value={settings.dragDrop}
@@ -104,7 +127,7 @@ export default class Sidebar extends React.Component<Props, State> {
                                     <option value={DragDrop.SwapSet}>Swap Lineage</option>
                                 </select>
                             </div>
-                            <div className='sb-setting-label'>Validation</div>
+                            <div className='sb-label'>Validation</div>
                             <div className='sb-setting'>
                                     <div onClick={e=>{settings.update.disableValid(!settings.disableValid)}} style={{cursor: 'default'}}>
                                         <input type='checkbox'
@@ -121,6 +144,10 @@ export default class Sidebar extends React.Component<Props, State> {
                                         Override Warnings
                                     </div>
                                 </div>
+                        </div>
+                        <div className='sidebar-buttons'>
+                        <div className='sb-label'>Data</div>
+                            <button className='stage-button-small' onClick={this.openStats}>Lineage Stats</button>
                         </div>
                     </div>
                     )}}

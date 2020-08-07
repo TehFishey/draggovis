@@ -32,21 +32,19 @@
     width: 100%;
 }
 
+.sidebar-buttons {
+    text-align: left;
+    width: 100%;
+}
+
 .sb-setting {
     text-align: left;
     margin-left: 10px
 }
 
-.sb-setting-label {
+.sb-label {
     text-align: left;
     border-bottom: solid 1px black;
-	margin-bottom: 2px;
-}
-
-.sb-select {
-    
-}
-
-.sb-checkbox {
-    
+    margin-bottom: 2px;
+    margin-top: 4px;
 }

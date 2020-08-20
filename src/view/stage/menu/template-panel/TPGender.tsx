@@ -1,6 +1,7 @@
 import React from 'react';
 import DVSelect, { menuOption } from '../../../general/select/Select'
 import { Gender } from '../../../../library/defines/Dragon';
+import { GenderProperty } from '../../../../library/controller/GeneratorProperty';
 
 
 const genderOptions: Array<menuOption> = [
@@ -9,8 +10,7 @@ const genderOptions: Array<menuOption> = [
 ]
 
 interface Props {
-    id: string,
-    label: string,
+    property: GenderProperty
     setArg: Function
 }
 
@@ -43,7 +43,7 @@ export default class TemplatePanelGender extends React.Component<Props, State> {
     render () {
         return (
             <div className='tpi-box-small'>
-                <div className='tpi-label'>{this.props.label}:</div>
+                <div className='tpi-label'>{this.props.property.label}:</div>
                 <div className='tpi-gender'>
                     <DVSelect
                         value = { {value: this.state.selectedGender, label: this.state.selectedGender} }

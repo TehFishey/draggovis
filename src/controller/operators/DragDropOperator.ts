@@ -24,7 +24,7 @@ export default class DragDropOperator extends Operator {
             return [dropNodeIndex];
         }
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     swapOne(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Promise<executionOutput> {
@@ -47,7 +47,7 @@ export default class DragDropOperator extends Operator {
             return [];
         }
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     copySet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Promise<executionOutput> {
@@ -76,7 +76,7 @@ export default class DragDropOperator extends Operator {
             return [];
         }
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     swapSet(dragNodeIndex: number, dropNodeIndex: number, validate: boolean=true) : Promise<executionOutput> {
@@ -122,6 +122,6 @@ export default class DragDropOperator extends Operator {
             return [];
         }
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 }

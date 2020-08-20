@@ -9,7 +9,7 @@ export default abstract class Operator {
         this.parent = parent;
     }
 
-    protected executeStrategy(strategy : executionStrategy) : Promise<executionOutput> {
+    protected execute(strategy : executionStrategy) : Promise<executionOutput> {
         return this.parent.updateTree(strategy);
     }
 }

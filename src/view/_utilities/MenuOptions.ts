@@ -1,12 +1,13 @@
 import { menuOption } from "../general/select/Select";
 
-import { Templates, Breeds, Sprites } from "../../defines/Defines";
+import { Breeds, Sprites } from "../../defines/Defines";
 import { Gender, DragonState } from "../../library/defines/Dragon";
-import LineageTemplate from "../../library/view/LineageTemplate";
 import Breed from "../../library/defines/Breed";
 import Sprite from "../../library/defines/Sprite";
 import DragonNode from "../../library/model/DragonNode";
+import Generator from "../../library/controller/Generator";
 import SpritePair from "../../library/defines/SpritePair";
+import Templates from "../../controller/_Templates";
 
 /**
  * Helper functions intended for use by React components. Deal with creating sets of
@@ -113,10 +114,10 @@ export default {
      * Returns a set of menu options for a react-select menu, with each entry corresponding
      * to an existing LineageTemplate from Defines.
      */
-    templateOptions() : Array<menuOption> {
+    templateOptions(templates: Templates) : Array<menuOption> {
         let out : Array<menuOption> = [];
         
-        Templates.arr.forEach((t: LineageTemplate) => {
+        templates.arr.forEach((t: Generator) => {
             out.push({value: t.id, label: t.label})
         });
         

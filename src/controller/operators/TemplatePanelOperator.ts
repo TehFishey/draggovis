@@ -14,6 +14,6 @@ export default class TemplatePanelOperator extends Operator {
             return undefined;
         };
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 }

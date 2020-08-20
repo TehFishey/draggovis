@@ -26,7 +26,7 @@ export default class EditPanelOperator extends Operator {
             return[];
         }
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     updateGender(index: number, gender: Gender, validate: boolean=true) : Promise<executionOutput> {
@@ -40,7 +40,7 @@ export default class EditPanelOperator extends Operator {
             return[];
         }
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     updateBreed(index: number, breedId: string, validate: boolean=true) : Promise<executionOutput> {
@@ -54,7 +54,7 @@ export default class EditPanelOperator extends Operator {
             return [];
         };
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     updateSprite(index: number, spriteId: string, validate: boolean=true) : Promise<executionOutput> {
@@ -67,7 +67,7 @@ export default class EditPanelOperator extends Operator {
             return [];
         };
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     createChild(index: number, validate: boolean=true) : Promise<executionOutput> {
@@ -113,7 +113,7 @@ export default class EditPanelOperator extends Operator {
             return [];
         };
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     removeChild(index: number, validate: boolean=true) : Promise<executionOutput> {
@@ -134,7 +134,7 @@ export default class EditPanelOperator extends Operator {
             return [];
         };
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     createParents(index: number, validate: boolean=true) : Promise<executionOutput> {
@@ -156,7 +156,7 @@ export default class EditPanelOperator extends Operator {
             return [];
         };
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     removeParents(index: number, validate: boolean=true) : Promise<executionOutput> {
@@ -173,7 +173,7 @@ export default class EditPanelOperator extends Operator {
             return [];
         };
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     invertParents(index: number, validate: boolean=true) : Promise<executionOutput> {
@@ -206,7 +206,7 @@ export default class EditPanelOperator extends Operator {
             return [];
         };
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 
     setDragonState(index: number, state: DragonState, validate: boolean=true) : Promise<executionOutput> {
@@ -220,6 +220,6 @@ export default class EditPanelOperator extends Operator {
             return [];
         };
 
-        return this.executeStrategy(strategy);
+        return this.execute(strategy);
     }
 }

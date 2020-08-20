@@ -1,17 +1,16 @@
 import _range from 'lodash/range';
 
-import Generator from '../../library/controller/Generator';
-import { DragProperty, NumProperty, GenderProperty } from '../../library/controller/GeneratorProperty';
+import Template from '../../library/view/LineageTemplate';
+import { DragProperty, NumProperty, GenderProperty } from '../../library/view/TemplateProperty';
 import Dragon, { Gender, DragonState } from '../../library/defines/Dragon';
 import Tree from '../../library/model/Tree';
 import DragonNode from '../../library/model/DragonNode';
+import Janitors from '../../controller/_utilities/Janitors';
 import Breed from '../../library/defines/Breed';
 import Sprite from '../../library/defines/Sprite';
 
-import Janitors from '../_utilities/Janitors';
-
-let templateGenerators : Array<Generator> = [
-    new Generator('even','Even-Gen', 
+let lineageTemplates : Array<Template> = [
+    new Template('even','Even-Gen', 
         "A single-breed lineage where all Caveborn dragons are in the same generation. Lineages of this type have every possible dragon position filled for each generation.",
         [
             new NumProperty('gens', 'Generations', _range(2,13)),
@@ -31,7 +30,7 @@ let templateGenerators : Array<Generator> = [
             return out;
         }
     ),
-    new Generator('checker','Checkerboard', 
+    new Template('checker','Checkerboard', 
     "A double-breed variant of the Even-Gen lineage, where all female dragons share one breed (or sprite), and all male dragons share a different breed (or sprite).",
         [
             new NumProperty('gens', 'Generations', _range(2,13)),
@@ -52,7 +51,7 @@ let templateGenerators : Array<Generator> = [
             return out;
         }
     ),
-    new Generator('stair','Stairstep', 
+    new Template('stair','Stairstep', 
     "An uneven lineage where all Caveborn dragons have the same gender. 'Primary' gendered dragons are bred from the previous generation's 'primary' gender and a Caveborn secondary gender, resulting in a lineage that looks like stairs.",
         [
             new NumProperty('gens', 'Generations', _range(2,13)),
@@ -74,7 +73,7 @@ let templateGenerators : Array<Generator> = [
             return out;
         }
     ),
-    new Generator('spiral','Spiral', 
+    new Template('spiral','Spiral', 
     "A variant of the Stairstep lineage where Caveborn and Primary dragons alternate genders each generation. Caveborns of the secondary dragon breed are bred with the primary-breed offspring of the each generation, resulting in a lineage that looks like a line.",
         [
             new NumProperty('gens', 'Generations', _range(2,13)),
@@ -104,7 +103,7 @@ let templateGenerators : Array<Generator> = [
             return out;
         }
     ),
-    new Generator('arrow','Arrowhead', 
+    new Template('arrow','Arrowhead', 
     "An arrow-shaped lineage which merges two stair-step lineages, one with female Caveborn dragons, the other with male Caveborn dragons.",
         [
             new NumProperty('gens', 'Generations', _range(2,13)),
@@ -136,7 +135,7 @@ let templateGenerators : Array<Generator> = [
             return out;
         }
     ),
-    new Generator('heart','Heart', 
+    new Template('heart','Heart', 
     "A 5-generation, heart-shaped lineage pattern, where dragons on the exterior of the heart share one breed, and dragons on the interior share another.",
         [
             new NumProperty('gens', 'Generations', [5]),
@@ -185,7 +184,7 @@ let templateGenerators : Array<Generator> = [
     )
 ]
     
-export default templateGenerators;
+export default lineageTemplates;
 
 function createCorrectedNode(tree: Tree,index: number,gender: Gender,breed: Breed,sprite: Sprite,state: DragonState) {
     let n = tree.createNode(index,gender,breed,sprite,state);

@@ -15,6 +15,6 @@ export default class ImportPanelOperator extends Operator {
             return undefined;
         };
 
-        return this.execute(strategy);
+        return this.executeStrategy(strategy);
     }
 }

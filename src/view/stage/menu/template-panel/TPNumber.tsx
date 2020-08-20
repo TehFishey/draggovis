@@ -1,9 +1,10 @@
 import React from 'react';
 import DVSelect, { menuOption } from '../../../general/select/Select'
-import { NumProperty } from '../../../../library/controller/GeneratorProperty';
 
 interface Props {
-    property: NumProperty
+    id: string,
+    label: string,
+    options: Array<number>,
     setArg: Function
 }
 
@@ -23,13 +24,13 @@ export default class TemplatePanelNumber extends React.Component<Props, State> {
 
         this.state = {
             numberOptions: [],
-            selectedNumber: this.props.property.options[0],
+            selectedNumber: this.props.options[0],
         }
     }
 
     setNumberOptions() {
         let options: Array<menuOption> = [];
-        this.props.property.options.forEach((option: number) => {
+        this.props.options.forEach((option: number) => {
             options.push(numberOption(option));
         })
         this.setState({numberOptions : options});
@@ -54,7 +55,7 @@ export default class TemplatePanelNumber extends React.Component<Props, State> {
     render () {
         return (
             <div className='tpi-box-small'>
-                <div className='tpi-label'>{this.props.property.label}</div>
+                <div className='tpi-label'>{this.props.label}</div>
                 <div className='tpi-number-select'>
                     <DVSelect
                         value = { numberOption(this.state.selectedNumber) }

@@ -7,10 +7,11 @@ import Dragon, { DragonState, Gender } from '../../../../library/defines/Dragon'
 import Validation from '../../../_utilities/TemplateValidation';
 import { Breeds, Sprites } from '../../../../defines/Defines';
 import { Settings } from '../../../context/Settings';
-import { DragProperty } from '../../../../library/controller/GeneratorProperty';
 
 interface Props {
-    property: DragProperty
+    id: string,
+    label: string,
+    gender?: Gender,
     setArg: Function,
 }
 
@@ -35,10 +36,10 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
         this.state = {
             breedOptions : [],
             spriteOptions : [],
-            selectedBreedOption : {value : this.props.property.default.breed.id, label: this.props.property.default.breed.label},
-            selectedSpriteOption : {value: this.props.property.default.sprite.id, label: this.props.property.default.sprite.label},
-            selectedBreed : this.props.property.default.breed,
-            selectedSprite : this.props.property.default.sprite,
+            selectedBreedOption : {value : 'guardian-dragon', label: 'Guardian Dragon'},
+            selectedSpriteOption : {value: 'guardian-u', label: 'Standard'},
+            selectedBreed : Breeds.dict.get('guardian-dragon')!,
+            selectedSprite : Sprites.dict.get('guardian-u')!,
             selectedState : DragonState.Healthy,
             validate: true
         }
@@ -63,7 +64,7 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
 
     updateBreedOptions(callback?: () => void) {
         let options: Array<menuOption> = (this.state.validate) ? 
-            Validation.setBreedOptions(this.props.property.validGender, this.state.validate) : 
+            Validation.setBreedOptions(this.props.gender, this.state.validate) : 
             Validation.setBreedOptions(undefined, this.state.validate);
         
         this.setState({breedOptions : options}, callback)
@@ -71,7 +72,7 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
 
     updateSpriteOptions(callback?: () => void) {
         let options: Array<menuOption> = (this.state.validate) ? 
-            Validation.setSpriteOptions(this.state.selectedBreed, this.props.property.validGender, this.state.validate) : 
+            Validation.setSpriteOptions(this.state.selectedBreed, this.props.gender, this.state.validate) : 
             Validation.setSpriteOptions(this.state.selectedBreed, undefined, this.state.validate);
         
         this.setState({
@@ -114,7 +115,7 @@ export default class TemplatePanelDragon extends React.Component<Props, State> {
     render () {
         return (
             <div className='tpi-box-large'>
-                <div className='tpi-label'>{this.props.property.label}</div>
+                <div className='tpi-label'>{this.props.label}</div>
                 <div className='tpi-dragon-breed'>
                     Breed:<br/>
                     <DVSelect

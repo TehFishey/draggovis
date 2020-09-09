@@ -6,7 +6,6 @@ import './app.css';
 function App() {
     return (
         <div className="app-root">
-            <div className="app-header">Draggovis - (Beta 0.1.2)</div>
             <SettingsProvider>
                 <Stage />
             </SettingsProvider>

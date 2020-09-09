@@ -31,6 +31,7 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("aranoa-dragon", "Aranoa Dragon", DragonSubType.Wingless, [Affinity.Water], SpriteFactory.uSprites("aranoa")),
     new DragonBreed("aria-dragon", "Aria Dragon", DragonSubType.Western, [Affinity.Neutral], SpriteFactory.mfSprites("aria")),
     new DragonBreed("ash-dragon", "Ash Dragon", DragonSubType.Wingless, [Affinity.Earth], SpriteFactory.uSprites("ash")),
+    new DragonBreed("astaarus-dragon", "Astaarus Dragon", DragonSubType.Western, [Affinity.Light, Affinity.Fire], SpriteFactory.mfSprites("astaarus")),
     new DragonBreed("azure-glacewing-dragon", "Azure Glacewing Dragon", DragonSubType.Western, [Affinity.Neutral], SpriteFactory.uSprites("azure-glacewing")),
     new DragonBreed("balloon-dragon", "Balloon Dragon", DragonSubType.Western, [Affinity.Air], SpriteFactory.uSprites("balloon")),
     new DragonBreed("black-dragon", "Black Dragon", DragonSubType.Western, [Affinity.Dark], SpriteFactory.mfAltSprites("black", false)),
@@ -210,6 +211,7 @@ let DragonBreeds: Array<Breed> = [
         SpriteFactory.customSprite('siyat-p-u', "Purple", true),
     ]),
     new DragonBreed("skysilk-dragon", "Skysilk Dragon", DragonSubType.Western, [Affinity.Air], SpriteFactory.uSprites("skysilk")),
+    new DragonBreed("skystrider-dragon", "Skystrider Dragon", DragonSubType.Amphiptere, [Affinity.Air], SpriteFactory.mfSprites("skystrider")),
     new DragonBreed("skywing-dragon", "Skywing Dragon", DragonSubType.Amphiptere, [Affinity.Air], SpriteFactory.uSprites("skywing")),
     new DragonBreed("speckle-throated-dragon", "Speckle-Throated Dragon", DragonSubType.Western, [Affinity.Air], SpriteFactory.mfSprites("speckle-throated")),
     new DragonBreed("spinel-wyvern", "Spinel Wyvern", DragonSubType.Wyvern, [Affinity.Earth], [

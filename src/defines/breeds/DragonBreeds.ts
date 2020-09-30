@@ -77,6 +77,7 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("electric-dragon", "Electric Dragon", DragonSubType.Western, [Affinity.Lightning], SpriteFactory.mfSprites("electric")),
     new DragonBreed("ember-dragon", "Ember Dragon", DragonSubType.Western, [Affinity.Fire], SpriteFactory.mfSprites("ember")),
     new DragonBreed("elux-lucis-dragon", "Elux Lucis Dragon", DragonSubType.Lindwyrm, [Affinity.Light, Affinity.Air], SpriteFactory.uSprites("elux-lucis")),
+    new DragonBreed("equinox-dragon", "Equinox Dragon", DragonSubType.Western, [Affinity.Air], SpriteFactory.uSprites("equinox")),
     new DragonBreed("falconiform-wyvern", "Falconiform Wyvern", DragonSubType.Wyvern, [Affinity.Fire], SpriteFactory.mfSprites("falconiform")),
     new DragonBreed("fell-dragon", "Fell Dragon", DragonSubType.Wingless, [Affinity.Death], SpriteFactory.mfSprites("fell")),
     new DragonBreed("fever-wyvern", "Fever Wyvern", DragonSubType.Wyvern, [Affinity.Death], SpriteFactory.uSprites("fever")),
@@ -143,6 +144,7 @@ let DragonBreeds: Array<Breed> = [
     new DragonBreed("magma-dragon", "Magma Dragon", DragonSubType.Wingless, [Affinity.Fire], SpriteFactory.uSprites("magma")),
     new DragonBreed("melismor-dragon", "Melismor Dragon", DragonSubType.Eastern, [Affinity.Earth], SpriteFactory.mfSprites("melismor")),
     new DragonBreed("mint-dragon", "Mint Dragon", DragonSubType.Wingless, [Affinity.Neutral], SpriteFactory.uSprites("mint")),
+    new DragonBreed("mistra-dragon", "Mistra Dragon", DragonSubType.Western, [Affinity.Light,Affinity.Time], SpriteFactory.mfSprites("mistra")),
     new DragonBreed("monarch-dragon", "Monarch Dragon", DragonSubType.Western, [Affinity.Earth], SpriteFactory.mfSprites("monarch")),
     new DragonBreed("moonstone-dragon", "Moonstone Dragon", DragonSubType.Western, [Affinity.Magi], SpriteFactory.mfSprites("moonstone")),
     new DragonBreed("nebula-dragon", "Nebula Dragon", DragonSubType.Wyvern, [Affinity.Light], [

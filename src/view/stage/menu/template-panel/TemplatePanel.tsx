@@ -120,7 +120,7 @@ export default class TemplatePanel extends React.Component<Props, State> {
 
     componentDidMount() {
         this.operator = this.context.controller.templatePanel;
-        this.templates = this.context.controller.generators;
+        this.templates = this.context.controller.templates;
         this.menuOptions = MenuOptions.templateOptions(this.templates!);
 
         if(this.operator && this.templates && this.menuOptions && !this.state.loaded) {

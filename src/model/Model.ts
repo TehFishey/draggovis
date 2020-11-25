@@ -10,7 +10,7 @@ import { Sprites, Breeds } from "../defines/Defines";
 export type executionStrategy = (tree: Tree) => Array<number> | undefined;
 export type executionOutput = { error? : string, data : Tree}
 
-const IOVersion = 4;
+const IOVersion = 5;
 
 export default class Model {
     readonly IOVersion : number;

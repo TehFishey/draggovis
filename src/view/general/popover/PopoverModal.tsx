@@ -47,8 +47,11 @@ export default class Popover extends React.Component<Props, State> {
 
         if(window.innerWidth < newX + this.componentRef.current!.clientWidth)
             newX -= (newX + this.componentRef.current!.clientWidth) - window.innerWidth;
+        else if(newX <= 0) newX = 0;
+        
         if(window.innerHeight < newY + this.componentRef.current!.clientHeight)
             newY -= (newY + this.componentRef.current!.clientHeight) - window.innerHeight;
+        else if(newY <= 0) newY = 0;
 
         if(this.state.pos.x !== newX || this.state.pos.y !== newY) {
             this.setState({

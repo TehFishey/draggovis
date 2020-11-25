@@ -6,6 +6,7 @@ import ConditionBuilder from '../_utilities/ConditionBuilder';
 import ConditionFactory from '../_utilities/ConditionFactory';
 
 let SpecialBreeds: Array<Breed> = [
+    // Prize Breeds
     new Breed("tinsel-dragon", "Tinsel Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Neutral], "mf-mf", [
         SpriteFactory.customSprite('tinsel-b-u', "Bronze", true, 
             ConditionFactory.trueBredSprite("Bronze", [{id: 'tinsel-b-u', label : 'Bronze'}])
@@ -23,7 +24,6 @@ let SpecialBreeds: Array<Breed> = [
             ])
         )
     ]),
-
     new Breed("shimmer-scale-dragon", "Shimmer-scale Dragon", DragonType.Dragon, DragonSubType.Eastern, [Affinity.Water], "mf-mf", [
         SpriteFactory.customSprite('shimmer-b-u', "Bronze", true, 
             ConditionFactory.trueBredSprite("Bronze", [{id: 'shimmer-b-u', label : 'Bronze'}])
@@ -42,6 +42,7 @@ let SpecialBreeds: Array<Breed> = [
         )
     ]),
 
+    // Valentines Holiday Dragons
     new Breed("valentine-dragon", "Valentine Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Magi], "f-f", [
         SpriteFactory.customSprite('valentine-f', "Standard", true),
         SpriteFactory.customSprite('valentine-salt1-f', "White Salt", false, ConditionBuilder.checkFirstGeneration("Purple Salt")),
@@ -98,6 +99,7 @@ let SpecialBreeds: Array<Breed> = [
         SpriteFactory.customSprite('erador-salt2-m', "Blue Salt", false, ConditionBuilder.checkFirstGeneration("Green Salt")),
     ]),
     
+    // Winter Holiday Dragons
     new Breed("holly-dragon", "Holly Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Life], "m-mf", [
         SpriteFactory.customSprite('holly-u', "Standard", true),
     ]),
@@ -160,6 +162,8 @@ let SpecialBreeds: Array<Breed> = [
         SpriteFactory.customSprite('wintertide-m', "Standard", true),
         SpriteFactory.customSprite('wintertide-salt-m', "Salt", false)
     ]),
+    
+    // Haloween Holiday Dragons
     //new Breed("vampire-dragon", "Vampire Dragon", "dragon", "mf-mf", SpriteFactory.mfSprites("vampire")),
     new Breed("pumpkin-dragon", "Pumpkin Dragon", DragonType.Pygmy, DragonSubType.Western, [Affinity.None], "mf-mf", [
         SpriteFactory.customSprite('pumpkin-u', "Standard", true),
@@ -227,6 +231,16 @@ let SpecialBreeds: Array<Breed> = [
         SpriteFactory.customSprite('kohraki-salt2-f', "White Salt ♀", false, ConditionBuilder.checkGender(Gender.Female,"White Salt ♀")),
         SpriteFactory.customSprite('kohraki-salt2-m', "White Salt ♂", false, ConditionBuilder.checkGender(Gender.Male,"White Salt ♂")),
     ]),
+    new Breed("pitfire-dragon", "Pitfire Dragon", DragonType.Dragon, DragonSubType.Western, [Affinity.Death], "mf-mf", [
+        SpriteFactory.customSprite('pitfire-f', "Standard ♀", true, ConditionBuilder.checkGender(Gender.Female,"Standard ♀")),
+        SpriteFactory.customSprite('pitfire-m', "Standard ♂", true, ConditionBuilder.checkGender(Gender.Male,"Standard ♂")),
+        SpriteFactory.customSprite('pitfire-reborn-f', "Reborn ♀", true, ConditionBuilder.checkGender(Gender.Female,"Reborn ♀")),
+        SpriteFactory.customSprite('pitfire-reborn-m', "Reborn ♂", true, ConditionBuilder.checkGender(Gender.Male,"Standard ♂")),
+        SpriteFactory.customSprite('pitfire-salt1-f', "Blue Salt ♀", false, ConditionBuilder.checkGender(Gender.Female,"Blue Salt ♀")),
+        SpriteFactory.customSprite('pitfire-salt1-m', "Blue Salt ♂", false, ConditionBuilder.checkGender(Gender.Male,"Blue Salt ♂")),
+        SpriteFactory.customSprite('pitfire-salt1-reborn-f', "Purple Reborn Salt ♀", false, ConditionBuilder.checkGender(Gender.Female,"Purple Reborn Salt ♀")),
+        SpriteFactory.customSprite('pitfire-salt1-reborn-m', "Purple Reborn Salt ♂", false, ConditionBuilder.checkGender(Gender.Male,"Purple Reborn Salt ♂")),
+    ])
 ]
 
 export default SpecialBreeds;

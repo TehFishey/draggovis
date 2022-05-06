@@ -1,6 +1,6 @@
 @font-face {
   font-family: Alice;
-  src: url(/fonts/Alice-Regular.ttf);
+  src: url(./fonts/Alice-Regular.ttf);
 }
 
 body {

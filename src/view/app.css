@@ -1,0 +1,38 @@
+.app-root {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.app-stage {
+    text-align: center;
+    flex-shrink: 0;
+    flex-grow: 0;
+    width: 100%;
+    height: calc(100vh);
+  }
+
+.app-header {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: #282c34;
+    color: white;
+    font-size: 36px;
+}
+
+.app-footer {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #282c34;
+}

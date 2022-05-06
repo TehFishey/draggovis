@@ -1,0 +1,34 @@
+.IO-panel {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+
+.modal-body p{
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+.IO-field {
+    height: 200px;
+    padding: 8px;
+    text-align: left;
+    text-justify: top;
+    text-overflow: wrap;
+    border-width: 1px;
+    border-style: inset;
+    border-color:#101010;
+    background-color: tan;
+    box-shadow: inset 0 0 5px;
+    resize: none;
+}
+
+.IO-interface {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.IO-close-button {
+    margin-top: 10px;
+}
